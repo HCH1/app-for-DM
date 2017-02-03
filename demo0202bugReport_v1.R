@@ -28,7 +28,7 @@ write.csv(x = nonDMbug_open, file = "nonDMbug_open.csv")
 write.csv(x = DMbug_open, file = "DMbug_open.csv")
 
 count <- rbind( dim(DMbug_open) , dim(nonDMbug_open) , dim(nonDMbug_close), dim(nonDMbug_close) )
-write.csv(x = DMbug_open, file = "DMbug_open.csv")
+write.csv(x = count, file = "count.csv")
 
 #DMbug_open <- sfbug1_DMbug[1] - DMbug_close[1]
 #DMbug_open <- sfbug1_DMbug[sfbug1_DMbug[1] != DMbug_close[1],]
