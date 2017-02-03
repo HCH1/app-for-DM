@@ -28,6 +28,8 @@ write.csv(x = nonDMbug_open, file = "nonDMbug_open.csv")
 write.csv(x = DMbug_open, file = "DMbug_open.csv")
 
 count <- rbind( dim(DMbug_open) , dim(nonDMbug_open) , dim(nonDMbug_close), dim(nonDMbug_close) )
+rownames(count) <- c("DMbug_open","nonDMbug_open","nonDMbug_close","nonDMbug_close")
+colnames(count) <- c("rows","cols")
 write.csv(x = count, file = "count.csv")
 
 #DMbug_open <- sfbug1_DMbug[1] - DMbug_close[1]
