@@ -12,11 +12,13 @@ sfbug_col11 <- unique(sfbug[11]) #DM Team Classification
 sfbug[13] <- as.Date(sfbug[,13], format= "%d/%m/%Y")
 write.csv(x = sfbug, file = "sfbug.csv")
 #Design Manual	
-#22FDX 22FDSOI
-sfbug_orig <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" & sfbug[5]=="Design Manual") , ]
-sfbug1 <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" & sfbug[5]=="Design Manual" ), ]
+#22FDX 22FDSOI 22SOI
+sfbug_orig <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" | sfbug[2]=="22SOI"), ]
+sfbug1 <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" | sfbug[2]=="22SOI"), ]
+sfbug1 <- sfbug1[sfbug1[5]=="Design Manual", ]
 #to filter date region
-sfbug1 <- sfbug[ sfbug[13] > "2016-11-12", ]
+sfbug1 <- sfbug1[ sfbug1[13] >= "2016-11-10", ]
+sfbug1 <- sfbug1[ sfbug1[13] <= "2017-01-31", ]
 write.csv(x = sfbug_orig, file = "sfbug_orig.csv")
 write.csv(x = sfbug1, file = "sfbug1.csv")
 
