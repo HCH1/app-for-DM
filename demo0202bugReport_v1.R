@@ -10,7 +10,8 @@ sfbug_col11 <- unique(sfbug[11]) #DM Team Classification
 #dmy <- sfbug[order(as.Date(sfbug[13],format="%d/%m/%Y")),,drop=FALSE]
 
 sfbug[13] <- as.Date(sfbug[,13], format= "%d/%m/%Y")
-write.csv(x = sfbug, file = "sfbug.csv")
+write.csv(x = sfbug, file = paste(format(Sys.time(), "%Y%m%d"), "_sfbug.csv", sep = "") )
+#write.csv(x = sfbug, file = "sfbug.csv")
 #Design Manual	
 #22FDX 22FDSOI 22SOI
 sfbug_orig <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" | sfbug[2]=="22SOI"), ]
@@ -19,17 +20,19 @@ bug_all <- bug_all[bug_all[5]=="Design Manual", ]
 #to filter date region 11/10-1/31
 bug_all <- bug_all[ bug_all[13] >= "2016-11-10", ]
 bug_all <- bug_all[ bug_all[13] <= "2017-01-31", ]
-write.csv(x = sfbug_orig, file = "sfbug_orig.csv")
-write.csv(x = bug_all, file = "bug_all.csv")
+write.csv(x = sfbug_orig, file = paste(format(Sys.time(), "%Y%m%d"), "_sfbug_orig.csv", sep = "") )
+write.csv(x = bug_all, file = paste(format(Sys.time(), "%Y%m%d"), "_bug_all.csv", sep = "") )
+
 #Resolved
 #Verified
 #Closed
 close_all <- bug_all[ which( bug_all[4]=="Resolved" | bug_all[4]=="Verified" | bug_all[4]=="Closed") , ]
 open_all <- bug_all[ which( bug_all[4]!="Resolved" & bug_all[4]!="Verified" & bug_all[4]!="Closed") , ]
-write.csv(x = close_all, file = "close_all.csv")
-write.csv(x = open_all, file = "open_all.csv")
+write.csv(x = close_all, file = paste(format(Sys.time(), "%Y%m%d"), "_close_all.csv", sep = "") )
+write.csv(x = open_all, file = paste(format(Sys.time(), "%Y%m%d"), "_open_all.csv", sep = "") )
 open_DM <- open_all[ which( open_all[11]=="Error (Others)" | open_all[11]=="Typo Implementation" | open_all[11]=="Typo Proposal" | open_all[11]=="Inadequate Proposal" | open_all[11]=="Need IAD"  | open_all[11]=="Neglected Related Content" | open_all[11]=="Scope changed"), ]
-write.csv(x = open_DM, file = "open_DM.csv")
+write.csv(x = open_DM, file = paste(format(Sys.time(), "%Y%m%d"), "_open_DM.csv", sep = "") )
+
 #(blank)
 #Work Request
 #Enhancement Request
@@ -41,16 +44,17 @@ open_Work <- open_all[open_all[11]=="Work Request", ]
 open_Ques <- open_all[which( open_all[11]=="Question (No Update Required)" | open_all[11]=="Question"), ]
 open_Invalid <- open_all[open_all[11]=="Invalid Bug", ]
 open_Blank <- open_all[open_all[11]=="", ]
-write.csv(x = open_Enhance, file = "open_Enhance.csv")
-write.csv(x = open_Work, file = "open_Work.csv")
-write.csv(x = open_Ques, file = "open_Ques.csv")
-write.csv(x = open_Invalid, file = "open_Invalid.csv")
-write.csv(x = open_Blank, file = "open_Blank.csv")
+write.csv(x = open_Enhance, file = paste(format(Sys.time(), "%Y%m%d"), "_open_Enhance.csv", sep = "") )
+write.csv(x = open_Work, file = paste(format(Sys.time(), "%Y%m%d"), "_open_Work.csv", sep = "") )
+write.csv(x = open_Ques, file = paste(format(Sys.time(), "%Y%m%d"), "_open_Ques.csv", sep = "") )
+write.csv(x = open_Invalid, file = paste(format(Sys.time(), "%Y%m%d"), "_open_Invalid.csv", sep = "") )
+write.csv(x = open_Blank, file = paste(format(Sys.time(), "%Y%m%d"), "_open_Blank.csv", sep = "") )
 
 sum_count <- rbind( dim(open_DM),dim(open_Enhance),dim(open_Work),dim(open_Ques),dim(open_Invalid),dim(open_Blank),dim(close_all) )
 rownames(sum_count) <- c("open_DM","open_Enhance","open_Work","open_Ques","open_Invalid","open_Blank","close_all")
 colnames(sum_count) <- c("bug (ea)","")
-write.csv(x = sum_count, file = "sum_count.csv")
+write.csv(x = sum_count, file = paste(format(Sys.time(), "%Y%m%d"), "_sum_count.csv", sep = "") )
+
 #Plot the chart.
 pie(sum_count[,1])
 #-------------------
