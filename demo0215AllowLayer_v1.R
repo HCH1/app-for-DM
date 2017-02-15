@@ -14,9 +14,12 @@ lpo2_22fdx_act_cate <- lpo2_22fdx_act[lpo2_22fdx_act[5]!="Generated Mask", ]
 write.csv(x = lpo2_22fdx_act_cate, file = paste(format(Sys.time(), "%Y%m%d"), "_lpo2_22fdx_act_cate.csv", sep = "") )
 #re-bind 3 columns
 lpo2_22fdx_act_cate_3cols <- cbind(lpo2_22fdx_act_cate[1],lpo2_22fdx_act_cate[2],lpo2_22fdx_act_cate[3])
+#remove duplicates
 lpo2_22fdx_act_cate_dedup <- unique(lpo2_22fdx_act_cate_3cols) 
+#re-order col 2 & 3
+lpo2_22fdx_act_cate_dedup <- lpo2_22fdx_act_cate_dedup[ order(lpo2_22fdx_act_cate_dedup[,2], lpo2_22fdx_act_cate_dedup[,3]), ]
 write.csv(x = lpo2_22fdx_act_cate_dedup, file = paste(format(Sys.time(), "%Y%m%d"), "_lpo2_22fdx_act_cate_dedup.csv", sep = "") )
-#do summary
+#do summary table
 sum_count <- rbind( dim(lpo2_22fdx),dim(lpo2_22fdx_act),dim(lpo2_22fdx_act_cate),dim(lpo2_22fdx_act_cate_dedup) )
 #rownames(sum_count) <- c("open_DM","open_Enhance","open_Work","open_Ques","open_Invalid","open_Blank","close_all")
 #colnames(sum_count) <- c("bug (ea)","")
