@@ -21,7 +21,7 @@ lpo2_22fdx_act_cate_dedup <- lpo2_22fdx_act_cate_dedup[ order(lpo2_22fdx_act_cat
 write.csv(x = lpo2_22fdx_act_cate_dedup, file = paste(format(Sys.time(), "%Y%m%d"), "_lpo2_22fdx_act_cate_dedup.csv", sep = "") )
 #do summary table
 sum_count <- rbind( dim(lpo2_22fdx),dim(lpo2_22fdx_act),dim(lpo2_22fdx_act_cate),dim(lpo2_22fdx_act_cate_dedup) )
-#rownames(sum_count) <- c("open_DM","open_Enhance","open_Work","open_Ques","open_Invalid","open_Blank","close_all")
-#colnames(sum_count) <- c("bug (ea)","")
+rownames(sum_count) <- c("LPO_22FDX","LPO_filter1","LPO_filter2","LPO_ans")
+colnames(sum_count) <- c("ea rows","ea columns")
 write.csv(x = sum_count, file = paste(format(Sys.time(), "%Y%m%d"), "_sum_count.csv", sep = "") )
 ###
