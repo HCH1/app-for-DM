@@ -25,3 +25,22 @@ rownames(sum_count) <- c("LPO_22FDX","LPO_filter1","LPO_filter2","LPO_ans")
 colnames(sum_count) <- c("ea rows","ea columns")
 write.csv(x = sum_count, file = paste(format(Sys.time(), "%Y%m%d"), "_sum_count.csv", sep = "") )
 ###
+#install.packages("compare")
+#library(compare)
+sum1 = read.csv("20170215_sum_count.csv", header = TRUE)
+sum11 <- c(sum1)
+#as.vector(sum1)
+#rapply(sum1, c)
+#sum1 <- data.frame(sum1)
+sum2 = read.csv("20170215_sum_count2.csv", header = TRUE)
+sum22 <- c(sum2)
+diff12 <- sum11[!(sum11 %in% sum22)]
+sum1
+sum2
+diff12
+#sum2 <- data.frame(sum2)
+#diff_log <- compare(sum11,sum22,allowAll=TRUE)
+#diff_log
+#diff12 <- all.equal(sum1, sum2)
+#diff2 <- sum22[setdiff(intersect(sum22, sum11)),]
+###
