@@ -24,20 +24,41 @@ sum_count <- rbind( dim(lpo2_22fdx),dim(lpo2_22fdx_act),dim(lpo2_22fdx_act_cate)
 rownames(sum_count) <- c("LPO_22FDX","LPO_filter1","LPO_filter2","LPO_ans")
 colnames(sum_count) <- c("ea rows","ea columns")
 write.csv(x = sum_count, file = paste(format(Sys.time(), "%Y%m%d"), "_sum_count.csv", sep = "") )
-###
-#install.packages("compare")
-#library(compare)
+### 
+#https://cran.r-project.org/web/packages/diffobj/vignettes/diffobj.html
+#install.packages("diffobj")
+#vignette("diffobj", package="diffobj")
 sum1 = read.csv("20170215_sum_count.csv", header = TRUE)
-sum11 <- c(sum1)
+sum2 = read.csv("20170215_sum_count2.csv", header = TRUE)
+diffPrint(target=sum2, current=sum1, color.mode="rgb")
+#
+tt1 = read.csv("tt1.csv", header = TRUE)
+tt2 = read.csv("tt2.csv", header = TRUE)
+diffPrint(target=tt2, current=tt1, color.mode="rgb" )
+#diffPrint(target=tt2, current=tt1, color.mode="rgb", disp.width = 200 )
+#diffStr(target=tt2, current=tt1, color.mode="rgb")
+#
+#sum11 <- c(sum1)
 #as.vector(sum1)
 #rapply(sum1, c)
 #sum1 <- data.frame(sum1)
-sum2 = read.csv("20170215_sum_count2.csv", header = TRUE)
-sum22 <- c(sum2)
-diff12 <- sum11[!(sum11 %in% sum22)]
-sum1
-sum2
-diff12
+#sum22 <- c(sum2)
+#diff12 <- sum22[!(sum22 %in% sum11)]
+#sum11
+#sum22
+#diff12
+### 
+#https://cran.r-project.org/web/packages/diffobj/vignettes/diffobj.html
+#install.packages("diffobj")
+#vignette("diffobj", package="diffobj")
+#library(diffobj)
+#a <- b <- matrix(1:100, ncol=2)
+#a <- a[-20,]
+#b <- b[-45,]
+#b[c(18, 44)] <- 999
+#diffPrint(target=a, current=b)
+#identical(sum11,sum22)
+#all.equal(readLines(20170215_sum_count.csv), readLines(20170215_sum_count2.csv)) 
 #sum2 <- data.frame(sum2)
 #diff_log <- compare(sum11,sum22,allowAll=TRUE)
 #diff_log
