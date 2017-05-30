@@ -5,14 +5,13 @@
 #sum1 = read.csv("22FDSOI_Rev1.2_0.0_DRC03_TEST3_Workingvs22FDSOI_Rev1.2_0.0_DRC02DRCTrack.csv", header = TRUE)
 #sum2 = read.csv("22FDX_Rev1.2_0.0_QA01V3_Workingvs22FDSOI_Rev1.2_0.0_DRC03DRCTrack.csv", header = TRUE)
 #diffPrint(target=sum2, current=sum1, color.mode="rgb")
-#############end
+####################################################end
 #install.packages("zoo")
 #library(zoo)
 diffdm = read.csv("22FDX_Rev1.2_0.0_DRC01Trackv5.csv", header = TRUE)
 diffdm2 <- cbind( diffdm[3], diffdm[7], diffdm[1] )
 diffdm2 <- diffdm2[order(diffdm2[1]), ]
 write.csv(x = diffdm2, file = paste(format(Sys.time(), "%Y%m%d"), "_diffdm2.csv", sep = "") )
-
 #install.packages("gtools")
 #library(gtools)
 diffdm4_uni <- unique(diffdm2[1]) #length(t(diffdm4_uni)) 113
@@ -36,4 +35,4 @@ ans_o1[i] <- a5
 #head(ans_o1)
 ans_o2 <- cbind( diffdm4_uni, ans_o1 )
 write.csv(x = ans_o2, file = paste(format(Sys.time(), "%Y%m%d"), "_rev_hist.csv", sep = "") )
-#############end
+####################################################end
