@@ -1,10 +1,10 @@
 #https://cran.r-project.org/web/packages/diffobj/vignettes/diffobj.html
-#install.packages("diffobj")
-#library(diffobj)
+install.packages("diffobj")
+library(diffobj)
 #vignette("diffobj", package="diffobj")
-#sum1 = read.csv("22FDSOI_Rev1.2_0.0_DRC03_TEST3_Workingvs22FDSOI_Rev1.2_0.0_DRC02DRCTrack.csv", header = TRUE)
-#sum2 = read.csv("22FDX_Rev1.2_0.0_QA01V3_Workingvs22FDSOI_Rev1.2_0.0_DRC03DRCTrack.csv", header = TRUE)
-#diffPrint(target=sum2, current=sum1, color.mode="rgb")
+sum1 = read.csv("22FDSOI_Rev1.2_0.0_DRC03_TEST3_Workingvs22FDSOI_Rev1.2_0.0_DRC02DRCTrack.csv", header = TRUE)
+sum2 = read.csv("22FDX_Rev1.2_0.0_QA01V3_Workingvs22FDSOI_Rev1.2_0.0_DRC03DRCTrack.csv", header = TRUE)
+diffPrint(target=sum2, current=sum1, color.mode="rgb")
 ####################################################end
 #install.packages("zoo")
 #library(zoo)
