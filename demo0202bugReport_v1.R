@@ -1,6 +1,6 @@
 #install.packages("zoo")
 #library(zoo)
-sfbug = read.csv("20170203SFbugs.csv", header = TRUE)
+sfbug = read.csv("20170525bug5.csv", header = TRUE)
 sfbug_col2 <- unique(sfbug[2]) #Product/Technology
 sfbug_col4 <- unique(sfbug[4]) #Status
 sfbug_col5 <- unique(sfbug[5]) #Component
@@ -18,8 +18,10 @@ sfbug_orig <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" | sfbug[2]==
 bug_all <- sfbug[ which( sfbug[2]=="22FDX" | sfbug[2]=="22FDSOI" | sfbug[2]=="22SOI"), ]
 bug_all <- bug_all[bug_all[5]=="Design Manual", ]
 #to filter date region 11/10-1/31
-bug_all <- bug_all[ bug_all[13] >= "2016-11-10", ]
-bug_all <- bug_all[ bug_all[13] <= "2017-01-31", ]
+#bug_all <- bug_all[ bug_all[13] >= "2016-11-10", ]
+#bug_all <- bug_all[ bug_all[13] <= "2017-01-31", ]
+bug_all <- bug_all[ bug_all[13] >= "2017-03-18", ]
+bug_all <- bug_all[ bug_all[13] <= "2017-05-25", ]
 write.csv(x = sfbug_orig, file = paste(format(Sys.time(), "%Y%m%d"), "_sfbug_orig.csv", sep = "") )
 write.csv(x = bug_all, file = paste(format(Sys.time(), "%Y%m%d"), "_bug_all.csv", sep = "") )
 
