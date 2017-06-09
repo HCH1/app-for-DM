@@ -33,8 +33,8 @@ end1v2 <- end1v1-from1v1
 sum1v1 <- sum1v1[ -(1:from1v1) ]
 sum1v1 <- sum1v1[ -(end1v2:length(sum1v1)) ]
 
-write.csv(x = sum2v1, file = paste(format(Sys.time(), "%Y%m%d"), "_sum2v1.csv", sep = "") )
-write.csv(x = sum1v1, file = paste(format(Sys.time(), "%Y%m%d"), "_sum1v1.csv", sep = "") )
+write.csv(x = sum2v1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum2v1.csv", sep = "") )
+write.csv(x = sum1v1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum1v1.csv", sep = "") )
 
 diffPrint(target=sum2v1, current=sum1v1, color.mode="rgb")
 ####################################################end
