@@ -8,10 +8,10 @@ diffPrint(target=sum2, current=sum1, color.mode="rgb")
 ####################################################end
 #install.packages("zoo")
 #library(zoo)
-diffdm = read.csv("22FDX_Rev1.2_0.0_DRC01Trackv5.csv", header = TRUE)
+diffdm = read.csv("22FDX_Rev1.2_0.0_QA02_D3_Workingvs22FDX_Rev1.2_0.0_QA01DRCTrack.csv", header = TRUE)
 diffdm2 <- cbind( diffdm[3], diffdm[7], diffdm[1] )
 diffdm2 <- diffdm2[order(diffdm2[1]), ]
-write.csv(x = diffdm2, file = paste(format(Sys.time(), "%Y%m%d"), "_diffdm2.csv", sep = "") )
+write.csv(x = diffdm2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diffdm2.csv", sep = "") )
 #install.packages("gtools")
 #library(gtools)
 diffdm4_uni <- unique(diffdm2[1]) #length(t(diffdm4_uni)) 113
@@ -34,17 +34,17 @@ ans_o1[i] <- a5
 }
 #head(ans_o1)
 ans_o2 <- cbind( diffdm4_uni, ans_o1 )
-write.csv(x = ans_o2, file = paste(format(Sys.time(), "%Y%m%d"), "_rev_hist.csv", sep = "") )
+write.csv(x = ans_o2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist.csv", sep = "") )
 ##vlookup with _internal.csv
 grule = read.csv("22FDX_Rev1.2_0.0_QA02_D2_internal.csv", header = TRUE)
 #head(grule)
 grule2 <- cbind( unique(grule[8]), unique(grule[10]) )
 colnames(grule2)[1] <- "Section"
 #head(grule2)
-write.csv(x = grule2, file = paste(format(Sys.time(), "%Y%m%d"), "_grule2.csv", sep = "") )
+write.csv(x = grule2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_grule2.csv", sep = "") )
 ans_o3 <- merge(ans_o2, grule2, by = "Section")
 ans_o3 <- ans_o3[order(ans_o3[3]), ]
 #library(dplyr)
 #ans_o3 <- left_join(ans_o2, grule2, by = c("Section"="Table.Title"))
-write.csv(x = ans_o3, file = paste(format(Sys.time(), "%Y%m%d"), "_rev_hist2.csv", sep = "") )
+write.csv(x = ans_o3, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist2.csv", sep = "") )
 ####################################################end
