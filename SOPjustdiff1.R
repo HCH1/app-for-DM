@@ -14,6 +14,7 @@ diffChr(sum1, sum2, color.mode="rgb")
 ############################################################end
 #write.csv(x = sum2v1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum2v1.csv", sep = "") )
 #write.csv(x = sum1v1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum1v1.csv", sep = "") )
+#diffChr(sum1, sum2, mode="sidebyside")
 #diffPrint(target=sum2, current=sum1, color.mode="rgb")
 #ses(sum1, sum2)
 #diffStr(sum1, sum2)
