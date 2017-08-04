@@ -28,9 +28,9 @@ suma$x <- paste( suma$Data.Layer.Name, suma$Layer.No., suma$Data.Type, sep = "|"
 sumav2 <- cbind( suma[5], suma[4] )
 #檢查LPO's ch, Data.Layer.Name	GDS.Number	GDS.Datatype	Layer.Description	Layer.Category	Cadence.Layer.Purpose
 sumb <- sum22
-sumb <- cbind( sumb[1], sumb[2], sumb[3], sumb[5] )
-sumb$x <- paste( sumb$Data.Layer.Name, sumb$GDS.Number, sumb$GDS.Datatype, sep = "|", collapse = NULL )
-sumbv2 <- cbind( sumb[5], sumb[4] )
+sumb <- cbind( sumb[1], sumb[2], sumb[3], sumb[5], sumb[6] )
+sumb$x <- paste( sumb$Data.Layer.Name, sumb$GDS.Number, sumb$GDS.Datatype, sumb$Cadence.Layer.Purpose, sep = "|", collapse = NULL )
+sumbv2 <- cbind( sumb[6], sumb[5] )
 write.csv(x = sumav2, file = "ch2_type_v2.csv")
 write.csv(x = sumbv2, file = "lpo_type_v2.csv")
 diffPrint(sumav2, sumbv2, color.mode="rgb")
@@ -41,9 +41,9 @@ sum3$x <- paste( sum3$Data.Layer.Name, sum3$Layer.No., sum3$Data.Type, sep = "|"
 sum3v2 <- cbind( sum3[5], sum3[4] )
 #檢查LPO's desc, Data.Layer.Name	GDS.Number	GDS.Datatype	Layer.Description	Layer.Category	Cadence.Layer.Purpose
 sum4 <- sum22
-sum4 <- cbind( sum4[1], sum4[2], sum4[3], sum4[4] )
-sum4$x <- paste( sum4$Data.Layer.Name, sum4$GDS.Number, sum4$GDS.Datatype, sep = "|", collapse = NULL )
-sum4v2 <- cbind( sum4[5], sum4[4] )
+sum4 <- cbind( sum4[1], sum4[2], sum4[3], sum4[4], sum4[6] )
+sum4$x <- paste( sum4$Data.Layer.Name, sum4$GDS.Number, sum4$GDS.Datatype, sumb$Cadence.Layer.Purpose, sep = "|", collapse = NULL )
+sum4v2 <- cbind( sum4[6], sum4[5] )
 write.csv(x = sum3v2, file = "ch2_Desc_v2.csv")
 write.csv(x = sum4v2, file = "lpo_Desc_v2.csv")
 diffPrint(sum3v2, sum4v2, color.mode="rgb")
