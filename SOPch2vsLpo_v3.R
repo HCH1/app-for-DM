@@ -3,9 +3,10 @@ lpo = read.csv("LPO-000172.csv", header = TRUE)
 #col2 7 9 17 18 
 #col4 Cadence Layer Purpose 
 #col11 Tech Variant
-lpo2 <- cbind( lpo[2], lpo[17], lpo[18], lpo[9], lpo[7], lpo[4], lpo[11])
-lpo2 <- lpo2[order(lpo2[1]), ]
-write.csv(x = lpo2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo_lite.csv", sep = "") )
+lpo1 <- cbind( lpo[2], lpo[17], lpo[18], lpo[9], lpo[7], lpo[4], lpo[11])
+lpo1 <- lpo1[order(lpo1[1]), ]
+write.csv(x = lpo1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo_lite.csv", sep = "") )
+lpo2 <- lpo1[ which( lpo1[7]=="22FDX"), ]
 #Common Design FEOL	Common Design BEOL	Marker Devices	Marker Voltage	
 #Marker ESD	Marker Floorplan	Marker Metrology	Design SRAM	
 lpo2_feol <- lpo2[ which( lpo2[5]=="Common Design FEOL"), ]
@@ -16,8 +17,8 @@ lpo2_general <- lpo2[ which( lpo2[5]=="Marker Floorplan"), ]
 lpo2_pci <- lpo2[ which( lpo2[5]=="Marker Metrology"), ]
 lpo2_sram <- lpo2[ which( lpo2[5]=="Design SRAM"), ]
 lpo2_fill <- lpo2[ which( lpo2[5]=="Fill"), ]
-lpo2_sum <- lpo2[ which( lpo2[7]=="22FDX"), ]
-lpo_count <- rbind( dim(lpo2_feol),dim(lpo2_beol),dim(lpo2_device),dim(lpo2_esd),dim(lpo2_general),dim(lpo2_pci),dim(lpo2_sram),dim(lpo2_fill),dim(lpo2_sum) )
+#lpo2_sum <- lpo2[ which( lpo2[7]=="22FDX"), ]
+lpo_count <- rbind( dim(lpo2_feol),dim(lpo2_beol),dim(lpo2_device),dim(lpo2_esd),dim(lpo2_general),dim(lpo2_pci),dim(lpo2_sram),dim(lpo2_fill),dim(lpo2) )
 ##
 #輸入ch2
 dm0 = read.csv("22FDXch2p2.csv", header = TRUE)
@@ -68,9 +69,9 @@ write.csv(x = sumbv2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpov2.csv"
 #
 ans1 <- left_join(sumbv2, sumav2, by = "x")
 ans1 <- ans1[order(ans1[7]), ]
-write.csv(x = ans1, file = "ans1.csv")
+write.csv(x = ans1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ans1.csv", sep = "") )
 ans2 <- cbind( ans1[1], ans1[4], ans1[5], ans1[3], ans1[7], ans1[2], ans1[6] )
-write.csv(x = ans2, file = "ans2.csv")
+write.csv(x = ans2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ans2.csv", sep = "") )
 ####################################################end
 ####################################################end
 #diffPrint(sumav2, sumbv2, color.mode="rgb")
