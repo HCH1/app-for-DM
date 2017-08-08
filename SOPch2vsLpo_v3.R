@@ -19,7 +19,8 @@ lpo2_pci <- lpo2[ which( lpo2[5]=="Marker Metrology"), ]
 lpo2_sram <- lpo2[ which( lpo2[5]=="Design SRAM"), ]
 lpo2_fill <- lpo2[ which( lpo2[5]=="Fill"), ]
 #lpo2_sum <- lpo2[ which( lpo2[7]=="22FDX"), ]
-lpo_count <- rbind( dim(lpo2_feol),dim(lpo2_beol),dim(lpo2_device),dim(lpo2_esd),dim(lpo2_general),dim(lpo2_pci),dim(lpo2_sram),dim(lpo2_fill),dim(lpo2), dim(unique(lpo2[1])) )
+lpo_count <- rbind( dim(lpo2_feol),dim(lpo2_beol),dim(lpo2_device),dim(lpo2_esd),dim(lpo2_general),dim(lpo2_pci),dim(lpo2_sram),dim(lpo2_fill),dim(lpo2),dim(unique(lpo2[1])) )
+write.csv(x = lpo2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo_external.csv", sep = "") )
 ##
 #輸入ch2
 dm0 = read.csv("22FDXch2p2.csv", header = TRUE)
@@ -35,8 +36,8 @@ dm0_fill <- dm0[ which( dm0[5]=="Fill"), ]
 dm_count <- rbind( dim(dm0_feol),dim(dm0_beol),dim(dm0_device),dim(dm0_esd),dim(dm0_general),dim(dm0_pci),dim(dm0_sram),dim(dm0_fill),dim(dm0), dim(unique(dm0[1])) )
 #
 sum_count <- cbind( lpo_count[,1], dm_count[,1] )
-rownames(sum_count) <- c("FEOL","BEOL","Device","ESD","General","PCI","SRAM","Fill","sum","unique")
-colnames(sum_count) <- c("LPO","DM")
+rownames(sum_count) <- c("FEOL","BEOL","Device","ESD","General","PCI","SRAM","Fill","sum","name_unique")
+colnames(sum_count) <- c("LPO_external","DM_ch2.2")
 write.csv(x = sum_count, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum_count.csv", sep = "") )
 sum_count
 #
@@ -78,23 +79,5 @@ ans1 <- unique(ans1)
 write.csv(x = ans1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ans1.csv", sep = "") )
 ans2 <- cbind( ans1[1], ans1[4], ans1[5], ans1[3], ans1[7], ans1[2], ans1[6] )
 write.csv(x = ans2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ans2.csv", sep = "") )
-####################################################end
-####################################################end
-#diffPrint(sumav2, sumbv2, color.mode="rgb")
-#??????DM's desc, Data.Layer.Name	Layer.No.	Data.Type	Description	ch
-#sum3 <- sum1
-#sum3 <- cbind( sum3[1], sum3[2], sum3[3], sum3[4] )
-#sum3$x <- paste( sum3$Data.Layer.Name, sum3$Layer.No., sum3$Data.Type, sep = "|", collapse = NULL )
-#sum3v2 <- cbind( sum3[5], sum3[4] )
-#??????LPO's desc, Data.Layer.Name	GDS.Number	GDS.Datatype	Layer.Description	Layer.Category	Cadence.Layer.Purpose
-#sum4 <- sum22
-#sum4 <- cbind( sum4[1], sum4[2], sum4[3], sum4[4], sum4[6] )
-#sum4$x <- paste( sum4$Data.Layer.Name, sum4$GDS.Number, sum4$GDS.Datatype, sumb$Cadence.Layer.Purpose, sep = "|", collapse = NULL )
-#sum4v2 <- cbind( sum4[6], sum4[5] )
-#write.csv(x = sum3v2, file = "ch2_Desc_v2.csv")
-#write.csv(x = sum4v2, file = "lpo_Desc_v2.csv")
-#diffPrint(sum3v2, sum4v2, color.mode="rgb")
-#diffChr(sum1v2, sum22v2, color.mode="rgb")
-#diffCsv(target="ch2v22.csv", current="lpov22.csv", color.mode="rgb")
 ####################################################end
 ####################################################end
