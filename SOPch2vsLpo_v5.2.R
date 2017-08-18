@@ -7,29 +7,29 @@ dm = read.csv("22FDXch2p2.csv", header = TRUE)
 dm1 <- dm
 dm1$x <- paste( dm1$CAD.Levels, dm1$Layer.No, dm1$Data.Type, sep = "|", collapse = NULL )
 #lpo1_col7 <- unique( lpo1[7] )
-#?????????????????????external
+#filter as external with all category
 lpo2 <- lpo1[ which( lpo1[6]=="Active" ), ]
 lpo2 <- lpo2[ which( lpo2[11]=="22FDX" ), ]
-#????????????LPO??????????????????ch2p2?????????rows
+#filter as external follow DMch2p2's category
 lpo22 <- lpo2[ which( lpo2[7]=="Common Design FEOL" | lpo2[7]=="Common Design BEOL" 
                      | lpo2[7]=="Marker Devices" | lpo2[7]=="Marker Voltage"
                      | lpo2[7]=="Marker ESD" | lpo2[7]=="Marker Floorplan"
                      | lpo2[7]=="Marker Metrology"
                      | lpo2[7]=="Design SRAM" | lpo2[7]=="Fill"), ]
-#LPO & DMch2p2?????? ??????LPO????????????????????????
+#filter LPO by rows_DMch2p2
 lpo1_dm1 <- merge( lpo1, unique( dm1[6] ) )
 write.csv(x = lpo1_dm1, file = paste(format(Sys.time(), "%Y%m%d_%H"), 
                                      "_lpo1_dm1.csv", sep = "") )
-#??? ?????? & LPO??????rows row?????? ???????????????
+#combine rows  
 lpo3_dm_and_filter <- rbind(lpo1_dm1, lpo22)
 lpo3_dm_and_filter_uni <- unique(lpo3_dm_and_filter)
-#?????????rows ??? DMch2p2 ??????col?????? 
+#vlookup/expand cols
 #library(dplyr)
 lpo3_dm_and_filter_uni2 <- left_join(lpo3_dm_and_filter_uni, dm1, by = "x")
 lpo3_dm_and_filter_uni2 <- lpo3_dm_and_filter_uni2[order(lpo3_dm_and_filter_uni2[43]), ]
 write.csv(x = lpo3_dm_and_filter_uni2, file = paste(format(Sys.time(), "%Y%m%d_%H"), 
                                                    "_lpo3_dm_and_filter_uni2.csv", sep = "") )
-#
+#do counts_report
 #Common Design FEOL	Common Design BEOL	Marker Devices	Marker Voltage	
 #Marker ESD	Marker Floorplan	Marker Metrology	Design SRAM	
 lpo2_feol <- lpo2[ which( lpo2[7]=="Common Design FEOL"), ]
@@ -58,7 +58,7 @@ sum_dm0 <- rbind( dm0_feol,dm0_beol,dm0_device,dm0_esd,dm0_general,dm0_pci,dm0_s
 dm_count <- rbind( dim(dm0_feol),dim(dm0_beol),dim(dm0_device),dim(dm0_esd),
                    dim(dm0_general),dim(dm0_pci),dim(dm0_sram),dim(dm0_fill),
                    dim(sum_dm0),dim(dm1),dim(unique(dm1[1])) )
-#
+#renamed
 sum_count <- cbind( lpo_count[,1], dm_count[,1] )
 rownames(sum_count) <- c("FEOL","BEOL","Device","ESD","General","PCI","SRAM","Fill",
                          "sum_above","database_dim","name_unique")
