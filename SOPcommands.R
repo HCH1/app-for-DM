@@ -90,6 +90,9 @@ o1 <- melt(i1, id.vars = "Structure")
 write.csv(x = o1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_melt_DTT.csv", sep = "") )
 #Plot
 pie(sum_count[,1])
+#creat Matix
+iter <- 10
+out <- matrix(NA, nrow=iter, ncol=3)
 ####################################################end
 ####################################################end
 ####################################################end
