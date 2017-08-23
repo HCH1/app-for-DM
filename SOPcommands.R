@@ -57,6 +57,7 @@ sum_count <- cbind( lpo_count[,1], dm_count[,1] )
 rownames(sum_count) <- c("FEOL","BEOL","Device","ESD","General","PCI","SRAM","Fill",
                          "database_dim","name_unique")
 colnames(sum_count) <- c("LPO_external","DM_ch2.2")
+colnames(f1) <- colnames(f2)
 #read txt
 sum2 = readLines("0524dita1.txt", warn = FALSE)
 sum1 = readLines("0522dita1.txt", warn = FALSE)
