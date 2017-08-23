@@ -21,15 +21,10 @@ lpo2_22fdx_act_cate_dedup <- lpo2_22fdx_act_cate_dedup[ order(lpo2_22fdx_act_cat
 #remove last row
 lpo2_22fdx_act_cate_dedup <- lpo2_22fdx_act_cate_dedup[-dim(lpo2_22fdx_act_cate_dedup)[1],]
 #will rbind c("Customer_Reserved_layers", "2000-2300", "0-9999")
-#demo
-#A = matrix( c(2, 4, 3, 1, 5, 7), nrow=2, ncol=3, byrow = TRUE)
-#newrow1 <- c("customer","request","999")
-#A2 <- rbind(A, newrow1)
-#
-last_row <- c("Customer_Reserved_layers","2000-2300","0-9999")
-#df2 <- as.data.frame(lpo2_22fdx_act_cate_dedup, stringsAsFactors = FALSE)
-df2 <- rbind(lpo2_22fdx_act_cate_dedup, last_row)
-write.csv(x = lpo2_22fdx_act_cate_dedup, file = paste(format(Sys.time(), "%Y%m%d"), "_lpo2_22fdx_ans.csv", sep = "") )
+last_row <- matrix(c("Customer_Reserved_layers", "2000-2300", "0-9999"), nrow = 1)
+colnames(last_row) <- colnames(lpo2_22fdx_act_cate_dedup)
+allowlayer1 <- rbind(lpo2_22fdx_act_cate_dedup, last_row)
+write.csv(x = allowlayer1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_allow_layer_ans.csv", sep = "") )
 #do summary table
 sum_count <- rbind( dim(lpo2_22fdx),dim(lpo2_22fdx_act),dim(lpo2_22fdx_act_cate),dim(lpo2_22fdx_act_cate_dedup) )
 rownames(sum_count) <- c("LPO_22FDX","LPO_filter1","LPO_filter2","LPO_ans")
