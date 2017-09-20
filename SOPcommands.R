@@ -21,8 +21,8 @@ lpo22 <- lpo2[ which( lpo2[7]=="Common Design FEOL" | lpo2[7]=="Common Design BE
                      | lpo2[7]=="Design SRAM" | lpo2[7]=="Fill"), ]
 #do OR_filter
 lpo1_dm1 <- merge( lpo1, unique( dm1[6] ) )
-#save
-write.csv(x = lpo1_dm1, file = paste(format(Sys.time(), "%Y%m%d_%H"), 
+#save without col_id
+write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), 
                                      "_lpo1_dm1.csv", sep = "") )
 #AND_rows
 lpo3_dm_and_filter <- rbind(lpo1_dm1, lpo22)
