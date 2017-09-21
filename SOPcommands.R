@@ -68,6 +68,8 @@ colnames(f1) <- colnames(f2)
 #read txt
 sum2 = readLines("0524dita1.txt", warn = FALSE)
 sum1 = readLines("0522dita1.txt", warn = FALSE)
+#read csv -> rows
+llpo = read.table("LPO-000202.csv")
 #reduce dim
 length(sum2)
 length(sum1)
@@ -81,6 +83,7 @@ sum2 <- gsub("<title", "\n<title", sum2)
 sum1 <- gsub("<entry", "\n<entry", sum1)
 sum1 <- gsub("<title", "\n<title", sum1)
 #grep keywords
+llpo2 <- grep("[!]|[#]|[$]|[%]|[&]|[+]|[=]", llpo, value = TRUE)
 sum2v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum2, value = TRUE) #grep /entry & /title & _-fn#
 sum1v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum1, value = TRUE) #grep /entry & /title & _-fn#
 #do diff
