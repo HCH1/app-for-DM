@@ -69,7 +69,7 @@ colnames(f1) <- colnames(f2)
 sum2 = readLines("0524dita1.txt", warn = FALSE)
 sum1 = readLines("0522dita1.txt", warn = FALSE)
 #read csv -> rows
-llpo = read.table("LPO-000202.csv")
+lpo = readLines("LPO-000202.csv", warn = FALSE)
 #reduce dim
 length(sum2)
 length(sum1)
