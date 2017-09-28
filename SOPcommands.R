@@ -121,10 +121,9 @@ o222t_vec_1 <- as.vector(t(o222_1))
 #keep non-duplicated
 o222t_vec_uni_1 <- o222t_vec_1[!duplicated(o222t_vec_1)]
 o222t_vec_uni_1 <- paste( t(o222t_vec_uni_1), collapse=" " )
-#
+#{A} touching {B} is prohibited.
 ans1[i] <- paste( "{", o222t_vec_uni_1, "}","touching", "{", o222t_vec_uni, "} is prohibited.", collapse=" " )
 }
-#A touching {B} is prohibited.
 write.csv(x = ans1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DTT_1_touching_0_prohibited.csv", sep = "") )
 #re-read matrix for order
 ans22 = read.csv(file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DTT_1_touching_0_prohibited_v2.csv", sep = ""), header = TRUE)
