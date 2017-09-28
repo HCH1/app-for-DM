@@ -110,9 +110,7 @@ pie(sum_count[,1])
 #creat Matix
 iter <- 10
 out <- matrix(NA, nrow=iter, ncol=3)
-##creat dummy matrix; 
-ans1 <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
-##template to solve rev_hist or tree_structure
+###Template to solve rev_hist or tree_structure
 col_a <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
 col_b <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
 col_d1 <- matrix( "{ ", nrow=dim(o2_col1_uni)[1], ncol=1 )
