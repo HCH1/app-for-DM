@@ -112,23 +112,36 @@ iter <- 10
 out <- matrix(NA, nrow=iter, ncol=3)
 ##creat dummy matrix; 
 ans1 <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
-##for loop to solve rev_hist or tree_structure
+##template to solve rev_hist or tree_structure
+col_a <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
+col_b <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
+col_d1 <- matrix( "{ ", nrow=dim(o2_col1_uni)[1], ncol=1 )
+col_d2 <- matrix( " }", nrow=dim(o2_col1_uni)[1], ncol=1 )
+col_d3 <- matrix( " touching ", nrow=dim(o2_col1_uni)[1], ncol=1 )
+col_d4 <- matrix( " } is prohibited.", nrow=dim(o2_col1_uni)[1], ncol=1 )
+#
 for ( i in 1:dim(o2_col1_uni)[1] ){
-#filter val = 1
+#val = 1
 o222_1 <- o22_1[o22_1[1]==paste( o2_col1_uni[i,],collapse=" " ), ]
-#matrix -> character
-o222t_vec_1 <- as.vector(t(o222_1))
-#keep non-duplicated
-o222t_vec_uni_1 <- o222t_vec_1[!duplicated(o222t_vec_1)]
-o222t_vec_uni_1 <- paste( t(o222t_vec_uni_1), collapse=" " )
-#{A} touching {B} is prohibited.
-ans1[i] <- paste( "{", o222t_vec_uni_1, "}","touching", "{", o222t_vec_uni, "} is prohibited.", collapse=" " )
+o222_1_col1 <- o222_1
+o222_1_col1 <- o222_1_col1[-1]
+o222t_vec_1_col1 <- as.vector(t(o222_1_col1))
+o222t_vec_uni_1_col1 <- o222t_vec_1_col1[!duplicated(o222t_vec_1_col1)]
+o222t_vec_uni_1_col1 <- paste( t(o222t_vec_uni_1_col1), collapse=" " )
+#val = 0
+o222 <- o22[o22[1]==paste( o2_col1_uni[i,],collapse=" " ), ]
+o222 <- o222[-1]
+o222t_vec <- as.vector(t(o222))
+o222t_vec_uni <- o222t_vec[!duplicated(o222t_vec)]
+o222t_vec_uni <- paste( t(o222t_vec_uni), collapse=" " )
+#
+col_a[i] <- o222t_vec_uni_1_col1
+col_b[i] <- o222t_vec_uni
 }
-write.csv(x = ans1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DTT_1_touching_0_prohibited.csv", sep = "") )
-#re-read matrix for order
-ans22 = read.csv(file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DTT_1_touching_0_prohibited_v2.csv", sep = ""), header = TRUE)
-ans22 <- ans22[-1]
-ans22 <- ans22[order(ans22[1]), ]
+#{A1}{A2} touching {B} is prohibited.
+ans3lite <- cbind(o2_col1_uni, col_a, col_b)
+ans3 <- cbind(col_d1, o2_col1_uni, col_d2, col_d1, col_a, col_d2, col_d3, col_d1, col_b, col_d2, col_d4)
+colnames(ans3lite) <- c("Structure","val=1","val=0")
 ####################################################end
 ####################################################end
 ####################################################end
