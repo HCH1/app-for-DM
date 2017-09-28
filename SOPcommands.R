@@ -1,4 +1,10 @@
-#auto-update R
+#http://dbarneche.github.io/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html
+typeof() # what is it?
+class() # what is it? (sorry)
+#
+#R also has many data structures. These include:
+#vector list matrix data_frame factors tables
+##auto-update R
 # installing/loading the package:
 if(!require(installr)) { install.packages("installr"); require(installr)} #load / install+load installr
 # step by step functions:
@@ -104,6 +110,27 @@ pie(sum_count[,1])
 #creat Matix
 iter <- 10
 out <- matrix(NA, nrow=iter, ncol=3)
+##creat dummy matrix; 
+ans1 <- matrix( NA, nrow=dim(o2_col1_uni)[1], ncol=1 ) #create dummy n*1
+##for loop to solve rev_hist or tree_structure
+for ( i in 1:dim(o2_col1_uni)[1] ){
+#filter val = 1
+o222_1 <- o22_1[o22_1[1]==paste( o2_col1_uni[i,],collapse=" " ), ]
+#matrix -> character
+o222t_vec_1 <- as.vector(t(o222_1))
+#keep non-duplicated
+o222t_vec_uni_1 <- o222t_vec_1[!duplicated(o222t_vec_1)]
+o222t_vec_uni_1 <- paste( t(o222t_vec_uni_1), collapse=" " )
+#
+ans1[i] <- paste( "{", o222t_vec_uni_1, "}","touching", "{", o222t_vec_uni, "} is prohibited.", collapse=" " )
+}
+#A touching {B} is prohibited.
+write.csv(x = ans1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DTT_1_touching_0_prohibited.csv", sep = "") )
+#re-read matrix for order
+ans22 = read.csv(file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DTT_1_touching_0_prohibited_v2.csv", sep = ""), header = TRUE)
+ans22 <- ans22[-1]
+ans22 <- ans22[order(ans22[1]), ]
+####################################################end
 ####################################################end
 ####################################################end
 ####################################################end
