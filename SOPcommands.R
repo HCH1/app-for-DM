@@ -140,6 +140,11 @@ col_b[i] <- o222t_vec_uni
 ans3lite <- cbind(o2_col1_uni, col_a, col_b)
 ans3 <- cbind(col_d1, o2_col1_uni, col_d2, col_d1, col_a, col_d2, col_d3, col_d1, col_b, col_d2, col_d4)
 colnames(ans3lite) <- c("Structure","val=1","val=0")
+#use as.character in for loop
+for ( i in 1:dim(o2_1_uni2)[1] ){
+o2_1_uni4 <- o2_1_uni[ which( o2_1_uni[2]==as.character( o2_1_uni2[i,1] ) ), ]
+col_aa[i] <- dim(o2_1_uni4[1])
+}
 ####################################################end
 ####################################################end
 ####################################################end
