@@ -30,6 +30,8 @@ lpo1_dm1 <- merge( lpo1, unique( dm1[6] ) )
 #save without col_id
 write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), 
                                      "_lpo1_dm1.csv", sep = "") )
+#save as txt
+write.table(x = drc1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_drc1.txt", sep = "") )
 #AND_rows
 lpo3_dm_and_filter <- rbind(lpo1_dm1, lpo22)
 #deduplicate
@@ -92,6 +94,8 @@ gsub('^.*This\\s*|\\s*first.*$', '', x)
 llpo2 <- grep("[!]|[#]|[$]|[%]|[&]|[+]|[=]", llpo, value = TRUE)
 sum2v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum2, value = TRUE) #grep /entry & /title & _-fn#
 sum1v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum1, value = TRUE) #grep /entry & /title & _-fn#
+#grep invert
+ddrc1 <- grep("space", drc1, value = TRUE, invert = TRUE)
 #do diff
 install.packages("diffobj")
 library(diffobj)
