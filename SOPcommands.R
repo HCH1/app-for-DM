@@ -83,11 +83,11 @@ sum2 <- sum2[ -(1:length(sum2)*0.95) ]
 sum1 <- sum1[ -(1:length(sum1)*0.95) ]
 length(sum2)
 length(sum1)
-#grep bwtween
+#search then replace
 sum2 <- gsub("<entry", "\n<entry", sum2)
 sum2 <- gsub("<title", "\n<title", sum2)
-sum1 <- gsub("<entry", "\n<entry", sum1)
-sum1 <- gsub("<title", "\n<title", sum1)
+#mulit-search then replace
+gsub('^.*This\\s*|\\s*first.*$', '', x)
 #grep keywords
 llpo2 <- grep("[!]|[#]|[$]|[%]|[&]|[+]|[=]", llpo, value = TRUE)
 sum2v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum2, value = TRUE) #grep /entry & /title & _-fn#
