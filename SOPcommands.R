@@ -1,9 +1,3 @@
-#http://dbarneche.github.io/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html
-typeof() # what is it?
-class() # what is it? (sorry)
-#
-#R also has many data structures. These include:
-#vector list matrix data_frame factors tables
 ##auto-update R
 # installing/loading the package:
 if(!require(installr)) { install.packages("installr"); require(installr)} #load / install+load installr
@@ -11,10 +5,27 @@ if(!require(installr)) { install.packages("installr"); require(installr)} #load 
 check.for.updates.R() # tells you if there is a new version of R or not.
 install.R() # download and run the latest R installer
 copy.packages.between.libraries() # copy your packages to the newest R installation from the one version before it (if ask=T, it will ask you between which two versions to perform the copying)
+
+#http://dbarneche.github.io/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html
+#R also has many data structures. These include: vector list matrix data_frame factors tables
+class()
+dim() 
+length()
+head()
+as.data.frame()
+as.character()
 #read
 lpo = read.csv("LPO-000172.csv", header = TRUE)
+drc = readLines("merge22fdx1004.txt", warn = FALSE)
+#read csv -> rows
+lpo = readLines("LPO-000202.csv", warn = FALSE)
 #keep original read
 lpo1 <- lpo
+#save without col_id by date
+write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo1_dm1.csv", sep = "") )
+#save as txt
+write.table(x = drc1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_drc1.txt", sep = "") )
+
 #create new col
 lpo1$x <- paste( lpo1$Data.Layer.Name, lpo1$GDS.Number, lpo1$GDS.Datatype, sep = "|", collapse = NULL )
 #do filter
@@ -27,11 +38,6 @@ lpo22 <- lpo2[ which( lpo2[7]=="Common Design FEOL" | lpo2[7]=="Common Design BE
                      | lpo2[7]=="Design SRAM" | lpo2[7]=="Fill"), ]
 #do OR_filter
 lpo1_dm1 <- merge( lpo1, unique( dm1[6] ) )
-#save without col_id
-write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-                                     "_lpo1_dm1.csv", sep = "") )
-#save as txt
-write.table(x = drc1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_drc1.txt", sep = "") )
 #AND_rows
 lpo3_dm_and_filter <- rbind(lpo1_dm1, lpo22)
 #deduplicate
@@ -73,11 +79,6 @@ rownames(sum_count) <- c("FEOL","BEOL","Device","ESD","General","PCI","SRAM","Fi
                          "database_dim","name_unique")
 colnames(sum_count) <- c("LPO_external","DM_ch2.2")
 colnames(f1) <- colnames(f2)
-#read txt
-sum2 = readLines("0524dita1.txt", warn = FALSE)
-sum1 = readLines("0522dita1.txt", warn = FALSE)
-#read csv -> rows
-lpo = readLines("LPO-000202.csv", warn = FALSE)
 #reduce dim
 length(sum2)
 length(sum1)
@@ -85,17 +86,21 @@ sum2 <- sum2[ -(1:length(sum2)*0.95) ]
 sum1 <- sum1[ -(1:length(sum1)*0.95) ]
 length(sum2)
 length(sum1)
+
 #search then replace
 sum2 <- gsub("<entry", "\n<entry", sum2)
 sum2 <- gsub("<title", "\n<title", sum2)
 #mulit-search then replace
 gsub('^.*This\\s*|\\s*first.*$', '', x)
+#replace lower a-z, lead \\s, end \\s 
+ddrc3 <- gsub("\\s[a-z]+|^[ ]+|[@]\\s|[ ]+$|[.]$", "", ddrc1v1)
 #grep keywords
 llpo2 <- grep("[!]|[#]|[$]|[%]|[&]|[+]|[=]", llpo, value = TRUE)
 sum2v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum2, value = TRUE) #grep /entry & /title & _-fn#
 sum1v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum1, value = TRUE) #grep /entry & /title & _-fn#
-#grep invert
+#grep invert = TRUE
 ddrc1 <- grep("space", drc1, value = TRUE, invert = TRUE)
+
 #do diff
 install.packages("diffobj")
 library(diffobj)
@@ -149,6 +154,12 @@ for ( i in 1:dim(o2_1_uni2)[1] ){
 o2_1_uni4 <- o2_1_uni[ which( o2_1_uni[2]==as.character( o2_1_uni2[i,1] ) ), ]
 col_aa[i] <- dim(o2_1_uni4[1])
 }
+
+#insdie dataframe is factor -> character -> list -> character
+split12 <- unlist( strsplit( as.character(ans3lite_order[1,2]), '\\s' ) )
+#intersect( split12,split22 )
+#intersect multi character
+Reduce(intersect, list(split12,split22,split32,split42))
 ####################################################end
 ####################################################end
 ####################################################end
