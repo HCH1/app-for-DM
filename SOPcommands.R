@@ -8,6 +8,10 @@ copy.packages.between.libraries() # copy your packages to the newest R installat
 
 #http://dbarneche.github.io/2014-12-11-ufsc/lessons/01-intro_r/data-structures.html
 #R also has many data structures. These include: vector list matrix data_frame factors tables
+dir()
+getwd()
+setwd('c://file/path')
+version
 class()
 dim() 
 length()
