@@ -136,8 +136,10 @@ for ( i in 1:dim(o2_col1_uni)[1] ){
 o222_1 <- o22_1[o22_1[1]==paste( o2_col1_uni[i,],collapse=" " ), ]
 o222_1_col1 <- o222_1
 o222_1_col1 <- o222_1_col1[-1]
+#col -> row, then convert to chara
 o222t_vec_1_col1 <- as.vector(t(o222_1_col1))
 o222t_vec_uni_1_col1 <- o222t_vec_1_col1[!duplicated(o222t_vec_1_col1)]
+#merge chara into 1 chara
 o222t_vec_uni_1_col1 <- paste( t(o222t_vec_uni_1_col1), collapse=" " )
 #val = 0
 o222 <- o22[o22[1]==paste( o2_col1_uni[i,],collapse=" " ), ]
@@ -164,6 +166,14 @@ split12 <- unlist( strsplit( as.character(ans3lite_order[1,2]), '\\s' ) )
 #intersect( split12,split22 )
 #intersect multi character
 Reduce(intersect, list(split12,split22,split32,split42))
+
+#col -> row, then convert to chara
+ans3lite_order_col2vec <- as.vector( t(ans3lite_order[2]) )
+#merge chara into 1 chara
+ans3lite_order_col2vec_uni_t <- paste( t(ans3lite_order_col2vec), collapse=" " )
+#split 1 chara into multi chara, then convert to dataframe
+ans3lite_order_col2vec_uni_t_sp <- strsplit(ans3lite_order_col2vec_uni_t, '\\s')
+ans3lite_order_col2vec_uni_t_sp_df <- as.data.frame(ans3lite_order_col2vec_uni_t_sp)
 ####################################################end
 ####################################################end
 ####################################################end
