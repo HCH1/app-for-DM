@@ -13,6 +13,7 @@ dtt_c1_lite <- dtt_c1[-c(1:99), -c(1:99)]
 #corrplot(dtt_c1, method="color", tl.col="black", type="upper", tl.cex = 0.5 , order = "alphabet") #Text label color and rotation
 #https://www.rdocumentation.org/packages/corrplot/versions/0.2-0/topics/corrplot
 corrplot(dtt_c1, method="color", tl.col="black", tl.cex = 0.3 , order = "hclust") #Text label color and rotation
+corrplot(dtt_c1, method="color", tl.col="black", tl.cex = 0.3 , order = "alphabet") #Text label color and rotation
 #head(round(dtt_c1,2))
 #corrplot(dtt_c1, method="circle")
 #fast reduce last rows/cols
