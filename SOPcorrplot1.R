@@ -9,7 +9,10 @@ dtt_c1 <- cor(i2)
 #dtt_c3 <- dtt_c2[ order(colnames(dtt_c2)), ]
 write.csv(x = dtt_c1, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_dtt_c1.csv", sep = "") )
 dtt_c1_lite <- dtt_c1[-c(1:99), -c(1:99)]
-corrplot(dtt_c1_lite, method="color")
+#corrplot(dtt_c1_lite, method="color")
+#corrplot(dtt_c1, method="color", tl.col="black", type="upper", tl.cex = 0.5 , order = "alphabet") #Text label color and rotation
+#https://www.rdocumentation.org/packages/corrplot/versions/0.2-0/topics/corrplot
+corrplot(dtt_c1, method="color", tl.col="black", tl.cex = 0.3 , order = "hclust") #Text label color and rotation
 #head(round(dtt_c1,2))
 #corrplot(dtt_c1, method="circle")
 #fast reduce last rows/cols
