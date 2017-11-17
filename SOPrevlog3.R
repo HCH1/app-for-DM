@@ -2,14 +2,18 @@
 install.packages("diffobj")
 library(diffobj)
 #vignette("diffobj", package="diffobj")
-sum1 = read.csv("22FDSOI_Rev1.2_0.0_DRC03_TEST3_Workingvs22FDSOI_Rev1.2_0.0_DRC02DRCTrack.csv", header = TRUE)
+sum1 = read.csv("22FDX_Rev1.3_0.0_QA02_D1_Workingvs22FDX_Rev1.3_0.0_QA01DRCTrack1.csv", header = TRUE)
 sum2 = read.csv("22FDX_Rev1.2_0.0_QA01V3_Workingvs22FDSOI_Rev1.2_0.0_DRC03DRCTrack.csv", header = TRUE)
 diffPrint(target=sum2, current=sum1, color.mode="rgb")
 ####################################################end
+####################################################end
+####################################################end
+####################################################end
 #install.packages("zoo")
 #library(zoo)
-diffdm = read.csv("22FDX_Rev1.2_0.0_QA02_D3_Workingvs22FDX_Rev1.2_0.0_QA01DRCTrack.csv", header = TRUE)
-diffdm2 <- cbind( diffdm[3], diffdm[7], diffdm[1] )
+diffdm = read.csv("28LPQ-RF_Rev1.0_6.0_DRC01D1vs28LPQ-RF_Rev1.0_5.0_20171027DRCTrack.csv", header = TRUE)
+diffdm1 <- cbind( diffdm[3], diffdm[7], diffdm[1] )
+diffdm2 <- diffdm1[ which( diffdm1[2]=="Added"|diffdm1[2]=="Removed"|diffdm1[2]=="Modified"), ]
 diffdm2 <- diffdm2[order(diffdm2[1]), ]
 write.csv(x = diffdm2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diffdm2.csv", sep = "") )
 #install.packages("gtools")
@@ -36,7 +40,7 @@ ans_o1[i] <- a5
 ans_o2 <- cbind( diffdm4_uni, ans_o1 )
 write.csv(x = ans_o2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist.csv", sep = "") )
 ##vlookup with _internal.csv
-grule = read.csv("22FDX_Rev1.2_0.0_QA02_D2_internal.csv", header = TRUE)
+grule = read.csv("22FDX_Rev1.3_0.0_DRC02_internal.csv", header = TRUE)
 #head(grule)
 grule2 <- cbind( unique(grule[8]), unique(grule[10]) )
 colnames(grule2)[1] <- "Section"
@@ -47,4 +51,7 @@ ans_o3 <- ans_o3[order(ans_o3[3]), ]
 #library(dplyr)
 #ans_o3 <- left_join(ans_o2, grule2, by = c("Section"="Table.Title"))
 write.csv(x = ans_o3, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist2.csv", sep = "") )
+####################################################end
+####################################################end
+####################################################end
 ####################################################end
