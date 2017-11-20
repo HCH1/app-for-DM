@@ -36,21 +36,5 @@ ans_o1[i] <- a5
 ans_o2 <- cbind( diffdm4_uni, ans_o1 )
 write.csv(x = ans_o2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist.csv", sep = "") )
 ans_o2
-##vlookup with _internal.csv
-#grule = read.csv("22FDX_Rev1.3_0.0_DRC02_internal.csv", header = TRUE)
-#head(grule)
-#grule2 <- cbind( unique(grule[8]), unique(grule[10]) )
-#colnames(grule2)[1] <- "Section"
-#head(grule2)
-#write.csv(x = grule2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_grule2.csv", sep = "") )
-#ans_o3 <- merge(ans_o2, grule2, by = "Section")
-#ans_o3 <- ans_o3[order(ans_o3[3]), ]
-#library(dplyr)
-#ans_o3 <- left_join(ans_o2, grule2, by = c("Section"="Table.Title"))
-#write.csv(x = ans_o3, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist2.csv", sep = "") )
-#ans_o3
-####################################################end
-####################################################end
-####################################################end
-####################################################end
+})
 }
