@@ -19,11 +19,11 @@ a3 <- diffdm2[diffdm2[1]==paste( diffdm4_uni[i,],collapse=" " ), ]
 #due to we want to merge them
 a4 <- cbind( a3[2], a3[3] ) #n*2 matrix
 a4t <- as.matrix( t(a4) ) #2*n matrix
-a4t <- as.vector(a4t) #convert to 2 lines (~ 2*1)
-#due to repeat "Added or Removed or Modified", so need to do de-duplicated in this vector
-a4t <- a4t[!duplicated(a4t)]
-#lines -> character
-a5 <- paste( t(a4t),collapse=" " )
+a4tv <- as.vector(a4t) #convert to line
+#due to repeat "Added or Removed or Modified", so need to do de-duplicated this vector
+a4t_v_d <- a4tv[!duplicated(a4tv)]
+#lines -> character (~ 1*1)
+a5 <- paste( t(a4t_v_d),collapse=" " )
 #save to i-th row
 ans_o1[i] <- a5
 }
