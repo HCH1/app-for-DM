@@ -104,7 +104,12 @@ sum2v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum2, value = TRUE) #grep /ent
 sum1v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum1, value = TRUE) #grep /entry & /title & _-fn#
 #grep invert = TRUE
 ddrc1 <- grep("space", drc1, value = TRUE, invert = TRUE)
-
+#grep 2K patterns
+gr_col2_vcr1 <- gr_col2_vcr[1:2000]
+ptn11 <- paste(gr_col2_vcr1, collapse="|") #"A|B|C"
+dm11 <- grep(ptn11, dm1, value = TRUE, invert = TRUE) # patterns max 2K ea
+#intersect vectors
+dm6 <- intersect( intersect(dm11,dm22), dm33 )
 #do diff
 install.packages("diffobj")
 library(diffobj)
