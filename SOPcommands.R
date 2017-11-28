@@ -18,6 +18,12 @@ length()
 head()
 as.data.frame()
 as.character()
+#Deploying applications
+#http://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications
+rsconnect::setAccountInfo(name="<ACCOUNT>", token="<TOKEN>", secret="<SECRET>")
+shiny::runApp()
+library(rsconnect)
+deployApp()
 #read
 lpo = read.csv("LPO-000172.csv", header = TRUE)
 drc = readLines("merge22fdx1004.txt", warn = FALSE)
