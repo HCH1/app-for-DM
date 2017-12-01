@@ -231,6 +231,8 @@ library(SnowballC)
 library(wordcloud)
 in1 = read.csv("22FDX_Rev1.4_0.0_PRE01_internal.csv", header = TRUE)
 in11a <- unlist( strsplit( as.character( in1[,4] ), '\\s' ) ) #data.frame -> character
+#in1 = readLines("22FDX_Rev1.4_0.0_PRE01 - Copy.txt", warn = FALSE)
+#in11a <- unlist( strsplit( as.character( in1 ), '\\s' ) ) #data.frame -> character
 class(in11a) #"character"
 in11 <- in11a
 ptn0 <- "[(]|[)]|[[]|[]]|[{]|[}]|[>]|[<]|[=]|[+]|[-]|[/]|[%]|[:]|[;]|[,]|[.]$" #replace punctuation
