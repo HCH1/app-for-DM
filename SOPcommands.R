@@ -171,13 +171,13 @@ for ( i in 1:dim(o2_1_uni2)[1] ){
 o2_1_uni4 <- o2_1_uni[ which( o2_1_uni[2]==as.character( o2_1_uni2[i,1] ) ), ]
 col_aa[i] <- dim(o2_1_uni4[1])
 }
-
+####################################################end
 #insdie dataframe is factor -> character -> list -> character
 split12 <- unlist( strsplit( as.character(ans3lite_order[1,2]), '\\s' ) )
 #intersect( split12,split22 )
 #intersect multi character
 Reduce(intersect, list(split12,split22,split32,split42))
-
+####################################################end
 #col -> row, then convert to chara
 ans3lite_order_col2vec <- as.vector( t(ans3lite_order[2]) )
 #merge chara into 1 chara
@@ -186,6 +186,20 @@ ans3lite_order_col2vec_uni_t <- paste( t(ans3lite_order_col2vec), collapse=" " )
 ans3lite_order_col2vec_uni_t_sp <- strsplit(ans3lite_order_col2vec_uni_t, '\\s')
 ans3lite_order_col2vec_uni_t_sp_df <- as.data.frame(ans3lite_order_col2vec_uni_t_sp)
 ####################################################end
+##(5.3) best! use tokens_ngrams()
+##http://docs.quanteda.io/reference/tokens_ngrams.html#details
+library(quanteda)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+in11a <- unlist( strsplit( as.character( in1[,4] ), '\\s' ) ) #data.frame -> character
+ptn0 <- "[(]|[)]|[[]|[]]|[{]|[}]|[>]|[<]|[=]|[+]|[-]|[/]|[%]|[:]|[;]|[,]|[.]$" #replace punctuation
+in11 <- gsub(ptn0, " ", in11) #use tokens_ngrams
+tok_ng <- tokens_ngrams(toks, n = 6, concatenator = " ")
+tb0 <- table(tok_ng) #can do freq sum
+wordcloud(names(tb1), as.numeric(tb1), min.freq = 1,
+          max.words=100, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
 ####################################################end
-####################################################end
+
 ####################################################end
