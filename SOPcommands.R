@@ -201,5 +201,54 @@ wordcloud(names(tb1), as.numeric(tb1), min.freq = 1,
           max.words=100, random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
 ####################################################end
+##ui
+library(shiny)
+basicPage(
+fileInput("file1", "Pls input _internal.csv -> word counts",
+                multiple = TRUE,
+                accept = c("text/csv",
+                         "text/comma-separated-values,text/plain",
+                         ".csv")),
+#plotOutput('plot1', width = "300px", height = "300px"),
+#plotOutput("plot1")
+##https://shiny.rstudio.com/reference/shiny/0.14/downloadHandler.html
+downloadButton("downloadData", "Download"),
+tableOutput("table1")
+#  radioButtons('style', 'Progress bar style', c('notification', 'old')),
+#  actionButton('goPlot', 'Go plot'),
+#  actionButton('goTable', 'Go table')
+)
+#runApp()
+####################################################end
+##server
+options(shiny.maxRequestSize=30*1024^2) 
+library(quanteda)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+server <- function(input, output) {
+####################################################
+output$table1 <- renderTable({
+req(input$file1)
+in0 <- read.csv(input$file1$datapath, header = TRUE)
+in1 <- in0
+##
+write.csv(x = tb2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_WC_byTokens.csv", sep = "") )
+head(tb2,22)
+})
+##
+# Our dataset
+  data <- tb2
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(Sys.Date(), "_WC_byTokens", ".csv", sep="")
+    },
+    content = function(file) {
+      write.csv(data, file)
+    }
+  )
+##
+}
+####################################################end
 
 ####################################################end
