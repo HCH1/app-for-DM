@@ -201,7 +201,7 @@ wordcloud(names(tb1), as.numeric(tb1), min.freq = 1,
           max.words=100, random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
 ####################################################end
-##ui
+##ui template
 library(shiny)
 basicPage(
 fileInput("file1", "Pls input _internal.csv -> word counts",
@@ -220,14 +220,14 @@ tableOutput("table1")
 )
 #runApp()
 ####################################################end
-##server
+##server template
 options(shiny.maxRequestSize=30*1024^2) 
 library(quanteda)
 library(tm)
 library(SnowballC)
 library(wordcloud)
 server <- function(input, output) {
-####################################################
+##
 output$table1 <- renderTable({
 req(input$file1)
 in0 <- read.csv(input$file1$datapath, header = TRUE)
@@ -250,5 +250,19 @@ head(tb2,22)
 ##
 }
 ####################################################end
-
+##HTML template
+#install.packages("XML")
+library(XML)
+#install.packages("rvest")
+library(rvest)
+#install.packages("magrittr")
+library(magrittr)
+#install.packages('rvest')
+library(rvest)
+##https://blog.rstudio.com/2014/11/24/rvest-easy-web-scraping-with-r/
+##https://stackoverflow.com/questions/33295686/rvest-error-in-open-connectionx-rb-timeout-was-reached
+url1 = "http://www.imdb.com/title/tt1490017/" #
+download.file(url1, destfile = "eg_imdb.html", quiet=TRUE)
+#read html for download file
+lego_movie <- read_html("eg_imdb.html")
 ####################################################end
