@@ -31,6 +31,15 @@ length(was_)
 diffChr(was_, will_, color.mode="rgb")
 ####################################################end
 ####################################################end
+##or directly diff LPO
+library(diffobj)
+will_ = readLines("LPO-000242.csv", warn = FALSE)
+was_ = readLines("LPO-000235.csv", warn = FALSE)
+length(will_)
+length(was_)
+diffChr(was_, will_, color.mode="rgb")
+####################################################end
+####################################################end
 ch2 <- lpo2[ which( lpo2[7]=="Active" ), ]
 ch2 <- ch2[ which( ch2[8]=="22FDX" ), ]
 #filter LAYER_CATEGORY:	
