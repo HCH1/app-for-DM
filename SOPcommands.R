@@ -270,3 +270,11 @@ download.file(url1, destfile = "eg_imdb.html", quiet=TRUE)
 #read html for download file
 lego_movie <- read_html("eg_imdb.html")
 ####################################################end
+library(gmodels)
+usedcars = read.csv("usedcars.csv", header = TRUE)
+usedcars$conservative <- usedcars$color %in% c("Black", "Gray", "Silver", "White")
+#summarize 4 colors occur in $model 
+CrossTable(x = usedcars$model, y = usedcars$conservative)
+####################################################end
+
+####################################################end
