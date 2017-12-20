@@ -46,6 +46,12 @@ lpo22 <- lpo2[ which( lpo2[7]=="Common Design FEOL" | lpo2[7]=="Common Design BE
                      | lpo2[7]=="Marker ESD" | lpo2[7]=="Marker Floorplan"
                      | lpo2[7]=="Marker Metrology"
                      | lpo2[7]=="Design SRAM" | lpo2[7]=="Fill"), ]
+#%in% operator returns TRUE or FALSE
+#so can use as multi-lookup, then filter TRUE
+usedcars$x <- usedcars$color %in% c("Black", "Gray", "Silver", "White")
+table(usedcars$x)
+FALSE	TRUE
+51		99
 #do OR_filter
 lpo1_dm1 <- merge( lpo1, unique( dm1[6] ) )
 #AND_rows
