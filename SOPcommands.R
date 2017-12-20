@@ -13,6 +13,7 @@ getwd()
 setwd('c://file/path')
 version
 class()
+#show 'data.frame': x obs. of y variables:
 str()
 dim() 
 length()
@@ -283,5 +284,15 @@ usedcars$conservative <- usedcars$color %in% c("Black", "Gray", "Silver", "White
 #summarize 4 colors occur in $model 
 CrossTable(x = usedcars$model, y = usedcars$conservative)
 ####################################################end
-
+#replace matrix cell content
+wbcd$diagnosis <- factor(wbcd$diagnosis, levels = c("B", "M"), labels = c("Benign", "Malignant"))
+table(wbcd$diagnosis)
+#prop.table() show freq then prob %
+#round() show simple digits
+round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
+#sum certain clos
+summary(wbcd[c("radius_mean", "area_mean", "smoothness_mean")])
+#applies normalize() to cola 3-31, then converts resulting list to a data frame.
+#and assigns it the name wbcd_n.
+wbcd_n <- as.data.frame(lapply(wbcd[3:31], normalize))
 ####################################################end
