@@ -13,6 +13,7 @@ getwd()
 setwd('c://file/path')
 version
 class()
+str()
 dim() 
 length()
 head()
