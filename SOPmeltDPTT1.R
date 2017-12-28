@@ -1,7 +1,7 @@
 #https://stackoverflow.com/questions/24858823/extract-data-from-pivot-table-to-data-frame-i-e-reverse-the-pivot
 #install.packages("reshape2")
-library(reshape2)
-ii1 = read.csv("28LPSe_DPTT1.csv", header = FALSE)
+#library(reshape2)
+ii1 = read.csv("28LPSe_DPTTn2.csv", header = FALSE)
 ii2 <- ii1
 #merge 2 rows
 r1 <- t( paste( t(ii2)[,1], t(ii2)[,2], sep = "_", collapse = NULL ) )
@@ -41,6 +41,7 @@ o5 <- cbind(o4[1],o4[2])
 for ( i in 1:length(t(o4_uni)) ){
 #filter unique devices 1 by 1
 a4 <- o5[ which( o5[1]==paste( o4_uni[i,], collapse=" " ) ), ]
+a4 <- a4[order(a4[2]), ]
 a4t <- as.matrix( t(a4[2]) ) #1*n matrix
 a4tv <- as.vector(a4t) #convert to line
 #merge vector -> char
@@ -55,9 +56,9 @@ ans_o1[i] <- a5
 ans_o2 <- cbind( o4_uni, ans_o1 )
 write.csv(x = ans_o2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_melt_DPTT3.csv", sep = "") )
 ###vlookup
-library(dplyr)
+#library(dplyr)
 ans3 <- left_join(ii2, ans_o2)
 write.csv(x = ans3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_melt_DPTT_ans.csv", sep = "") )
-####################################################end
+head(cbind( ans3[1], ans3[ dim(ans3)[2] ] ), 11)
 ####################################################end
 ####################################################end
