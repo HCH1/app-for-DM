@@ -1,4 +1,3 @@
-#input csv
 i1 = read.csv("LM-0053.175 Export_Layers_By_LMT.csv", header = TRUE)
 i2 = read.csv("LPO-000242.csv", header = TRUE)
 dim(i1)
@@ -12,9 +11,9 @@ dumx5 <- matrix( NA, nrow=dim(i1)[1], ncol=5 )
 for footstop "."
 dumx_fs <- matrix( ".", nrow=dim(i1)[1], ncol=1 )
 dim(dumx0)
-#creat LPO_draft
+#create LPO_draft
 mx1 <- cbind( i1[1],i1[3],i1[2],dumx5,
-#creat "." or ".." at the end
+#create "." or ".." at the end
 paste( i1$Description, dumx_fs, sep = "", collapse = NULL ),
 dumx3,i1[4],dumx3,i1[7],i1[8],i1[9],i1[10],dumx4 )
 #replace colnames base on formal LPO
