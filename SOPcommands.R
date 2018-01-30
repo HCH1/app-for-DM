@@ -27,7 +27,9 @@ shiny::runApp()
 library(rsconnect)
 deployApp()
 #read
-lpo = read.csv("LPO-000172.csv", header = TRUE)
+#stringsAsFactors=FALSE can let is.na easy to do
+lpo = read.csv("LPO-000172.csv", header = TRUE, stringsAsFactors=FALSE)
+mx1[is.na(mx1)] <- ""
 drc = readLines("merge22fdx1004.txt", warn = FALSE)
 #read csv -> rows
 lpo = readLines("LPO-000202.csv", warn = FALSE)
