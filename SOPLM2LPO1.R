@@ -1,6 +1,6 @@
 library(dplyr)
-i1 = read.csv("LM-0053.175 Export_Layers_By_LMT.csv", header = TRUE)
-i2 = read.csv("LPO-000253.csv", header = TRUE)
+i1 = read.csv("LM-0053.175 Export_Layers_By_LMT.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("LPO-000253.csv", header = TRUE, stringsAsFactors=FALSE)
 dim(i1) #24r
 dim(i2) #37r
 coln2 <- colnames(i2)
@@ -51,5 +51,25 @@ mx2 <- cbind( mx1_v3[1:3], mx1_v3[40:44], mx1_v3[9], mx1_v3[46:48], mx1_v3[13]
 , mx1_v3[50:52], mx1_v3[17:20], mx1_v3[57:73] )
 str(mx2)
 write.csv(x = mx2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft3.csv", sep = "") )
+#replace
+mx22 <- mx2
+mx22[is.na(mx22)] <- ""
+str(mx22)
+
+mx22$Layer.Technology.Node.y <- gsub("22FD", "28SL"
+, mx22$Layer.Technology.Node.y)
+
+mx22$Tech.Variant...Included.in.PDK.y <- gsub("22FDX", "28SLP-HV;28LPSe;28SLP;28HPP"
+, mx22$Tech.Variant...Included.in.PDK.y)
+
+mx22$Cadence.Material.Type.Qualifier.y <- gsub("NIL", "NA"
+, mx22$Cadence.Material.Type.Qualifier.y)
+
+mx22$Cadence.Photo.Mask.Color.Color.State.y <- gsub("NIL", "NA"
+, mx22$Cadence.Photo.Mask.Color.Color.State.y)
+
+mx22[is.na(mx22)] <- ""
+str(mx22)
+write.csv(x = mx22, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4.csv", sep = "") )
 ####################################################end
 ####################################################end
