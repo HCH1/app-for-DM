@@ -298,3 +298,12 @@ summary(wbcd[c("radius_mean", "area_mean", "smoothness_mean")])
 #and assigns it the name wbcd_n.
 wbcd_n <- as.data.frame(lapply(wbcd[3:31], normalize))
 ####################################################end
+fw1 <- gregexpr( pattern ="[|]", i1v1[60] ) #find position
+char1 <- as.character(fw1) #c(17, 34, 42, 50, 63, 71, 92, 103, 112, 131)
+df1 <- as.data.frame(fw1) #10r
+df2 <- rbind(c(0), df1) #11r
+df2v2 <- df2[ -dim(df2)[1], ] #10r
+fw1_gap <- df1 - df2v2 #shift row
+fw1_gap2 <- as.character(fw1_gap) #c(17, 17, 8, 8, 13, 8, 21, 11, 9, 19)
+t1 = read.fwf( "cmos28g_tech - Copy lm.txt", skip=60, width = fw1_gap2 ) #split by fixed width
+####################################################end
