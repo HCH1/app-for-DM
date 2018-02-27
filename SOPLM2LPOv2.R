@@ -89,7 +89,7 @@ write.csv(x = dumx2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_
 ####################################################end
 ####################################################end
 ##1 prepare .lm data
-lvs_lm1 = read.csv("cmos28g_tech - Copy lm.csv", header = FALSE, stringsAsFactors=FALSE)
+lvs_lm1 = read.csv("cmos28g_tech - Copy lm2.csv", header = FALSE, stringsAsFactors=FALSE)
 str(lvs_lm1)
 lvs_lm2 <- lvs_lm1
 lvs_lm2 <- cbind( paste( lvs_lm1$V3, lvs_lm1$V4, sep = ";", collapse = NULL ) #combine gds# as unique
