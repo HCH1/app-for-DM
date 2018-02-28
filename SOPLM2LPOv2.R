@@ -124,8 +124,11 @@ lvs_om3[is.na(lvs_om3)] <- ""
 str(lvs_om3)
 write.csv(x = lvs_om3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om.csv", sep = "") )
 ####################################################end
-##3.1 prepare .tf OA layer data
-tf_oa_lay1 = read.csv("cmos28g_tech - Copy tf OA layer.csv", header = TRUE, stringsAsFactors=FALSE)
+##3.1 prepare .tf OA layer & ic oa layer
+tf_oa_lay0 = read.csv("cmos28g_tech - Copy tf OA layer.csv", header = TRUE, stringsAsFactors=FALSE)
+ic_oa_lay0 = read.csv("cdsDefTechLib_IC616 - Copy ic oa lay.csv", header = TRUE, stringsAsFactors=FALSE)
+colnames(ic_oa_lay0) <- colnames(tf_oa_lay0)
+tf_oa_lay1 <- rbind(tf_oa_lay0, ic_oa_lay0)
 str(tf_oa_lay1)
 tf_oa_lay2 <- tf_oa_lay1[,-3]
 #tf_oa_lay2 <- cbind( paste( tf_oa_lay1$V4, tf_oa_lay1$V5, sep = ";", collapse = NULL ) #ctf_oa_laybine gds# as unique
@@ -139,10 +142,14 @@ tf_oa_lay3 <- left_join(lvs_om3, tf_oa_lay2, by = "Data.Layer.Name")
 str(tf_oa_lay3)
 tf_oa_lay3[is.na(tf_oa_lay3)] <- ""
 str(tf_oa_lay3)
-write.csv(x = tf_oa_lay3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_oa_lay.csv", sep = "") )
+write.csv(x = tf_oa_lay3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay.csv", sep = "") )
 ####################################################end
-##3.2 prepare .tf OA purpose data
-tf_oa_pur1 = read.csv("cmos28g_tech - Copy tf OA purpose.csv", header = TRUE, stringsAsFactors=FALSE)
+##3.2 prepare .tf OA purpose & ic oa purpose
+tf_oa_pur0 = read.csv("cmos28g_tech - Copy tf OA purpose.csv", header = TRUE, stringsAsFactors=FALSE)
+ic_oa_pur0 = read.csv("cdsDefTechLib_IC616 - Copy ic oa pur.csv", header = TRUE, stringsAsFactors=FALSE)
+ic_oa_pur0 <- ic_oa_pur0[-3]
+colnames(ic_oa_pur0) <- colnames(tf_oa_pur0)
+tf_oa_pur1 <- rbind(tf_oa_pur0, ic_oa_pur0)
 str(tf_oa_pur1)
 tf_oa_pur2 <- tf_oa_pur1
 #tf_oa_pur2 <- cbind( paste( tf_oa_pur1$V4, tf_oa_pur1$V5, sep = ";", collapse = NULL ) #ctf_oa_purbine gds# as unique
@@ -156,7 +163,7 @@ tf_oa_pur3 <- left_join(tf_oa_lay3, tf_oa_pur2, by = "Cadence.Layer.Purpose.y.x"
 str(tf_oa_pur3)
 tf_oa_pur3[is.na(tf_oa_pur3)] <- ""
 str(tf_oa_pur3)
-write.csv(x = tf_oa_pur3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_oa_lay,tf_oa_pur.csv", sep = "") )
+write.csv(x = tf_oa_pur3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
