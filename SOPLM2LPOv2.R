@@ -162,8 +162,48 @@ str(tf_oa_pur2)
 tf_oa_pur3 <- left_join(tf_oa_lay3, tf_oa_pur2, by = "Cadence.Layer.Purpose.y.x")
 str(tf_oa_pur3)
 tf_oa_pur3[is.na(tf_oa_pur3)] <- ""
-str(tf_oa_pur3)
+str(tf_oa_pur3) #has col A-AV
 write.csv(x = tf_oa_pur3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur.csv", sep = "") )
+####################################################end
+##4 vs 28SLP-HV ch2
+slphv1 = read.csv("28SLP-HV_Rev0.1_0.0 ch2.csv", header = TRUE, stringsAsFactors=FALSE)
+str(slphv1)
+slphv2 <- slphv1
+slphv2 <- cbind( paste( slphv1$v3, slphv1$v4, sep = ";", collapse = NULL ) #combine gds# as unique
+,slphv1[2],slphv1[5],slphv1[3:4] )
+str(slphv2)
+slphv_name <- c("Number","Data.Layer.Name","Layer.Description.x"
+,"GDS.Number.x.x","GDS.Datatype.x.x")
+colnames(slphv2) <- slphv_name
+str(slphv2)
+slphv22 <- slphv2[ which( slphv2[1]!="-;-" ), ]
+str(slphv22)
+#left_join
+slphv3 <- left_join(tf_oa_pur3, slphv22, by = "Number")
+str(slphv3)
+slphv3[is.na(slphv3)] <- ""
+str(slphv3) #add 4 new col AW-AZ
+write.csv(x = slphv3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv.csv", sep = "") )
+####################################################end
+##4.2 vs 28LPSe ch2
+lpse1 = read.csv("28LPSe_Rev1.0_3.0 ch2.csv", header = TRUE, stringsAsFactors=FALSE)
+str(lpse1)
+lpse2 <- lpse1
+lpse2 <- cbind( paste( lpse1$v3, lpse1$v4, sep = ";", collapse = NULL ) #combine gds# as unique
+,lpse1[2],lpse1[5],lpse1[3:4] )
+str(lpse2)
+lpse_name <- c("Number","Data.Layer.Name.x","Layer.Description.x.x"
+,"GDS.Number.x.x.x","GDS.Datatype.x.x.x")
+colnames(lpse2) <- lpse_name
+str(lpse2)
+lpse22 <- lpse2[ which( lpse2[1]!="-;-" ), ]
+str(lpse22)
+#left_join
+lpse3 <- left_join(slphv3, lpse22, by = "Number")
+str(lpse3)
+lpse3[is.na(lpse3)] <- ""
+str(lpse3) #add 4 new col BA-BD
+write.csv(x = lpse3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
