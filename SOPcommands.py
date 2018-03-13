@@ -83,5 +83,14 @@ print (str.replace("is", "was", 3))
 #thwas was string example....wow!!! thwas was really string
 #thwas was string example....wow!!! thwas is really string
 ####################################################end
+filename = '//fab2crp-nas1/home19/HHUNG/Profile/Documents/2018py/merge22fdx1004.txt'
+f = open(filename)
+drc1 = f.readlines() #to list
+f.close()
+drc2 = list( filter(lambda x: re.search(r'\w+rohibit', x), drc1) ) #grep list
+#save list to txt
+outF = open("myOutFile.txt", "w") #creat txt
+outF.writelines(drc2) #save txt
+outF.close()
 ####################################################end
 ####################################################end
