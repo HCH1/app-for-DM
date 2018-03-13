@@ -23,15 +23,12 @@ TodaysDate = time.strftime("%Y%m%d_%H")
 filename = TodaysDate + "_rev_hist_py.csv"
 df4v2.to_csv( filename, sep=',', encoding='utf-8', index=False )
 ####################################################end
-####################################################end
-####################################################end
 #loop draft
 for i in range( 0,len(df4) ):
 #a3 = df4[ df4.iloc[:,0].isin( [ df5[0] ] ) ]
 a3 = df4[ df4.iloc[:,0].isin( [ df5[i] ] ) ]
 
    print()
-####################################################end
 ####################################################end
 df.info()
 len(df)
@@ -58,5 +55,33 @@ df.loc[:,'D'] = np.array([5] * len(df))
 pd.concat([ df.loc[:,['C']], df.loc[:,['B']] ], axis=1)
 df2[df2['E'].isin(['two','four'])] #filter
 sorted("This is a test string from Andrew".split(), key=str.lower
+####################################################end
+import re
+re.match("c", "abcdef")    # No match
+re.search("^c", "abcdef")  # No match
+re.search("^a", "abcdef")  # Match <_sre.SRE_Match object; span=(0, 1), match='a'>
+
+mystring = "This Is A String"
+print( mystring.replace( "String", "Text" ) ) #This Is A Text
+
+s = "The dog is large small"
+ss = s.replace( s.split()[3], s.split()[3]+'ly' ) #.replace() .split()
+ss #The dog is largely small
+
+#https://www.tutorialspoint.com/python3/string_split.htm
+str = "this is string example....wow!!!"
+print (str.split( ))
+print (str.split('i',1))
+print (str.split('w'))
+#['this', 'is', 'string', 'example....wow!!!']
+#['th', 's is string example....wow!!!']
+#['this is string example....', 'o', '!!!']
+
+str = "this is string example....wow!!! this is really string"
+print (str.replace("is", "was"))
+print (str.replace("is", "was", 3))
+#thwas was string example....wow!!! thwas was really string
+#thwas was string example....wow!!! thwas is really string
+####################################################end
 ####################################################end
 ####################################################end
