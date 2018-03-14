@@ -113,5 +113,16 @@ o3 = open("drc4.txt", "w") #creat txt
 o3.writelines( list(drc4) ) #save list txt
 o3.close()
 ####################################################end
+#trick to add word in lines
+drc5 = [ '<@head> ' + w.strip() for w in drc4 ] #lines head to add word
+drc5 = [ w.strip() + ' <@end>\n' for w in drc5 ] #lines end to add word
+o_drc5 = open("drc5.txt", "w") #creat txt
+o_drc5.writelines( list(drc5) ) #save list txt
+o_drc5.close()
+
+drc7 = [ '<@head>'.join(w.splitlines(True)) for w in drc4 ] #lines head to add word
+o_drc7 = open("drc7.txt", "w") #creat txt
+o_drc7.writelines( list(drc7) ) #save list txt
+o_drc7.close()
 ####################################################end
 ####################################################end
