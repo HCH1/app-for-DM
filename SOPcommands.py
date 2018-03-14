@@ -1,7 +1,9 @@
 #https://pandas.pydata.org/pandas-docs/stable/10min.html#csv
 import pandas as pd
 import numpy as np
+import re
 import matplotlib.pyplot as plt
+####################################################end
 df1 = pd.read_csv('//fab2crp-nas1/home19/hhung/Profile/Documents/2018py/28LPQRF-QCA_Rev1.1_0.0_DRC03D2vs28LPQRF-QCA_Rev1.1_0.0_DRC02DRCTrack2.csv')
 #cbind 3 cols
 df2 = pd.concat( [ df1.iloc[:,2],df1.iloc[:,6],df1.iloc[:,0] ] , axis=1 ) #axis=1 along col
@@ -83,14 +85,33 @@ print (str.replace("is", "was", 3))
 #thwas was string example....wow!!! thwas was really string
 #thwas was string example....wow!!! thwas is really string
 ####################################################end
-filename = '//fab2crp-nas1/home19/HHUNG/Profile/Documents/2018py/merge22fdx1004.txt'
-f = open(filename)
+i1 = '//fab2crp-nas1/home19/HHUNG/Profile/Documents/2018py/merge22fdx1004.txt'
+f = open(i1)
 drc1 = f.readlines() #to list
 f.close()
 drc2 = list( filter(lambda x: re.search(r'\w+rohibit', x), drc1) ) #grep list
-#save list to txt
-outF = open("myOutFile.txt", "w") #creat txt
-outF.writelines(drc2) #save txt
-outF.close()
+o1 = open("myOutFile.txt", "w") #creat txt
+o1.writelines(drc2) #save txt
+o1.close()
+###loop replace list
+drc3 = drc2
+for i in range(0, 7):
+	kw1 = ['touching','over','straddling','incurring','created','space','prohibited'] #replace list
+	drc3 = [ w.replace(kw1[i], '\t') for w in drc3 ] #loop
+	print(kw1[i]) #check
+o2 = open("drc3.txt", "w") #creat txt
+o2.writelines( list(drc3) ) #save list txt
+o2.close()
+###sub for regexp; replace for words
+drc4 = drc3
+for i in range(0, 3):
+	kw2 = [r'^\s+',r'\s+$',r'\s[a-z]+',r'[ ]'] #replace list; lead \s; end \s
+	drc4 = [ re.sub(kw2[i], "", w) for w in drc4 ] #replace
+	drc4 = [ re.sub(r'[@]', "\n", w) for w in drc4 ] #insert line
+	print(kw2[i]) #check
+o3 = open("drc4.txt", "w") #creat txt
+o3.writelines( list(drc4) ) #save list txt
+o3.close()
+####################################################end
 ####################################################end
 ####################################################end
