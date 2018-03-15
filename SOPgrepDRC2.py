@@ -14,7 +14,8 @@ drc1 = f.readlines() #to list
 f.close()
 #https://stackoverflow.com/questions/12845288/grep-on-elements-of-a-list
 #drc2 = re.findall(r"\w+rohibit", text) #grep str
-drc2 = list( filter(lambda x: re.search(r'\w+rohibit', x), drc1) ) #grep list
+drc2 = list( filter(lambda x: re.search(r'prohibit', x), drc1) ) #grep list
+#drc2 = list( filter(lambda x: re.search(r'\w+rohibit', x), drc1) ) #grep list
 
 #http://cmdlinetips.com/2012/09/three-ways-to-write-text-to-a-file-in-python/
 #save list to txt
