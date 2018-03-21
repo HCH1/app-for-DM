@@ -1,5 +1,5 @@
 library(dplyr)
-i1 = read.csv("LM-0053.175 Export_Layers_By_LMT.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("LM-0053.183 Export_Layers_By_LMT.csv", header = TRUE, stringsAsFactors=FALSE)
 i2 = read.csv("LPO-000264.csv", header = TRUE, stringsAsFactors=FALSE)
 dim(i1) #24c
 dim(i2) #37c
@@ -88,7 +88,7 @@ dumx2 <- merge( dumx2, tb2, all = TRUE )
 write.csv(x = dumx2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_freq4.csv", sep = "") )
 ####################################################end
 ####################################################end
-##1 prepare .lm data
+##1 prepare .lm data #+6 col AL-AQ
 lvs_lm1 = read.csv("cmos28g_tech - Copy lm2.csv", header = FALSE, stringsAsFactors=FALSE)
 str(lvs_lm1)
 lvs_lm2 <- lvs_lm1
@@ -107,7 +107,7 @@ lvs_lm3[is.na(as.character(lvs_lm3))] <- ""
 str(lvs_lm3)
 write.csv(x = lvs_lm3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm.csv", sep = "") )
 ####################################################end
-##2 prepare .om data
+##2 prepare .om data #+2 col AR-AT
 lvs_om1 = read.csv("cmos28g_tech - Copy om.csv", header = FALSE, stringsAsFactors=FALSE)
 str(lvs_om1)
 lvs_om2 <- lvs_om1
@@ -124,7 +124,7 @@ lvs_om3[is.na(lvs_om3)] <- ""
 str(lvs_om3)
 write.csv(x = lvs_om3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om.csv", sep = "") )
 ####################################################end
-##3.1 prepare .tf OA layer & ic oa layer
+##3.1 prepare .tf OA layer & ic oa layer #+1 col AU
 tf_oa_lay0 = read.csv("cmos28g_tech - Copy tf OA layer.csv", header = TRUE, stringsAsFactors=FALSE)
 ic_oa_lay0 = read.csv("cdsDefTechLib_IC616 - Copy ic oa lay.csv", header = TRUE, stringsAsFactors=FALSE)
 colnames(ic_oa_lay0) <- colnames(tf_oa_lay0)
@@ -134,17 +134,17 @@ tf_oa_lay2 <- tf_oa_lay1[,-3]
 #tf_oa_lay2 <- cbind( paste( tf_oa_lay1$V4, tf_oa_lay1$V5, sep = ";", collapse = NULL ) #ctf_oa_laybine gds# as unique
 #,tf_oa_lay1[7],tf_oa_lay1[3],tf_oa_lay1[1])
 str(tf_oa_lay2)
-tf_oa_lay_name <- c("Data.Layer.Name","Cadence.Name.OA.Number.y")
+tf_oa_lay_name <- c("Cadence.Layer.Name.x.y","Cadence.Name.OA.Number.y")
 colnames(tf_oa_lay2) <- tf_oa_lay_name
 str(tf_oa_lay2)
-#left_join
-tf_oa_lay3 <- left_join(lvs_om3, tf_oa_lay2, by = "Data.Layer.Name")
+#left_join, align .lm data
+tf_oa_lay3 <- left_join(lvs_om3, tf_oa_lay2, by = "Cadence.Layer.Name.x.y")
 str(tf_oa_lay3)
 tf_oa_lay3[is.na(tf_oa_lay3)] <- ""
 str(tf_oa_lay3)
 write.csv(x = tf_oa_lay3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay.csv", sep = "") )
 ####################################################end
-##3.2 prepare .tf OA purpose & ic oa purpose
+##3.2 prepare .tf OA purpose & ic oa purpose #+1 col AV
 tf_oa_pur0 = read.csv("cmos28g_tech - Copy tf OA purpose.csv", header = TRUE, stringsAsFactors=FALSE)
 ic_oa_pur0 = read.csv("cdsDefTechLib_IC616 - Copy ic oa pur.csv", header = TRUE, stringsAsFactors=FALSE)
 ic_oa_pur0 <- ic_oa_pur0[-3]
@@ -155,17 +155,17 @@ tf_oa_pur2 <- tf_oa_pur1
 #tf_oa_pur2 <- cbind( paste( tf_oa_pur1$V4, tf_oa_pur1$V5, sep = ";", collapse = NULL ) #ctf_oa_purbine gds# as unique
 #,tf_oa_pur1[7],tf_oa_pur1[3],tf_oa_pur1[1])
 str(tf_oa_pur2)
-tf_oa_pur_name <- c("Cadence.Layer.Purpose.y.x","Cadence.Purpose.OA.Number.y")
+tf_oa_pur_name <- c("Cadence.Layer.Purpose.y.y","Cadence.Purpose.OA.Number.y")
 colnames(tf_oa_pur2) <- tf_oa_pur_name
 str(tf_oa_pur2)
-#left_join
-tf_oa_pur3 <- left_join(tf_oa_lay3, tf_oa_pur2, by = "Cadence.Layer.Purpose.y.x")
+#left_join, align .lm data
+tf_oa_pur3 <- left_join(tf_oa_lay3, tf_oa_pur2, by = "Cadence.Layer.Purpose.y.y")
 str(tf_oa_pur3)
 tf_oa_pur3[is.na(tf_oa_pur3)] <- ""
 str(tf_oa_pur3) #has col A-AV
 write.csv(x = tf_oa_pur3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur.csv", sep = "") )
 ####################################################end
-##4 vs 28SLP-HV ch2
+##4 vs 28SLP-HV ch2 #+4 col
 slphv1 = read.csv("28SLP-HV_Rev0.1_0.0 ch2.csv", header = TRUE, stringsAsFactors=FALSE)
 str(slphv1)
 slphv2 <- slphv1
@@ -185,7 +185,7 @@ slphv3[is.na(slphv3)] <- ""
 str(slphv3) #add 4 new col AW-AZ
 write.csv(x = slphv3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv.csv", sep = "") )
 ####################################################end
-##4.2 vs 28LPSe ch2
+##4.2 vs 28LPSe ch2 #+4 col
 lpse1 = read.csv("28LPSe_Rev1.0_3.0 ch2.csv", header = TRUE, stringsAsFactors=FALSE)
 str(lpse1)
 lpse2 <- lpse1
