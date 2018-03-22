@@ -15,9 +15,9 @@ dumx_fs <- matrix( ".", nrow=dim(i1)[1], ncol=1 )
 dim(dumx0)
 #create LPO_draft1
 mx1 <- cbind( paste( i1$Input.GDS.Number, i1$Input.GDS.Data.Type, sep = ";", collapse = NULL ) #combine gds# as unique
-,i1[3],i1[2],dumx5,
+,i1[3],i1[2],dumx5
 #create "." or ".." at the end
-paste( i1$Description, dumx_fs, sep = "", collapse = NULL ),
+,paste( i1$Description, dumx_fs, sep = "", collapse = NULL ),
 dumx3,i1[4],dumx3,i1[7],i1[8],i1[9],i1[10],dumx4,dumx13 )
 #replace colnames base on formal LPO
 dim(mx1)
@@ -40,11 +40,19 @@ mx1_v2 <- mx11
 #dim(i2_v2)
 #mx1_v2 <- left_join(mx1_v2, i2_v2, by = "Data.Layer.Name")
 #vlookup
-mx1_v2 <- left_join(mx11, i2, by = "Data.Layer.Name")
+i2v1 <- i2
+str(i2v1)
+i2v2 <- cbind( paste( i2v1$GDS.Number, i2v1$GDS.Datatype, sep = ";", collapse = NULL ), i2v1 )
+colnames(i2v2)[1] <- "Number"
+mx1_v2 <- left_join(mx11, i2v2, by = "Number")
+#mx1_v2 <- left_join(mx11, i2, by = "Data.Layer.Name")
 str(mx1_v2)
 mx1_v3 <- mx1_v2
 #replace NA -> blank
 mx1_v3[is.na(as.character(mx1_v3))] <- ""
+dim(mx1_v3)
+mx1_v3 <- mx1_v3[-38]
+dim(mx1_v3)
 str(mx1_v3)
 write.csv(x = mx1_v3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft2.csv", sep = "") )
 #re-cbind draft LPO
@@ -107,7 +115,7 @@ lvs_lm3[is.na(as.character(lvs_lm3))] <- ""
 str(lvs_lm3)
 write.csv(x = lvs_lm3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm.csv", sep = "") )
 ####################################################end
-##2 prepare .om data #+2 col AR-AT
+##2 prepare .om data #+3 col AR-AT
 lvs_om1 = read.csv("cmos28g_tech - Copy om.csv", header = FALSE, stringsAsFactors=FALSE)
 str(lvs_om1)
 lvs_om2 <- lvs_om1
@@ -203,7 +211,12 @@ lpse3 <- left_join(slphv3, lpse22, by = "Number")
 str(lpse3)
 lpse3[is.na(lpse3)] <- ""
 str(lpse3) #add 4 new col BA-BD
-write.csv(x = lpse3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse.csv", sep = "") )
+#combine OA# as unique put in 1st col
+lpse4 <- cbind( paste( lpse3$Cadence.Name.OA.Number.y.y, lpse3$Cadence.Purpose.OA.Number.y.y, sep = ";", collapse = NULL ) 
+, lpse3 )
+colnames(lpse4)[1] <- "oa.from.lvs"
+str(lpse4)
+write.csv(x = lpse4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
