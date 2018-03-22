@@ -307,3 +307,20 @@ fw1_gap <- df1 - df2v2 #shift row
 fw1_gap2 <- as.character(fw1_gap) #c(17, 17, 8, 8, 13, 8, 21, 11, 9, 19)
 t1 = read.fwf( "cmos28g_tech - Copy lm.txt", skip=60, width = fw1_gap2 ) #split by fixed width
 ####################################################end
+#ifelse as excel
+lpse4$in.slphv <- ifelse(lpse4$GDS.Number.x.x.y > 0,"1","0")
+#multi if
+lpse4$Tech.Variant.v1 <- ifelse(lpse4$in.slphv == 1 & lpse4$in.lpse == 1,"28SLP-HV;28LPSe"
+,ifelse(lpse4$in.slphv == 1 & lpse4$in.lpse == 0,"28SLP-HV"
+,ifelse(lpse4$in.slphv == 0 & lpse4$in.lpse == 1,"28LPSE","NA")))
+table(lpse4[length(lpse4)-1])
+table(lpse4[length(lpse4)])
+mydata$y = with(mydata, ifelse(x3 %in% c("A","B") , x1*2,
+                  ifelse(x3 %in% c("C","D"), x1*3, x1*4)))
+ifelse(mydata$x1<10 & mydata$x2>150,1,0)
+ifelse(mydata$x1<10 | mydata$x2>150,1,0)
+####################################################end
+####################################################end
+####################################################end
+####################################################end
+####################################################end
