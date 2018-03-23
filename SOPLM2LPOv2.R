@@ -15,10 +15,10 @@ dumx_fs <- matrix( ".", nrow=dim(i1)[1], ncol=1 )
 dim(dumx0)
 #create LPO_draft1
 mx1 <- cbind( paste( i1$Input.GDS.Number, i1$Input.GDS.Data.Type, sep = ";", collapse = NULL ) #combine gds# as unique
-,i1[3],i1[2],dumx5
-#create "." or ".." at the end
-,paste( i1$Description, dumx_fs, sep = "", collapse = NULL ),
-dumx3,i1[4],dumx3,i1[7],i1[8],i1[9],i1[10],dumx4,dumx13 )
+	,i1[3],i1[2],dumx5
+	#create "." or ".." at the end
+	,paste( i1$Description, dumx_fs, sep = "", collapse = NULL ),
+	dumx3,i1[4],dumx3,i1[7],i1[8],i1[9],i1[10],dumx4,dumx13 )
 #replace colnames base on formal LPO
 dim(mx1)
 colnames(mx1) <- coln2[1:dim(t(mx1))[1]]
@@ -57,7 +57,7 @@ str(mx1_v3)
 write.csv(x = mx1_v3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft2.csv", sep = "") )
 #re-cbind draft LPO
 mx2 <- cbind( mx1_v3[1:3], mx1_v3[40:44], mx1_v3[9], mx1_v3[46:48], mx1_v3[13]
-, mx1_v3[50:52], mx1_v3[17:20], mx1_v3[57:73] )
+	, mx1_v3[50:52], mx1_v3[17:20], mx1_v3[57:73] )
 str(mx2)
 write.csv(x = mx2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft3.csv", sep = "") )
 #replace
@@ -66,17 +66,17 @@ mx22[is.na(as.character(mx22))] <- ""
 str(mx22)
 
 mx22$Layer.Technology.Node.y <- gsub("22FD", "28SL"
-, mx22$Layer.Technology.Node.y)
+	, mx22$Layer.Technology.Node.y)
 
 mx22$Tech.Variant...Included.in.PDK.y <- gsub("22FDX", "28SLP-HV;28LPSe;28SLP;28HPP"
-, mx22$Tech.Variant...Included.in.PDK.y)
+	, mx22$Tech.Variant...Included.in.PDK.y)
 
 mx22$Cadence.Material.Type.Qualifier.y <- gsub("NIL", "NA"
-, mx22$Cadence.Material.Type.Qualifier.y)
-, mx22$Cadence.Material.Type.Qualifier.y)
+	, mx22$Cadence.Material.Type.Qualifier.y)
+	, mx22$Cadence.Material.Type.Qualifier.y)
 
 mx22$Cadence.Photo.Mask.Color.Color.State.y <- gsub("NIL", "NA"
-, mx22$Cadence.Photo.Mask.Color.Color.State.y)
+	, mx22$Cadence.Photo.Mask.Color.Color.State.y)
 
 mx22[is.na(as.character(mx22))] <- ""
 str(mx22)
@@ -88,10 +88,10 @@ write.csv(x = mx22, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%
 mx33 <- cbind( mx22[4:7], mx22[10:14] )
 dumx2 <- matrix( NA, nrow=1, ncol=1 )
 for ( i in 1:dim(t(mx33))[1] ){
-tb1 <- table( mx33[i] )
-tb2 <- as.data.frame( tb1 )
-#tb2 <- as.data.frame( tb1, row.names = TRUE )
-dumx2 <- merge( dumx2, tb2, all = TRUE )
+	tb1 <- table( mx33[i] )
+	tb2 <- as.data.frame( tb1 )
+	#tb2 <- as.data.frame( tb1, row.names = TRUE )
+	dumx2 <- merge( dumx2, tb2, all = TRUE )
 }
 write.csv(x = dumx2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_freq4.csv", sep = "") )
 ####################################################end
@@ -101,11 +101,11 @@ lvs_lm1 = read.csv("cmos28g_tech - Copy lm2.csv", header = FALSE, stringsAsFacto
 str(lvs_lm1)
 lvs_lm2 <- lvs_lm1
 lvs_lm2 <- cbind( paste( lvs_lm1$V3, lvs_lm1$V4, sep = ";", collapse = NULL ) #combine gds# as unique
-,lvs_lm1[1:4],paste( lvs_lm1$V5, lvs_lm1$V6, sep = " ", collapse = NULL )
-,lvs_lm1[8])
+	,lvs_lm1[1:4],paste( lvs_lm1$V5, lvs_lm1$V6, sep = " ", collapse = NULL )
+	,lvs_lm1[8])
 str(lvs_lm2)
 lm_name <- c("Number","Cadence.Layer.Name.x","Cadence.Layer.Purpose.y","GDS.Number.x"
-,"GDS.Datatype.x","Cadence.Material.Type.Qualifier.y","Data.Layer.Name.x")
+	,"GDS.Datatype.x","Cadence.Material.Type.Qualifier.y","Data.Layer.Name.x")
 colnames(lvs_lm2) <- lm_name
 str(lvs_lm2)
 #left_join
@@ -120,7 +120,7 @@ lvs_om1 = read.csv("cmos28g_tech - Copy om.csv", header = FALSE, stringsAsFactor
 str(lvs_om1)
 lvs_om2 <- lvs_om1
 lvs_om2 <- cbind( paste( lvs_om1$V4, lvs_om1$V5, sep = ";", collapse = NULL ) #combine gds# as unique
-,lvs_om1[7],lvs_om1[3],lvs_om1[1])
+	,lvs_om1[7],lvs_om1[3],lvs_om1[1])
 str(lvs_om2)
 om_name <- c("Number","Data.Layer.Name.x","Cadence.Layer.Name.x","Cadence.Layer.Purpose.y")
 colnames(lvs_om2) <- om_name
@@ -178,7 +178,7 @@ slphv1 = read.csv("28SLP-HV_Rev0.1_0.0 ch2.csv", header = TRUE, stringsAsFactors
 str(slphv1)
 slphv2 <- slphv1
 slphv2 <- cbind( paste( slphv1$v3, slphv1$v4, sep = ";", collapse = NULL ) #combine gds# as unique
-,slphv1[2],slphv1[5],slphv1[3:4] )
+	,slphv1[2],slphv1[5],slphv1[3:4] )
 str(slphv2)
 slphv_name <- c("Number","Data.Layer.Name","Layer.Description.x"
 ,"GDS.Number.x.x","GDS.Datatype.x.x")
@@ -198,7 +198,7 @@ lpse1 = read.csv("28LPSe_Rev1.0_3.0 ch2.csv", header = TRUE, stringsAsFactors=FA
 str(lpse1)
 lpse2 <- lpse1
 lpse2 <- cbind( paste( lpse1$v3, lpse1$v4, sep = ";", collapse = NULL ) #combine gds# as unique
-,lpse1[2],lpse1[5],lpse1[3:4] )
+	,lpse1[2],lpse1[5],lpse1[3:4] )
 str(lpse2)
 lpse_name <- c("Number","Data.Layer.Name.x","Layer.Description.x.x"
 ,"GDS.Number.x.x.x","GDS.Datatype.x.x.x")
@@ -212,10 +212,33 @@ str(lpse3)
 lpse3[is.na(lpse3)] <- ""
 str(lpse3) #add 4 new col BA-BD
 #combine OA# as unique put in 1st col
-lpse4 <- cbind( paste( lpse3$Cadence.Name.OA.Number.y.y, lpse3$Cadence.Purpose.OA.Number.y.y, sep = ";", collapse = NULL ) 
-, lpse3 )
-colnames(lpse4)[1] <- "oa.from.lvs"
+lpse4 <- cbind( paste( lpse3$Cadence.Name.OA.Number.y.x, lpse3$Cadence.Purpose.OA.Number.y.x, sep = ";", collapse = NULL ) 
+	, paste( lpse3$Cadence.Name.OA.Number.y.y, lpse3$Cadence.Purpose.OA.Number.y.y, sep = ";", collapse = NULL ) 
+	, lpse3 )
+colnames(lpse4)[1] <- "oa.ref.only.22fdx"
+colnames(lpse4)[2] <- "oa.from.lvs"
 str(lpse4)
+####################################################end
+##replace whole col values, lvs lmt data is key, 22 is only ref
+lpse4$Cadence.Layer.Name.x.x <- lpse4$Cadence.Layer.Name.x.y
+lpse4$Cadence.Layer.Purpose.y.x <- lpse4$Cadence.Layer.Purpose.y.y
+lpse4$Oasis.Number.x <- lpse4$GDS.Number.x.x.x.x
+lpse4$Oasis.Datatype.x <- lpse4$GDS.Datatype.x.x.x.x
+lpse4$Cadence.Material.Type.Qualifier.y.x <- lpse4$Cadence.Material.Type.Qualifier.y.y
+lpse4$Cadence.Name.OA.Number.y.x <- lpse4$Cadence.Name.OA.Number.y.y
+lpse4$Cadence.Purpose.OA.Number.y.x <- lpse4$Cadence.Purpose.OA.Number.y.y
+lpse4 <- lpse4[order(lpse4[2]), ] #order oa.from.lvs
+#ifelse as excel
+lpse4$in.slphv <- ifelse(lpse4$GDS.Number.x.x.y > 0,"1","0")
+lpse4$in.lpse <- ifelse(lpse4$GDS.Number.x.x.x.y > 0,"1","0")
+#lpse4$in.lpse <- lpse4$GDS.Number.x.x.x.y > 0
+lpse4$Tech.Variant.v1 <- ifelse(lpse4$in.slphv == 1 & lpse4$in.lpse == 1,"28SLP-HV;28LPSe"
+	,ifelse(lpse4$in.slphv == 1 & lpse4$in.lpse == 0,"28SLP-HV"
+	,ifelse(lpse4$in.slphv == 0 & lpse4$in.lpse == 1,"28LPSE","NA")))
+lpse4$check.oa.lvs.22fdx <- ifelse(lpse4$oa.from.lvs != ";" & lpse4$oa.from.lvs %in% lpse4$oa.ref.only.22fdx,"1","0")
+str(lpse4)
+#table(lpse4[length(lpse4)-1])
+#table(lpse4[length(lpse4)])
 write.csv(x = lpse4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse.csv", sep = "") )
 ####################################################end
 ####################################################end
