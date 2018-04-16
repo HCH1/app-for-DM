@@ -16,8 +16,18 @@ mx_ratio
 for ( i in 1:mx_ratio ) {
 from1 <- 250*(i - 1) + 2
 end1 <- 250*i + 1
+#want file name rule: 28SL_Migration__Bulk_Upload_0xx_start_0xxxx_end_0xxxx
+num1 <- paste( "00", i, sep="" )
+num1_r3 <- substr(num1, nchar(num1)-2, nchar(num1)) #0xx
+
+num2 <- paste( "0000", from1-1, sep="" )
+num2_r5 <- substr(num2, nchar(num2)-4, nchar(num2)) #0xxxx
+
+num3 <- paste( "0000", end1-1, sep="" )
+num3_r5 <- substr(num3, nchar(num3)-4, nchar(num3)) #0xxxx
+
 mx_split <- rbind(mx_name, i1[from1:end1, ])
-filename1 <- paste( "28SL_Migration__Bulk_Upload_", i, "_start_", from1-1, "_end_", end1-1, ".xls", sep="" )
+filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xls", sep="" )
 #write.csv(x = mx_split, col.names=FALSE, file = filename1)
 write.table( mx_split, file = filename1, sep= "\t", quote = FALSE, col.names=FALSE, row.names=FALSE)
 #write.xlsx(x = mx_split, col.names = FALSE, file = filename1)
