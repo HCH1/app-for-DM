@@ -320,6 +320,16 @@ mydata$y = with(mydata, ifelse(x3 %in% c("A","B") , x1*2,
 ifelse(mydata$x1<10 & mydata$x2>150,1,0)
 ifelse(mydata$x1<10 | mydata$x2>150,1,0)
 ####################################################end
+mx_rows <- dim(t(i1))[2]-1 #4999
+mx_ratio <- 1 + mx_rows %/% 250 #1+59=60
+for ( i in 1:mx_ratio ) {
+from1 <- 250*(i - 1) + 2
+end1 <- 250*i + 1
+mx_split <- rbind(mx_name, i1[from1:end1, ])
+filename1 <- paste( "28SL_Migration__Bulk_Upload_", i, "_start_", from1-1, "_end_", end1-1, ".xls", sep="" )
+#save as xls format, use "\t"
+write.table( mx_split, file = filename1, sep= "\t", quote = FALSE, col.names=FALSE, row.names=FALSE)
+}
 ####################################################end
 ####################################################end
 ####################################################end
