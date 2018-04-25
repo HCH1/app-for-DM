@@ -49,8 +49,8 @@ num3 <- paste( "0000", dim(i1)[1]-1, sep="" )
 num3_r5 <- substr(num3, nchar(num3)-4, nchar(num3)) #0xxxx
 
 mx_split <- rbind(mx_name, i1[from1:dim(i1)[1], ])
-filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xls", sep="" )
-write.table( mx_split, file = filename1, sep= "\t", quote = FALSE, col.names=FALSE, row.names=FALSE)
+filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xlsx", sep="" )
+write.xlsx(mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE)
 }
 ####################################################end
 ####################################################end
