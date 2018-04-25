@@ -330,8 +330,8 @@ num1 <- paste( "00", i, sep="" )
 num1_r3 <- substr(num1, nchar(num1)-2, nchar(num1)) #0xx
 mx_split <- rbind(mx_name, i1[from1:end1, ])
 filename1 <- paste( "28SL_Migration__Bulk_Upload_", i, "_start_", from1-1, "_end_", end1-1, ".xls", sep="" )
-#save as xls format, use "\t"
-write.table( mx_split, file = filename1, sep= "\t", quote = FALSE, col.names=FALSE, row.names=FALSE)
+#will save as xlsx or xls
+write.xlsx(mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE)
 }
 ####################################################end
 ####################################################end
