@@ -1,6 +1,6 @@
 #library(dplyr)
 library(xlsx)
-i1 = read.csv("2018_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse - Copy6 v5.2 for Tom.csv", header = FALSE, stringsAsFactors=FALSE)
+i1 = read.csv("2018_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse - Copy6 v5.3 for Tom.csv", header = FALSE, stringsAsFactors=FALSE)
 dim(i1) #15000 37
 mx_name <- i1[1,]
 dim(mx_name) #1 37
@@ -27,10 +27,14 @@ num3 <- paste( "0000", end1-1, sep="" )
 num3_r5 <- substr(num3, nchar(num3)-4, nchar(num3)) #0xxxx
 
 mx_split <- rbind(mx_name, i1[from1:end1, ])
-filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xls", sep="" )
+#1.1
+filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xlsx", sep="" )
+write.xlsx( mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE )
+#1.2
+filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".csv", sep="" )
+write.table( x = mx_split, file = filename1, sep=",",  col.names=FALSE, row.names=FALSE )
 #write.csv(x = mx_split, col.names=FALSE, file = filename1)
 #will save as xlsx or xls
-write.xlsx(mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE)
 #write.table( mx_split, file = filename1, sep= "\t", quote = FALSE, col.names=FALSE, row.names=FALSE)
 #write.xlsx(x = mx_split, col.names = FALSE, file = filename1)
 }
@@ -50,7 +54,7 @@ num3_r5 <- substr(num3, nchar(num3)-4, nchar(num3)) #0xxxx
 
 mx_split <- rbind(mx_name, i1[from1:dim(i1)[1], ])
 filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xlsx", sep="" )
-write.xlsx(mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE)
+write.xlsx( mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE )
 }
 ####################################################end
 ####################################################end
