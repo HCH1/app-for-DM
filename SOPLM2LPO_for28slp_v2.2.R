@@ -68,7 +68,7 @@ str(mx22)
 mx22$Layer.Technology.Node.y <- gsub("22FD", "28SL"
 , mx22$Layer.Technology.Node.y)
 
-mx22$Tech.Variant...Included.in.PDK.y <- gsub("22FDX", "28SLP-HV;28LPSe;28SLP;28HPP"
+mx22$Tech.Variant...Included.in.PDK.y <- gsub("22FDX", "28SLPHV;28SLP"
 , mx22$Tech.Variant...Included.in.PDK.y)
 
 mx22$Cadence.Material.Type.Qualifier.y <- gsub("NIL", "NA"
