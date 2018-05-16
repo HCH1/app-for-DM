@@ -334,6 +334,18 @@ filename1 <- paste( "28SL_Migration__Bulk_Upload_", i, "_start_", from1-1, "_end
 write.xlsx(mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE)
 }
 ####################################################end
+#after do left_join, new col is factor, 
+#must convert to chr then do is.na again, then easy do ifelse
+i1v4 <- left_join(i1v3, lpqrfqca22, by = "gds1")
+i1v4$lpse.check <- as.character(i1v4$lpse.check)
+#replace NA
+i1v4[is.na(i1v4)] <- 0
+#vlookup
+i1v4$ans0 <- paste( i1v4$lpse.check, i1v4$hpp.check, i1v4$lpqrf.check, i1v4$lpqrfqca.check, sep = ";", collapse = NULL )
+str(i1v4)
+#vlookup
+i1v4$ans1 <- ifelse(i1v4$ans0 == "1;1;1;1","28LPSE;28HPP;28LPQRF;28LPQRFQCA","")
+####################################################end
 ####################################################end
 ####################################################end
 ####################################################end
