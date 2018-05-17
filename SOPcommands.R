@@ -346,6 +346,10 @@ str(i1v4)
 #vlookup
 i1v4$ans1 <- ifelse(i1v4$ans0 == "1;1;1;1","28LPSE;28HPP;28LPQRF;28LPQRFQCA","")
 ####################################################end
+filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".csv", sep="" )
+#better to use table to save as csv
+write.table( x = mx_split, file = filename1, sep=",",  col.names=FALSE, row.names=FALSE )
+####################################################end
 ####################################################end
 ####################################################end
 ####################################################end
