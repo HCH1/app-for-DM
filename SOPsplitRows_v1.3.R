@@ -1,6 +1,6 @@
 #library(dplyr)
 library(xlsx)
-i1 = read.csv("2018_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse - Copy6 v5.3 for Tom.csv", header = FALSE, stringsAsFactors=FALSE)
+i1 = read.csv("20180508_16_LPO_draft4,lvs_lm,om,tf_ic_oa_lay,tf_ic_oa_pur,slphv,lpse for 28slphv for Tom v1.5b.csv", header = FALSE, stringsAsFactors=FALSE)
 dim(i1) #15000 37
 mx_name <- i1[1,]
 dim(mx_name) #1 37
@@ -28,8 +28,8 @@ num3_r5 <- substr(num3, nchar(num3)-4, nchar(num3)) #0xxxx
 
 mx_split <- rbind(mx_name, i1[from1:end1, ])
 #1.1
-filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xlsx", sep="" )
-write.xlsx( mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE )
+#filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".xlsx", sep="" )
+#write.xlsx( mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE )
 #1.2
 filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".csv", sep="" )
 write.table( x = mx_split, file = filename1, sep=",",  col.names=FALSE, row.names=FALSE )
