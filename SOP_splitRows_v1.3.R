@@ -62,7 +62,7 @@ mx_split <- rbind(mx_name, i1[from1:dim(i1)[1], ])
 ##1.2.1 for 28slphv
 #filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".csv", sep="" )
 ##1.2.2 for 28g
-filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".csv", sep="" )
+filename1 <- paste( "28G_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5, "_end_", num3_r5, ".csv", sep="" )
 write.table( x = mx_split, file = filename1, sep=",",  col.names=FALSE, row.names=FALSE )
 }
 ####################################################end
