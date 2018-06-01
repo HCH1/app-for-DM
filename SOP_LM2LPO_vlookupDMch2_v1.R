@@ -84,7 +84,7 @@ str(i1v3)
 ##replace ".." -> "."
 i1v3$slphv.des <- gsub("[.]{2}", ".", i1v3$slphv.des )
 i1v3$slp.des <- gsub("[.]{2}", ".", i1v3$slp.des )
-write.csv(x = i1v3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft5_28slphv for Thomas L and Tom M v8.csv", sep = "") )
+write.csv(x = i1v3, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_LPO_draft5_28slphv for Thomas L and Tom M v4.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
