@@ -255,3 +255,16 @@ write.csv(x = i1v5, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%
 ####################################################end
 ####################################################end
 ####################################################end
+###check if duplicate
+#input csv
+ip = read.csv("0601amir1.csv", header = TRUE)
+ip3 <- ip
+ip4 <- table(ip3)
+ip5 <- as.data.frame(ip4)
+ip6 <- ip5[order(ip5[2], decreasing = TRUE), ]
+str(ip6)
+head(ip6)
+write.csv(x = ip6, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_0601amir1.csv", sep = "") )
+####################################################end
+####################################################end
+####################################################end
