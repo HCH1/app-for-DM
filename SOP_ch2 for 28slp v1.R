@@ -1,6 +1,6 @@
 #install.packages("zoo")
 #library(zoo)
-lpo = read.csv("LPO-000312.csv", header = TRUE)
+lpo = read.csv("LPO-000314 d1 LCN-002015.csv", header = TRUE)
 str(lpo)
 #merge column 2 6 7 17 18
 lpo2 <- cbind(lpo[2]
@@ -22,16 +22,32 @@ lpo4 <- lpo3[ which( lpo3[6]=="Common Design FEOL" | lpo3[6]=="Common Design BEO
                      | lpo3[6]=="Marker ESD" | lpo3[6]=="Marker Voltage"
                      | lpo3[6]=="Design SRAM" | lpo3[6]=="Marker Metrology"
                      | lpo3[6]=="Fill"), ]
-lpo5 <- lpo4[ which( lpo4[7]=="28SLPHV" | lpo4[7]=="28SLP;28SLPHV"), ]
+#for slphv
+#lpo5 <- lpo4[ which( lpo4[7]=="28SLPHV" | lpo4[7]=="28SLP;28SLPHV"), ]
+#for slp
+#lpo5 <- lpo4[ which( lpo4[7]=="28SLP" | lpo4[7]=="28SLP;28SLPHV"), ]
+#for hpp
+lpo5 <- lpo4[ which( lpo4[7]=="28HPP;28SLP" | lpo4[7]=="28HPP;28SLP;28SLPHV"), ]
 #order
 lpo6 <- lpo5[order(lpo5[3]), ]
 str(lpo6)
 head(lpo6)
 lpo7 <- lpo6
-write.csv(x = lpo7, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo to ch2 28lpshv.csv", sep = "") )
+#for slphv
+#write.csv(x = lpo7, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo to ch2 28slphv.csv", sep = "") )
+#for slp
+#write.csv(x = lpo7, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo to ch2 28slp.csv", sep = "") )
+#for slp
+write.csv(x = lpo7, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo to ch2 28hpp.csv", sep = "") )
+
 ####################################################end
 ####################################################end
-dm1 = read.csv("28SLP-HV_Rev0.1_0.0 ch2.csv", header = TRUE)
+#slphv
+#dm1 = read.csv("28SLP-HV_Rev0.1_0.0 ch2 - Copy.csv", header = TRUE)
+#slp
+#dm1 = read.csv("28SLP_Rev1.1_5.0_DRC02 ch2 - Copy.csv", header = TRUE)
+#hpp
+dm1 = read.csv("28HPP_Rev1.1_4.0 ch2 - Copy.csv", header = TRUE)
 str(dm1)
 dm1 <- cbind(dm1[2]
 , dm1$v5
@@ -40,7 +56,12 @@ dm1 <- cbind(dm1[2]
 colnames(dm1) <- c("CAD Level","Description","GDS")
 dm2 <- dm1[order(dm1[3]), ]
 str(dm2)
-write.csv(x = dm2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ch2 28lpshv.csv", sep = "") )
+#slphv
+#write.csv(x = dm2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ch2 28slphv.csv", sep = "") )
+#slp
+#write.csv(x = dm2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ch2 28slp.csv", sep = "") )
+#hpp
+write.csv(x = dm2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_ch2 28hpp.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
