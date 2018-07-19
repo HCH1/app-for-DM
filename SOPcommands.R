@@ -354,6 +354,19 @@ filename1 <- paste( "28SL_Migration__Bulk_Upload_", num1_r3, "_start_", num2_r5,
 #better to use table to save as csv
 write.table( x = mx_split, file = filename1, sep=",",  col.names=FALSE, row.names=FALSE )
 ####################################################end
+#read htm
+in1 = readLines("Pages from 22FDX_Rev1.3_3.0_PRE01-4.htm", warn = FALSE)
+was1 <- "ELVTP"
+will1 <- " will"
+ptn1 <- paste( '<del><b><font color="red">', was1, "</font></b></del>",
+'<b><font color="blue">', will1, "</font></b>", sep="" )
+#search then replace, both lower/uppercase
+in2 <- gsub(was1, ptn1, in2, ignore.case = TRUE)
+#save to htm
+fileConn <- file("o1.htm")
+writeLines(in2, fileConn)
+close(fileConn)
+####################################################end
 ####################################################end
 ####################################################end
 ####################################################end
