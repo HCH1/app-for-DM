@@ -1,3 +1,4 @@
+#read htm
 in1 = readLines("Pages from 22FDX_Rev1.3_3.0_PRE01-4.htm", warn = FALSE)
 str(in1)
 head(in1)
@@ -22,5 +23,6 @@ in2 <- gsub(was1, ptn1, in2, ignore.case = TRUE)
 fileConn <- file("o1.htm")
 writeLines(in2, fileConn)
 close(fileConn)
+####################################################end
 ####################################################end
 ####################################################end
