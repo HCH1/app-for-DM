@@ -5,31 +5,50 @@ head(in1)
 in2 <- in1
 #remove fig due to waste loading time
 in2 <- grep("<IMG", in2, value = TRUE, invert = TRUE)
+##for special case
+was1 <- "Union(EG, ZG)"
+will1 <- "EG"
+ptn1 <- paste( '<mark><del><b><font color="red">', was1, "</font></b></del>",
+'<b><font color="blue">', will1, "</font></b></mark>", sep="" )
+in2 <- gsub("Union[(]EG[,][ ]ZG[)]", ptn1, in2, ignore.case = FALSE)
+##for special case
+was1 <- "ZG33V"
+will1 <- ""
+ptn1 <- paste( '<mark><del><b><font color="red">', was1, "</font></b></del>",
+'<b><font color="blue">', will1, "</font></b></mark>", sep="" )
+in2 <- gsub("ZG[3][3]V", ptn1, in2, ignore.case = FALSE)
+##for special case
+was1 <- "ZG18V"
+will1 <- ""
+ptn1 <- paste( '<mark><del><b><font color="red">', was1, "</font></b></del>",
+'<b><font color="blue">', will1, "</font></b></mark>", sep="" )
+in2 <- gsub("ZG[1][8]V", ptn1, in2, ignore.case = FALSE)
+
 #if u have many was pattern, use loop
-was0 <- c("ZGXSLVT",	"zgxslvt",
-"ZGVSLVT",	"zgvslvt",
-"ZGTDPDNW",	"zgtdpdnw",
-"ZGTDNDSX",	"zgtdndsx",
-"ZGSLVTP",	"zgslvtp",
-"ZGSLVTN",	"zgslvtn",
-"ZGSLVT",	"zgslvt",
-"ZGRVTP",	"zgrvtp",
-"ZGRVTN",	"zgrvtn",
-"ZGPBICNT",	"zgpbicnt",
-"ZGPBCNT",	"zgpbcnt",
-"ZGNCAP",	"zgncap",
-"ZGNBCNT",	"zgnbcnt",
-"ZGDIODEPNW",	"zgdiodepnw",
-"ZGDIODENX",	"zgdiodenx",
-"ESDZGX",	"esdzgx",
-"ESDZGVNPN",	"esdzgvnpn",
-"ESDZGV",	"esdzgv",
-"ESDZGPDNW",	"esdzgpdnw",
-"ESDZGNDSX",	"esdzgndsx",
-"ESDZG",	"esdzg",
-"ZGV",	"zgv",
-"ZGX",	"zgx",
-"ZG"	"zg"
+was0 <- c("ZGXSLVT","zgxslvt",
+"ZGVSLVT","zgvslvt",
+"ZGTDPDNW","zgtdpdnw",
+"ZGTDNDSX","zgtdndsx",
+"ZGSLVTP","zgslvtp",
+"ZGSLVTN","zgslvtn",
+"ZGSLVT","zgslvt",
+"ZGRVTP","zgrvtp",
+"ZGRVTN","zgrvtn",
+"ZGPBICNT","zgpbicnt",
+"ZGPBCNT","zgpbcnt",
+"ZGNCAP","zgncap",
+"ZGNBCNT","zgnbcnt",
+"ZGDIODEPNW","zgdiodepnw",
+"ZGDIODENX","zgdiodenx",
+"ESDZGX","esdzgx",
+"ESDZGVNPN","esdzgvnpn",
+"ESDZGV","esdzgv",
+"ESDZGPDNW","esdzgpdnw",
+"ESDZGNDSX","esdzgndsx",
+"ESDZG","esdzg",
+"ZGV","zgv",
+"ZGX","zgx",
+"ZG","zg"
 )
 for ( i in 1:length(was0) ){
 #grep certain
