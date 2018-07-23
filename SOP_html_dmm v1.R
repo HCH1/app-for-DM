@@ -23,33 +23,13 @@ will1 <- ""
 ptn1 <- paste( '<mark><del><b><font color="red">', was1, "</font></b></del>",
 '<b><font color="blue">', will1, "</font></b></mark>", sep="" )
 in2 <- gsub("ZG[1][8]V", ptn1, in2, ignore.case = FALSE)
-
 #if u have many was pattern, use loop
-was0 <- c("ZGXSLVT","zgxslvt",
-"ZGVSLVT","zgvslvt",
-"ZGTDPDNW","zgtdpdnw",
-"ZGTDNDSX","zgtdndsx",
-"ZGSLVTP","zgslvtp",
-"ZGSLVTN","zgslvtn",
-"ZGSLVT","zgslvt",
-"ZGRVTP","zgrvtp",
-"ZGRVTN","zgrvtn",
-"ZGPBICNT","zgpbicnt",
-"ZGPBCNT","zgpbcnt",
-"ZGNCAP","zgncap",
-"ZGNBCNT","zgnbcnt",
-"ZGDIODEPNW","zgdiodepnw",
-"ZGDIODENX","zgdiodenx",
-"ESDZGX","esdzgx",
-"ESDZGVNPN","esdzgvnpn",
-"ESDZGV","esdzgv",
-"ESDZGPDNW","esdzgpdnw",
-"ESDZGNDSX","esdzgndsx",
-"ESDZG","esdzg",
-"ZGV","zgv",
-"ZGX","zgx",
-"ZG","zg"
-)
+#input 1 column pattern txt
+was0 = readLines("DMM want replace type.txt", warn = FALSE)
+#was0_len <- nchar(was0)
+#str(was0_len)
+#was0_mx2 <- cbind(was0,was0_len)
+#str(was0_mx2)
 for ( i in 1:length(was0) ){
 #grep certain
 #in2 <- grep("ELVTP", in2, value = TRUE, invert = FALSE)
