@@ -1,12 +1,17 @@
 #install.packages("zoo")
 #library(zoo)
-lpo = read.csv("LPO-000321 22FD.csv", header = TRUE)
+lpo = read.csv("LPO-000354 28SL.csv", header = TRUE)
 #merge column 2 6 7 17 18
 lpo2 <- cbind(lpo[2],lpo[17],lpo[18],lpo[6],lpo[7],lpo[11])
 write.csv(x = lpo2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo2.csv", sep = "") )
 #filter Tech Variant != blank
 lpo2_22fdx <- lpo2[lpo2[6]!="", ]
-lpo2_22fdx <- lpo2_22fdx[lpo2_22fdx[6]=="22FDX", ]
+colnames(lpo2_22fdx)[6] <- c("TV")
+str(lpo2_22fdx)
+##2 ways to do filter
+##lpo2_22fdx <- lpo2_22fdx[lpo2_22fdx[6]=="22FDX", ]
+##or
+lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV),]
 #filter Layer Status == Active
 lpo2_22fdx_act <- lpo2_22fdx[lpo2_22fdx[4]=="Active", ]
 #filter Layer Category != 
