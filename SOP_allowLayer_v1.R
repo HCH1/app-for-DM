@@ -7,13 +7,14 @@ write.csv(x = lpo2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%
 #filter Tech Variant != blank
 lpo2_22fdx <- lpo2[lpo2[6]!="", ]
 colnames(lpo2_22fdx)[6] <- c("TV")
-str(lpo2_22fdx)
 ##2 ways to do filter
 ##lpo2_22fdx <- lpo2_22fdx[lpo2_22fdx[6]=="22FDX", ]
-##or
-lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV),]
+##or do OR_filter
+lpo2_22fdx <- lpo2_22fdx[ which( lpo2_22fdx[6]=="28SLP" | lpo2_22fdx[6]=="28SLP;28SLPHV" ), ]
+##or grep contain
+##lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV),]
 ##or grep not SLPHV
-##lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV, invert = TRUE),]
+#lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV, invert = TRUE),]
 #filter Layer Status == Active
 lpo2_22fdx_act <- lpo2_22fdx[lpo2_22fdx[4]=="Active", ]
 #filter Layer Category != 
