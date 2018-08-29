@@ -12,6 +12,8 @@ str(lpo2_22fdx)
 ##lpo2_22fdx <- lpo2_22fdx[lpo2_22fdx[6]=="22FDX", ]
 ##or
 lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV),]
+##or grep not SLPHV
+##lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV, invert = TRUE),]
 #filter Layer Status == Active
 lpo2_22fdx_act <- lpo2_22fdx[lpo2_22fdx[4]=="Active", ]
 #filter Layer Category != 
