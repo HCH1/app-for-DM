@@ -6,6 +6,11 @@ i3 = read.csv("3 LM-0001.087 130.csv", header = TRUE, stringsAsFactors=FALSE)
 #dim(i1)
 #dim(i2)
 #dim(i3)
+##sometimes DM table name is diff, so rename.
+colnames(i1_v1)[1] <- "DM.Layer.Name"
+colnames(i1_v1)[2] <- "DM.Description"
+colnames(i1_v1)[3] <- "DM.GDS.Number"
+colnames(i1_v1)[4] <- "DM.GDS.Datatype"
 ##combine gds# as unique
 i1_v1 <- cbind( i1, paste( i1$Input.GDS.II.Number, i1$GDS.data.type, sep = ";", collapse = NULL ) )
 i1_v1 <- i1_v1[ order(i1_v1[5]), ]
