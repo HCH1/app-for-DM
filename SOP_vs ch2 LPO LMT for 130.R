@@ -55,6 +55,14 @@ i1_v4 <- data.frame( table(i1_v3[5]) ) #can do freq sum
 i1_v4[i1_v4$Freq > 1,] #export freq >= 2
 i1_v4 <- i1_v4[ order(-i1_v4[2]), ] #order reverse
 write.csv(x = i1_v4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT gds freq v2.csv", sep = "") )
+###
+library(diffobj)
+##do diff for layer name
+will_ <- as.vector( t( i1_v3[1] ) )
+was_ <- as.vector( t( i1_v3[6] ) )
+length(will_)
+length(was_)
+diffChr(was_, will_, color.mode="rgb")
 ####################################################end
 ####################################################end
 ####################################################end
