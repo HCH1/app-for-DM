@@ -12,7 +12,7 @@ colnames(i1_v1)[2] <- "DM.Description"
 colnames(i1_v1)[3] <- "DM.GDS.Number"
 colnames(i1_v1)[4] <- "DM.GDS.Datatype"
 ##combine gds# as unique
-i1_v1 <- cbind( i1, paste( i1$Input.GDS.II.Number, i1$GDS.data.type, sep = ";", collapse = NULL ) )
+i1_v1 <- cbind( i1, paste( i1$DM.Input.GDS.II.Number, i1$DM.GDS.data.type, sep = ";", collapse = NULL ) )
 i1_v1 <- i1_v1[ order(i1_v1[5]), ]
 colnames(i1_v1)[5] <- "gds.pair"
 #head(i1_v1)
@@ -21,12 +21,17 @@ i2_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NUL
 , i2[2], i2[7], i2[9], i2[13] )
 i2_v1 <- i2_v1[ order(i2_v1[1]), ]
 colnames(i2_v1)[1] <- "gds.pair"
+colnames(i2_v1)[2] <- "LPO.Data.Layer.Name"
+colnames(i2_v1)[3] <- "LPO.Layer.Category"
+colnames(i2_v1)[4] <- "LPO.Layer.Description"
+colnames(i2_v1)[5] <- "LPO.Layer.Type"
 #head(i2_v1)
 ##combine gds# as unique
 i3_v1 <- cbind( paste( i3$Input.GDS.Number, i3$Input.GDS.Data.Type, sep = ";", collapse = NULL )
 , i3[3] )
 i3_v1 <- i3_v1[ order(i3_v1[1]), ]
 colnames(i3_v1)[1] <- "gds.pair"
+colnames(i3_v1)[2] <- "LMT.Layer.Number"
 #head(i3_v1)
 ##
 #vlookup
