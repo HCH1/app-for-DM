@@ -44,19 +44,30 @@ i1_v2 <- left_join(i1_v1, i2_v1, by = "gds.pair")
 ##
 #vlookup
 i1_v3 <- left_join(i1_v2, i3_v1, by = "gds.pair")
-#dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
-#head(i1_v3)
-write.csv(x = i1_v3, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
-#vlookup in lpo or in lmt
-i1_v3$ans.in.lpo <- ifelse(i1_v3$LPO.Data.Layer.Name == "NA","FALSE","")
-i1_v3$ans.in.lmt <- ifelse(i1_v3$LMT.Layer.Number == "NA","FALSE","")
-i1_v3 <- cbind( i1_v3[,12:13], i1_v3[1:11] )
-##
+###to dig out duplicate GDS#
 i1_v4 <- data.frame( table(i1_v3$gds.pair) ) #can do freq sum
 i1_v4[i1_v4$Freq > 1,] #export freq >= 2
 i1_v4 <- i1_v4[ order(-i1_v4[2]), ] #order reverse
+colnames(i1_v4)[1] <- "gds.pair"
 write.csv(x = i1_v4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT gds freq v2.csv", sep = "") )
 ###
+#dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
+#head(i1_v3)
+#vlookup in lpo or in lmt
+i1_v3$ans.in.lpo <- ifelse(i1_v3$LPO.Data.Layer.Name == "NA","0","")
+i1_v3$ans.in.lmt <- ifelse(i1_v3$LMT.Layer.Number == "NA","0","")
+i1_v3$ans.name.diff <- ifelse(i1_v3$DM.Layer.Name != i1_v3$LPO.Data.Layer.Name
+,"1","")
+###vlookup gds freq
+i1_v3 <- left_join(i1_v3, i1_v4, by = "gds.pair")
+#i1_v3 <- cbind( i1_v3[,12:length(i1_v3)], i1_v3[1:11] )
+i1_v33 <- i1_v3[,12:14]
+#replace ans has NA
+i1_v33[ is.na( i1_v33 ) ] <- "0"
+i1_v33 <- cbind( i1_v33, i1_v3[15], i1_v3[1:11] )
+i1_v33 <- i1_v33[ order(i1_v33[1], i1_v33[3], decreasing = TRUE), ]
+##
+write.csv(x = i1_v33, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
 ###to export TV missing lines
 #grep dataframe contain keywords
 i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$ LPO.TV, invert = TRUE), ]
