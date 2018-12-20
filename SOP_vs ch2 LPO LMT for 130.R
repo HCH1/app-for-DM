@@ -1,30 +1,32 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
+##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 i3 = read.csv("3 LM-0001.087 130.csv", header = TRUE, stringsAsFactors=FALSE)
 #dim(i1)
 #dim(i2)
 #dim(i3)
 ##sometimes DM table name is diff, so rename.
-colnames(i1_v1)[1] <- "DM.Layer.Name"
-colnames(i1_v1)[2] <- "DM.Description"
-colnames(i1_v1)[3] <- "DM.GDS.Number"
-colnames(i1_v1)[4] <- "DM.GDS.Datatype"
+colnames(i1)[1] <- "DM.Layer.Name"
+colnames(i1)[2] <- "DM.Description"
+colnames(i1)[3] <- "DM.GDS.Number"
+colnames(i1)[4] <- "DM.GDS.Datatype"
 ##combine gds# as unique
-i1_v1 <- cbind( i1, paste( i1$DM.Input.GDS.II.Number, i1$DM.GDS.data.type, sep = ";", collapse = NULL ) )
+i1_v1 <- cbind( i1, paste( i1$DM.GDS.Number, i1$DM.GDS.Datatype, sep = ";", collapse = NULL ) )
 i1_v1 <- i1_v1[ order(i1_v1[5]), ]
 colnames(i1_v1)[5] <- "gds.pair"
 #head(i1_v1)
 ##combine gds# as unique
 i2_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NULL )
-, i2[2], i2[7], i2[9], i2[13] )
+, i2[2], i2[7], i2[9], i2[13], i2[11] )
 i2_v1 <- i2_v1[ order(i2_v1[1]), ]
 colnames(i2_v1)[1] <- "gds.pair"
 colnames(i2_v1)[2] <- "LPO.Data.Layer.Name"
 colnames(i2_v1)[3] <- "LPO.Layer.Category"
 colnames(i2_v1)[4] <- "LPO.Layer.Description"
 colnames(i2_v1)[5] <- "LPO.Layer.Type"
+colnames(i2_v1)[6] <- "LPO.TV"
 #head(i2_v1)
 ##combine gds# as unique
 i3_v1 <- cbind( paste( i3$Input.GDS.Number, i3$Input.GDS.Data.Type, sep = ";", collapse = NULL )
@@ -58,11 +60,8 @@ write.csv(x = i1_v4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%
 ###
 library(diffobj)
 ##do diff for layer name
-will_ <- as.vector( t( i1_v3[1] ) )
-was_ <- as.vector( t( i1_v3[6] ) )
-length(will_)
-length(was_)
-diffChr(was_, will_, color.mode="rgb")
-####################################################end
-####################################################end
-####################################################end
+DM_ <- as.vector( t( i1_v3[1] ) )
+LPO_ <- as.vector( t( i1_v3[6] ) )
+length(DM_)
+length(LPO_)
+diffChr(LPO_, DM_, color.mode="rgb")
