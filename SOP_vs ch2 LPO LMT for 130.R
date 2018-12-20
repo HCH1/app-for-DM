@@ -40,28 +40,49 @@ colnames(i3_v1)[2] <- "LMT.Layer.Number"
 i1_v2 <- left_join(i1_v1, i2_v1, by = "gds.pair")
 #dim(i1_v2)
 #head(i1_v2)
-write.csv(x = i1_v2, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO v1.csv", sep = "") )
+#write.csv(x = i1_v2, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO v1.csv", sep = "") )
 ##
 #vlookup
 i1_v3 <- left_join(i1_v2, i3_v1, by = "gds.pair")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
 write.csv(x = i1_v3, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
+#vlookup in lpo or in lmt
+i1_v3$ans.in.lpo <- ifelse(i1_v3$LPO.Data.Layer.Name == "NA","FALSE","")
+i1_v3$ans.in.lmt <- ifelse(i1_v3$LMT.Layer.Number == "NA","FALSE","")
+i1_v3 <- cbind( i1_v3[,12:13], i1_v3[1:11] )
 ##
-dim(i1)
-dim(i1_v1)
-dim(i1_v2)
-dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
-##
-i1_v4 <- data.frame( table(i1_v3[5]) ) #can do freq sum
+i1_v4 <- data.frame( table(i1_v3$gds.pair) ) #can do freq sum
 i1_v4[i1_v4$Freq > 1,] #export freq >= 2
 i1_v4 <- i1_v4[ order(-i1_v4[2]), ] #order reverse
 write.csv(x = i1_v4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT gds freq v2.csv", sep = "") )
 ###
+###to export TV missing lines
+#grep dataframe contain keywords
+i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$ LPO.TV, invert = TRUE), ]
+##combine gds# as unique
+i2_tv_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NULL )
+, i2)
+i2_tv_v1 <- i2_tv_v1[ order(i2_tv_v1[1]), ]
+colnames(i2_tv_v1)[1] <- "gds.pair"
+#vlookup
+i1_tv_v2 <- left_join(i1_tv_v1, i2_tv_v1, by = "gds.pair")
+#dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
+#head(i1_v3)
+write.csv(x = i1_tv_v2, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT then TV missing.csv", sep = "") )
+##check again all dimm history
+dim(i1)
+dim(i1_v1)
+dim(i1_v2)
+dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
+dim(i1_tv_v1)
+dim(i1_tv_v2)
+##
+###to do diff report
 library(diffobj)
 ##do diff for layer name
-DM_ <- as.vector( t( i1_v3[1] ) )
-LPO_ <- as.vector( t( i1_v3[6] ) )
+DM_ <- as.vector( t( i1_v3$DM.Layer.Name ) )
+LPO_ <- as.vector( t( i1_v3$LPO.Data.Layer.Name ) )
 length(DM_)
 length(LPO_)
 diffChr(LPO_, DM_, color.mode="rgb")
