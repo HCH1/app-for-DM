@@ -1,8 +1,10 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("1 DM-000450_1_13 Nov 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
+##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
+##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002454 LPO 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 i3 = read.csv("3 LM-0001.087 130.csv", header = TRUE, stringsAsFactors=FALSE)
 #dim(i1)
 #dim(i2)
@@ -70,7 +72,8 @@ i1_v33 <- i1_v33[ order(i1_v33[1], i1_v33[3], decreasing = TRUE), ]
 write.csv(x = i1_v33, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
 ###to export TV missing lines
 #grep dataframe contain keywords; be care of swith DM#
-i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$ LPO.TV, invert = TRUE), ]
+i1_tv_v1 <- i1_v3[ grep("DM-000450", i1_v3$ LPO.TV, invert = TRUE), ]
+##i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$ LPO.TV, invert = TRUE), ]
 ##i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$ LPO.TV, invert = TRUE), ]
 ##combine gds# as unique
 i2_tv_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NULL )
@@ -82,7 +85,7 @@ i1_tv_v2 <- left_join(i1_tv_v1, i2_tv_v1, by = "gds.pair")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
 write.csv(x = i1_tv_v2, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT then TV missing.csv", sep = "") )
-##check again all dimm history
+#check again all dimm history
 dim(i1)
 dim(i1_v1)
 dim(i1_v2)
