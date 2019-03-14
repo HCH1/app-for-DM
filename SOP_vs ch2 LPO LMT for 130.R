@@ -72,6 +72,7 @@ i1_v33 <- i1_v33[ order(i1_v33[1], i1_v33[3], decreasing = TRUE), ]
 write.csv(x = i1_v33, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
 ##freq of LPO.Layer.Category
 i1_v33_cate <- data.frame( table(i1_v33$LPO.Layer.Category) ) #can do freq sum
+i1_v33_cate
 write.csv(x = i1_v33_cate, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.csv", sep = "") )
 ###to export TV missing lines
 #grep dataframe contain keywords; be care of swith DM#
