@@ -345,6 +345,7 @@ i1v4$lpse.check <- as.character(i1v4$lpse.check)
 #replace NA
 i1v4[is.na(i1v4)] <- 0
 #vlookup
+###if want to connect col texts, use paste and save as new col.
 i1v4$ans0 <- paste( i1v4$lpse.check, i1v4$hpp.check, i1v4$lpqrf.check, i1v4$lpqrfqca.check, sep = ";", collapse = NULL )
 str(i1v4)
 #vlookup
