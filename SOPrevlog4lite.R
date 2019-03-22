@@ -61,6 +61,7 @@ ans_o2_dmy[ is.na( ans_o2_dmy ) ] <- "Section"
 #ans_o4 <- cbind(ans_o3[1:2], ans_o2_dmy[1], ans_o3[3], ans_o3[2])
 ans_o4 <- cbind(ans_o3, ans_o2_dmy)
 #str(ans_o4)
+###if want to connect col texts, use paste and save as new col.
 ans_o4$id.for.DCC <- paste(ans_o4$ans_o2_dmy, ans_o4$Table.ID, sep=" ")
 #str(ans_o4)
 ans_o4 <- cbind(ans_o4, ans_o4[2])
