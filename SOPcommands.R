@@ -368,5 +368,33 @@ writeLines(in2, fileConn)
 close(fileConn)
 ####################################################end
 ####################################################end
+###https://stackoverflow.com/questions/33018282/list-file-information-in-a-text-file-for-all-the-files-in-a-directory
+###http://astrostatistics.psu.edu/su07/R/html/base/html/file.info.html
+locpath <- getwd()
+locpath_bf <- file.path( locpath, "130RFSOI_130RFSOI_V1000DRC02_Base", "Base" )
+locpath_af <- file.path( locpath, "130RFSOI_130RFSOI_V1000FINAL_Base", "Base" )
+###https://stat.ethz.ch/pipermail/r-help/2010-October/255439.html
+###extract files info with correct path
+#f1 <- file.info( list.files( path = "." ) ) #this is getwd()
+f1bf <- file.info( list.files( path = locpath_bf, full.names=TRUE ) )
+f1af <- file.info( list.files( path = locpath_af, full.names=TRUE  ) )
+#write.csv(x = f1, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_file info v1.csv", sep = "") )
+write.csv(x = f1bf, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_file info bf.csv", sep = "") )
+write.csv(x = f1af, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_file info af.csv", sep = "") )
+###full path -> only need base name
+i1bf_v1$file.type <- basename( i1bf_v1[,1] )
+i1af_v1$file.type <- basename( i1af_v1[,1] )
+###vlookup full matrix
+#i1bfaf_v1_diff <- left_join(i1bf_v1[1:2], i1bf_v1[1:2], by = "X")
+i1bfaf_v1_diff <- full_join(i1af_v1, i1bf_v1, by = "file.type")
+###verify size if diff
+i1bfaf_v1_diff$size.diff <- ifelse(i1bfaf_v1_diff$size.x != i1bfaf_v1_diff$size.y
+,"2","1")
+###re-order
+i1bfaf_v1_diff <- i1bfaf_v1_diff[ order( i1bfaf_v1_diff[ dim(i1bfaf_v1_diff)[2] ]
+, na.last = FALSE, decreasing = TRUE ), ] #order reverse
+####################################################end
+####################################################end
+
 ####################################################end
 ####################################################end
