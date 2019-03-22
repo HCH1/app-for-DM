@@ -36,3 +36,36 @@ ans_o2 <- cbind( diffdm4_uni, ans_o1 )
 write.csv(x = ans_o2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist.csv", sep = "") )
 ####################################################end
 ####################################################end
+####################################################end
+###create a col follow DCC format.
+##load GR csv
+gr_ref1 = read.csv("130BCDLITE_Rev1.0_4.0_DRC02_internal.psv.csv", header = TRUE)
+str(gr_ref1)
+##need table title and ID
+gr_ref1_v2 <- gr_ref1[8:9]
+colnames(gr_ref1_v2)[1] <- "Section"
+str(gr_ref1_v2)
+##de-duplicate
+gr_ref1_v2 <- unique(gr_ref1_v2)
+#str(gr_ref1_v2)
+write.csv(x = gr_ref1_v2, file = paste(format(Sys.time(), "%Y%m%d_%H"), "gr_ref1_v2.csv", sep = "") )
+##vlookup base on rev logs
+ans_o3 <- left_join(ans_o2, gr_ref1_v2, by = "Section")
+#str(ans_o3)
+ans_o3 <- ans_o3[ order(ans_o3[3]), ] #order reverse
+#str(ans_o3)
+##create dummy n*1
+ans_o2_dmy <- matrix( NA, nrow=dim(ans_o2)[1], ncol=1 )
+ans_o2_dmy[ is.na( ans_o2_dmy ) ] <- "Section"
+#str(ans_o2_dmy)
+#ans_o4 <- cbind(ans_o3[1:2], ans_o2_dmy[1], ans_o3[3], ans_o3[2])
+ans_o4 <- cbind(ans_o3, ans_o2_dmy)
+#str(ans_o4)
+ans_o4$id.for.DCC <- paste(ans_o4$ans_o2_dmy, ans_o4$Table.ID, sep=" ")
+#str(ans_o4)
+ans_o4 <- cbind(ans_o4, ans_o4[2])
+#str(ans_o4)
+write.csv(x = ans_o4, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_rev_hist_id.csv", sep = "") )
+####################################################end
+####################################################end
+####################################################end
