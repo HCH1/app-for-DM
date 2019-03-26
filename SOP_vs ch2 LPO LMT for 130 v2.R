@@ -6,7 +6,8 @@ i1 = read.csv("1 DM-000165_130RFSOI_Rev1.0_0.0 ch2 - Copy.csv", header = TRUE, s
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 i2 = read.csv("2 LPO-000339 (v16) 130RFSOI.csv", header = TRUE, stringsAsFactors=FALSE)
-i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i3 = read.csv("3 LM-0159.014.csv", header = TRUE, stringsAsFactors=FALSE)
+#i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #dim(i1)
 #dim(i2)
 #dim(i3)
@@ -69,13 +70,15 @@ i1_v33 <- i1_v3[,12:14]
 i1_v33[ is.na( i1_v33 ) ] <- "0"
 i1_v33 <- cbind( i1_v33, i1_v3[15], i1_v3[1:11] )
 i1_v33 <- i1_v33[ order(i1_v33[1], i1_v33[3], decreasing = TRUE), ]
-write.csv(x = i1_v33, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
+write.csv(x = i1_v33, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
 ###
 ###freq of LPO.Layer.Category
 i1_v33_cate <- data.frame( table(i1_v33$LPO.Layer.Category) ) #can do freq sum
 colnames(i1_v33_cate)[1] <- "Layer.Category"
 i1_v33_cate
-write.csv(x = i1_v33_cate, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.csv", sep = "") )
+write.csv(x = i1_v33_cate, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.csv", sep = "") )
 ###
 ###export sub LPO by wanted Category
 #do OR_filter; use inner_join will keep only correct rows
@@ -86,7 +89,8 @@ sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( sublpo_Category[11]=="1
 sublpo_Category_tv_will_vs_dm[ is.na( sublpo_Category_tv_will_vs_dm ) ] <- ""
 #order Data.Layer.Name
 sublpo_Category_tv_will_vs_dm <- sublpo_Category_tv_will_vs_dm[ order(sublpo_Category_tv_will_vs_dm[2]), ] #order reverse
-write.csv(x = sublpo_Category_tv_will_vs_dm, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo_Category_tv_will_vs_dm.csv", sep = "") )
+write.csv(x = sublpo_Category_tv_will_vs_dm, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo_Category_TV_for_LCN_using.csv", sep = "") )
 ###
 ###do a lite diff bwtween sub-LPO vs DM ch2, by layer name
 sublpo_lite1 <- cbind( sublpo_Category_tv_will_vs_dm[2], 
@@ -106,7 +110,8 @@ subdm_lite1 <- subdm_lite1[ order(subdm_lite1[1]), ]
 str(subdm_lite1)
 diff_subdm_vs_sublpo_by_Category_tv <- full_join(sublpo_lite1, subdm_lite1, by = "Layer.Name")
 diff_subdm_vs_sublpo_by_Category_tv <- diff_subdm_vs_sublpo_by_Category_tv[ order(diff_subdm_vs_sublpo_by_Category_tv[1]), ]
-write.csv(x = diff_subdm_vs_sublpo_by_Category_tv, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diff_subdm_vs_sublpo_by_Category_tv.csv", sep = "") )
+write.csv(x = diff_subdm_vs_sublpo_by_Category_tv, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diff_subdm_vs_sublpo_by_Category_TV.csv", sep = "") )
 ###
 ###to export TV missing lines
 #grep dataframe contain keywords; be care of swith DM#
@@ -123,7 +128,15 @@ colnames(i2_tv_v1)[1] <- "gds.pair"
 i1_tv_v2 <- left_join(i1_tv_v1, i2_tv_v1, by = "gds.pair")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
-write.csv(x = i1_tv_v2, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT then TV missing.csv", sep = "") )
+write.csv(x = i1_tv_v2, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT then TV missing.csv", sep = "") )
+###
+###export missing TV for LCN submit
+missing_TV_for_LCN <- inner_join(i2, i1_tv_v2[16], by = "ï..Number")
+#replace NA to blank
+missing_TV_for_LCN[ is.na( missing_TV_for_LCN ) ] <- ""
+write.csv(x = missing_TV_for_LCN, row.names = TRUE
+, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_missing_TV_for_LCN_using.csv", sep = "") )
 #check again all dimm history
 dim(i1)
 dim(i1_v1)
