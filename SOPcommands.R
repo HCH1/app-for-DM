@@ -338,6 +338,14 @@ filename1 <- paste( "28SL_Migration__Bulk_Upload_", i, "_start_", from1-1, "_end
 write.xlsx(mx_split, file = filename1, sheetName="Sheet1",  col.names=FALSE, row.names=FALSE, append=FALSE, showNA=TRUE)
 }
 ####################################################end
+###export sub LPO by wanted Category
+#do OR_filter; use inner_join will keep only correct rows
+sublpo_Category <- inner_join(i2, i1_v33_cate, by = "Layer.Category")
+#do filter for correct TV
+sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( sublpo_Category[11]=="130RFSOI" ), ]
+#replace NA to blank
+sublpo_Category_tv_will_vs_dm[ is.na( sublpo_Category_tv_will_vs_dm ) ] <- ""
+####################################################end
 #after do left_join, new col is factor, 
 #must convert to chr then do is.na again, then easy do ifelse
 i1v4 <- left_join(i1v3, lpqrfqca22, by = "gds1")
