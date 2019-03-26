@@ -113,17 +113,17 @@ dim(i1_tv_v2)
 ###to do diff report
 library(diffobj)
 ##do diff bwtween sub-LPO vs DM ch2, by layer name
-DM_ <- as.vector( t( i1[ order(i1[1]), ]$DM.Layer.Name ) )
-subLPO_ <- as.vector( t( sublpo_Category_tv_will_vs_dm$Data.Layer.Name ) )
-length(DM_)
-length(subLPO_)
-diffChr(subLPO_, DM_, color.mode="rgb")
 ####################################################end
-####################################################end
-####################################################end
-##do diff for layer name
+##this is old one
 #DM_ <- as.vector( t( i1_v3$DM.Layer.Name ) )
 #LPO_ <- as.vector( t( i1_v3$LPO.Data.Layer.Name ) )
 #length(DM_)
 #length(LPO_)
 #diffChr(LPO_, DM_, color.mode="rgb")
+####################################################end
+##do diff for layer name
+DM_ <- as.vector( t( i1[ order(i1[1]), ]$DM.Layer.Name ) )
+subLPO_ <- as.vector( t( sublpo_Category_tv_will_vs_dm$Data.Layer.Name ) )
+length(DM_)
+length(subLPO_)
+diffChr(subLPO_, DM_, color.mode="rgb")
