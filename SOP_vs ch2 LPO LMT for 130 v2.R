@@ -1,10 +1,11 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 130BCDLite_DM000064_V1040DRC01 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("1 DM-000165_130RFSOI_Rev1.0_0.0 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+##i1 = read.csv("1 130BCDLite_DM000064_V1040DRC01 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LPO-000395 (v20) 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LPO-000339 (v16) 130RFSOI.csv", header = TRUE, stringsAsFactors=FALSE)
 i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #dim(i1)
 #dim(i2)
@@ -51,7 +52,7 @@ i1_v4 <- data.frame( table(i1_v3$gds.pair) ) #can do freq sum
 i1_v4[i1_v4$Freq > 1,] #export freq >= 2
 i1_v4 <- i1_v4[ order(-i1_v4[2]), ] #order reverse
 colnames(i1_v4)[1] <- "gds.pair"
-write.csv(x = i1_v4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT gds freq v2.csv", sep = "") )
+#write.csv(x = i1_v4, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT gds freq v2.csv", sep = "") )
 ###
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
@@ -72,12 +73,24 @@ i1_v33 <- i1_v33[ order(i1_v33[1], i1_v33[3], decreasing = TRUE), ]
 write.csv(x = i1_v33, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT v2.csv", sep = "") )
 ##freq of LPO.Layer.Category
 i1_v33_cate <- data.frame( table(i1_v33$LPO.Layer.Category) ) #can do freq sum
+colnames(i1_v33_cate)[1] <- "Layer.Category"
 i1_v33_cate
 write.csv(x = i1_v33_cate, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.csv", sep = "") )
+###export sub LPO by wanted Category
+#do OR_filter; use inner_join will keep only correct rows
+sublpo_Category <- inner_join(i2, i1_v33_cate, by = "Layer.Category")
+#do filter for correct TV
+sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( sublpo_Category[11]=="130RFSOI" ), ]
+#replace NA to blank
+sublpo_Category_tv_will_vs_dm[ is.na( sublpo_Category_tv_will_vs_dm ) ] <- ""
+#order Data.Layer.Name
+sublpo_Category_tv_will_vs_dm <- sublpo_Category_tv_will_vs_dm[ order(sublpo_Category_tv_will_vs_dm[2]), ] #order reverse
+write.csv(x = sublpo_Category_tv_will_vs_dm, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo_Category_tv_will_vs_dm.csv", sep = "") )
 ###to export TV missing lines
 #grep dataframe contain keywords; be care of swith DM#
 ##i1_tv_v1 <- i1_v3[ grep("DM-000450", i1_v3$ LPO.TV, invert = TRUE), ]
-i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$ LPO.TV, invert = TRUE), ]
+i1_tv_v1 <- i1_v3[ grep("130RFSOI", i1_v3$ LPO.TV, invert = TRUE), ]
+##i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$ LPO.TV, invert = TRUE), ]
 ##i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$ LPO.TV, invert = TRUE), ]
 ##combine gds# as unique
 i2_tv_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NULL )
@@ -99,9 +112,18 @@ dim(i1_tv_v2)
 ##
 ###to do diff report
 library(diffobj)
-##do diff for layer name
-DM_ <- as.vector( t( i1_v3$DM.Layer.Name ) )
-LPO_ <- as.vector( t( i1_v3$LPO.Data.Layer.Name ) )
+##do diff bwtween sub-LPO vs DM ch2, by layer name
+DM_ <- as.vector( t( i1[ order(i1[1]), ]$DM.Layer.Name ) )
+subLPO_ <- as.vector( t( sublpo_Category_tv_will_vs_dm$Data.Layer.Name ) )
 length(DM_)
-length(LPO_)
-diffChr(LPO_, DM_, color.mode="rgb")
+length(subLPO_)
+diffChr(subLPO_, DM_, color.mode="rgb")
+####################################################end
+####################################################end
+####################################################end
+##do diff for layer name
+#DM_ <- as.vector( t( i1_v3$DM.Layer.Name ) )
+#LPO_ <- as.vector( t( i1_v3$LPO.Data.Layer.Name ) )
+#length(DM_)
+#length(LPO_)
+#diffChr(LPO_, DM_, color.mode="rgb")
