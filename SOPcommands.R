@@ -346,6 +346,16 @@ sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( sublpo_Category[11]=="1
 #replace NA to blank
 sublpo_Category_tv_will_vs_dm[ is.na( sublpo_Category_tv_will_vs_dm ) ] <- ""
 ####################################################end
+###SOP to check two files diff: add new key col > xxx_join() > logic check > replace NA > save as
+i2_v1a <- i2
+i2_v1a$gds.pair <- paste( i2_v1a$GDS.Number, i2_v1a$GDS.Datatype, sep = ";", collapse = NULL )
+#str(i2_v1a)
+missing_TV_for_LCN <- inner_join(i2_v1a, cbind( i1_tv_v2[5], i1_tv_v2[1] ), by = "gds.pair")
+#check DM name =? LPO name
+missing_TV_for_LCN$ans.vs.dm.lpo.name <- ifelse(missing_TV_for_LCN$DM.Layer.Name == missing_TV_for_LCN$Data.Layer.Name ,"1","2")
+#replace NA to blank
+missing_TV_for_LCN[ is.na( missing_TV_for_LCN ) ] <- ""
+####################################################end
 #after do left_join, new col is factor, 
 #must convert to chr then do is.na again, then easy do ifelse
 i1v4 <- left_join(i1v3, lpqrfqca22, by = "gds1")
