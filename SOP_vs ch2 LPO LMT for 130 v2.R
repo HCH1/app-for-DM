@@ -5,7 +5,7 @@ i1 = read.csv("1 DM-000165_130RFSOI_Rev1.0_0.0 ch2 - Copy.csv", header = TRUE, s
 ##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LPO-000339 (v16) 130RFSOI.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002669 130RFSOI (v17) .csv", header = TRUE, stringsAsFactors=FALSE)
 i3 = read.csv("3 LM-0159.014.csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #dim(i1)
@@ -132,12 +132,19 @@ write.csv(x = i1_tv_v2, row.names = TRUE,
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT then TV missing.csv", sep = "") )
 ###
 ###export missing TV for LCN submit
-missing_TV_for_LCN <- inner_join(i2, i1_tv_v2[16], by = "ï..Number")
+i2_v1a <- i2
+#i2_v1a$gds.pair <- cbind( i2_v1a, paste( i2_v1a$GDS.Number, i2_v1a$GDS.Datatype, sep = ";", collapse = NULL ) )
+i2_v1a$gds.pair <- paste( i2_v1a$GDS.Number, i2_v1a$GDS.Datatype, sep = ";", collapse = NULL )
+#str(i2_v1a)
+missing_TV_for_LCN <- inner_join(i2_v1a, cbind( i1_tv_v2[5], i1_tv_v2[1] ), by = "gds.pair")
+#check DM name =? LPO name
+missing_TV_for_LCN$ans.vs.dm.lpo.name <- ifelse(missing_TV_for_LCN$DM.Layer.Name == missing_TV_for_LCN$Data.Layer.Name ,"1","2")
 #replace NA to blank
 missing_TV_for_LCN[ is.na( missing_TV_for_LCN ) ] <- ""
 write.csv(x = missing_TV_for_LCN, row.names = TRUE
 , file = paste(format(Sys.time(), "%Y%m%d_%H"), "_missing_TV_for_LCN_using.csv", sep = "") )
-#check again all dimm history
+###
+###check again all dimm history
 dim(i1)
 dim(i1_v1)
 dim(i1_v2)
