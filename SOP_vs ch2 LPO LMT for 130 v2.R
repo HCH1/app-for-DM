@@ -5,7 +5,7 @@ i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header
 ##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002653 130G-LP (v27).csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002689 130G-LP (v28).csv", header = TRUE, stringsAsFactors=FALSE)
 i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 i4tv = "DM-000450"
@@ -86,19 +86,21 @@ file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.
 sublpo_Category <- inner_join(i2, i1_v33_cate, by = "Layer.Category")
 #do filter for correct TV
 ###
-sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( 
-sublpo_Category[11] == i4tv ), ]
+#grep dataframe contain keywords
+#grep TV=i4tv from sub-LPO
+subLPO_TV_v2 <- sublpo_Category[grep(i4tv, sublpo_Category$Tech.Variant...Included.in.PDK),]
+str(subLPO_TV_v2)
 #replace NA to blank
-sublpo_Category_tv_will_vs_dm[ is.na( sublpo_Category_tv_will_vs_dm ) ] <- ""
+subLPO_TV_v2[ is.na( subLPO_TV_v2 ) ] <- ""
 #order Data.Layer.Name
-sublpo_Category_tv_will_vs_dm <- sublpo_Category_tv_will_vs_dm[ order(sublpo_Category_tv_will_vs_dm[2]), ] #order reverse
-write.csv(x = sublpo_Category_tv_will_vs_dm, row.names = TRUE, 
+subLPO_TV_v2 <- subLPO_TV_v2[ order(subLPO_TV_v2[2]), ] #order reverse
+write.csv(x = subLPO_TV_v2, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo_Category_TV_for_LCN_using.csv", sep = "") )
 ###
-###do a lite diff bwtween sub-LPO vs DM ch2, by layer name
-sublpo_lite1 <- cbind( sublpo_Category_tv_will_vs_dm[2], 
-paste( sublpo_Category_tv_will_vs_dm$GDS.Number, sublpo_Category_tv_will_vs_dm$GDS.Datatype, sep = ";", collapse = NULL )
-, sublpo_Category_tv_will_vs_dm[1] )
+###do a lite diff between sub-LPO vs DM ch2, by layer name
+sublpo_lite1 <- cbind( subLPO_TV_v2[2], 
+paste( subLPO_TV_v2$GDS.Number, subLPO_TV_v2$GDS.Datatype, sep = ";", collapse = NULL )
+, subLPO_TV_v2[1] )
 colnames(sublpo_lite1)[1] <- "Layer.Name"
 colnames(sublpo_lite1)[2] <- "subLPO.gds.pair"
 colnames(sublpo_lite1)[3] <- "subLPO.LV"
@@ -112,7 +114,7 @@ colnames(subdm_lite1)[2] <- "subDM.gds.pair"
 subdm_lite1 <- subdm_lite1[ order(subdm_lite1[1]), ]
 str(subdm_lite1)
 diff_subdm_vs_sublpo_by_Category_tv <- full_join(sublpo_lite1, subdm_lite1, by = "Layer.Name")
-diff_subdm_vs_sublpo_by_Category_tv <- diff_subdm_vs_sublpo_by_Category_tv[ order(diff_subdm_vs_sublpo_by_Category_tv[1]), ]
+diff_subdm_vs_sublpo_by_Category_tv <- diff_subdm_vs_sublpo_by_Category_tv[ order(diff_subdm_vs_sublpo_by_Category_tv[2], na.last = FALSE), ]
 write.csv(x = diff_subdm_vs_sublpo_by_Category_tv, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diff_subdm_vs_sublpo_by_Category_TV.csv", sep = "") )
 ###
@@ -171,7 +173,7 @@ library(diffobj)
 ####################################################end
 ##do diff for layer name
 DM_ <- as.vector( t( i1[ order(i1[1]), ]$DM.Layer.Name ) )
-subLPO_ <- as.vector( t( sublpo_Category_tv_will_vs_dm$Data.Layer.Name ) )
+subLPO_ <- as.vector( t( subLPO_TV_v2$Data.Layer.Name ) )
 length(DM_)
 length(subLPO_)
 diffChr(subLPO_, DM_, color.mode="rgb")
