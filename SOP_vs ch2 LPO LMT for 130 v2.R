@@ -1,13 +1,14 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 DM-000165_130RFSOI_Rev1.0_0.0 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 130BCDLite_DM000064_V1040DRC01 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002669 130RFSOI (v17) .csv", header = TRUE, stringsAsFactors=FALSE)
-i3 = read.csv("3 LM-0159.014.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002653 130G-LP (v27).csv", header = TRUE, stringsAsFactors=FALSE)
+i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i4tv = "DM-000450"
 #dim(i1)
 #dim(i2)
 #dim(i3)
@@ -84,7 +85,9 @@ file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.
 #do OR_filter; use inner_join will keep only correct rows
 sublpo_Category <- inner_join(i2, i1_v33_cate, by = "Layer.Category")
 #do filter for correct TV
-sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( sublpo_Category[11]=="130RFSOI" ), ]
+###
+sublpo_Category_tv_will_vs_dm <- sublpo_Category[ which( 
+sublpo_Category[11] == i4tv ), ]
 #replace NA to blank
 sublpo_Category_tv_will_vs_dm[ is.na( sublpo_Category_tv_will_vs_dm ) ] <- ""
 #order Data.Layer.Name
@@ -115,8 +118,9 @@ file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diff_subdm_vs_sublpo_by_Category
 ###
 ###to export TV missing lines
 #grep dataframe contain keywords; be care of swith DM#
-##i1_tv_v1 <- i1_v3[ grep("DM-000450", i1_v3$ LPO.TV, invert = TRUE), ]
-i1_tv_v1 <- i1_v3[ grep("130RFSOI", i1_v3$ LPO.TV, invert = TRUE), ]
+###
+i1_tv_v1 <- i1_v3[ grep( i4tv, i1_v3$ LPO.TV, invert = TRUE), ]
+##i1_tv_v1 <- i1_v3[ grep("130RFSOI", i1_v3$ LPO.TV, invert = TRUE), ]
 ##i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$ LPO.TV, invert = TRUE), ]
 ##i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$ LPO.TV, invert = TRUE), ]
 ##combine gds# as unique
@@ -128,6 +132,8 @@ colnames(i2_tv_v1)[1] <- "gds.pair"
 i1_tv_v2 <- left_join(i1_tv_v1, i2_tv_v1, by = "gds.pair")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
+#replace NA to blank
+i1_tv_v2[ is.na( i1_tv_v2 ) ] <- ""
 write.csv(x = i1_tv_v2, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT then TV missing.csv", sep = "") )
 ###
