@@ -1,14 +1,14 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("1 180BCDlite-GEN2_DM-000456_Rev2_v0.5_0.0 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 130BCDLite_DM000064_V1040DRC01 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
 ##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002689 130G-LP (v28).csv", header = TRUE, stringsAsFactors=FALSE)
-i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002698 180BSL (v2).csv", header = TRUE, stringsAsFactors=FALSE)
+i3 = read.csv("3 LM-0106.038.csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-i4tv = "DM-000450"
+i4tv = "DM-000456"
 #dim(i1)
 #dim(i2)
 #dim(i3)
@@ -18,9 +18,9 @@ colnames(i1)[2] <- "DM.Description"
 colnames(i1)[3] <- "DM.GDS.Number"
 colnames(i1)[4] <- "DM.GDS.Datatype"
 ##combine gds# as unique
-i1_v1 <- cbind( i1, paste( i1$DM.GDS.Number, i1$DM.GDS.Datatype, sep = ";", collapse = NULL ) )
+i1_v1 <- i1
+i1_v1$gds.pair <- paste( i1_v1$DM.GDS.Number, i1_v1$DM.GDS.Datatype, sep = ";", collapse = NULL )
 i1_v1 <- i1_v1[ order(i1_v1[5]), ]
-colnames(i1_v1)[5] <- "gds.pair"
 #head(i1_v1)
 ##combine gds# as unique
 i2_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NULL )
@@ -121,10 +121,10 @@ file = paste(format(Sys.time(), "%Y%m%d_%H"), "_diff_subdm_vs_sublpo_by_Category
 ###to export TV missing lines
 #grep dataframe contain keywords; be care of swith DM#
 ###
-i1_tv_v1 <- i1_v3[ grep( i4tv, i1_v3$ LPO.TV, invert = TRUE), ]
-##i1_tv_v1 <- i1_v3[ grep("130RFSOI", i1_v3$ LPO.TV, invert = TRUE), ]
-##i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$ LPO.TV, invert = TRUE), ]
-##i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$ LPO.TV, invert = TRUE), ]
+i1_tv_v1 <- i1_v3[ grep( i4tv, i1_v3$LPO.TV, invert = TRUE), ]
+##i1_tv_v1 <- i1_v3[ grep("130RFSOI", i1_v3$LPO.TV, invert = TRUE), ]
+##i1_tv_v1 <- i1_v3[ grep("DM-000064", i1_v3$LPO.TV, invert = TRUE), ]
+##i1_tv_v1 <- i1_v3[ grep("DM-000282", i1_v3$LPO.TV, invert = TRUE), ]
 ##combine gds# as unique
 i2_tv_v1 <- cbind( paste( i2$GDS.Number, i2$GDS.Datatype, sep = ";", collapse = NULL )
 , i2)
