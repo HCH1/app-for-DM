@@ -414,6 +414,14 @@ i1bfaf_v1_diff <- i1bfaf_v1_diff[ order( i1bfaf_v1_diff[ dim(i1bfaf_v1_diff)[2] 
 , na.last = FALSE, decreasing = TRUE ), ] #order reverse
 ####################################################end
 ####################################################end
-
+###split col to cols by sep
+library(tidyr)
+in1_v11 <- separate(in1_v11,oa2,sep=";",into=c("Cadence.Layer.Purpose","Cadence.Purpose.OA.Number"))
+in2_v11 <- separate(in2_v11,oa2,sep=";",into=c("Cadence.Layer.Purpose","Cadence.Purpose.OA.Number"))
+in3_v11 <- separate(in3_v11,oa2,sep=";",into=c("Cadence.Layer.Purpose","Cadence.Purpose.OA.Number"))
+###create a summary table
+in4 <- full_join(in1_v11, in2_v11, by = "Cadence.Layer.Purpose")
+in4 <- full_join(in4, in3_v11, by = "Cadence.Layer.Purpose")
+in4[ is.na( in4 ) ] <- ""
 ####################################################end
 ####################################################end
