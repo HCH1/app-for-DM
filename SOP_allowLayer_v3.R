@@ -1,18 +1,16 @@
-#install.packages("zoo")
-#library(zoo)
-lpo = read.csv("LPO-000354 28SL.csv", header = TRUE)
+lpo = read.csv("LCN-002718 130G-LP (v29).csv", header = TRUE)
+TV_uwant <- "DM-000064"
 #merge column 2 6 7 17 18
 lpo2 <- cbind(lpo[2],lpo[17],lpo[18],lpo[6],lpo[7],lpo[11])
-write.csv(x = lpo2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo2.csv", sep = "") )
+#write.csv(x = lpo2, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo2.csv", sep = "") )
 #filter Tech Variant != blank
 lpo2_22fdx <- lpo2[lpo2[6]!="", ]
 colnames(lpo2_22fdx)[6] <- c("TV")
-##2 ways to do filter
-##lpo2_22fdx <- lpo2_22fdx[lpo2_22fdx[6]=="22FDX", ]
-##or do OR_filter
-lpo2_22fdx <- lpo2_22fdx[ which( lpo2_22fdx[6]=="28SLP" | lpo2_22fdx[6]=="28SLP;28SLPHV" ), ]
+#grep dataframe contain keywords
+lpo2_22fdx <- lpo2_22fdx[grep(TV_uwant, lpo2_22fdx$TV),]
+#str(lpo2_22fdx)
 ##or grep contain
-##lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV),]
+###lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV),]
 ##or grep not SLPHV
 #lpo2_22fdx <- lpo2_22fdx[grep("28SLPHV", lpo2_22fdx$TV, invert = TRUE),]
 #filter Layer Status == Active
@@ -21,7 +19,7 @@ lpo2_22fdx_act <- lpo2_22fdx[lpo2_22fdx[4]=="Active", ]
 lpo2_22fdx_act_cate <- lpo2_22fdx_act[lpo2_22fdx_act[5]!="Cadence Auxiliary", ]
 lpo2_22fdx_act_cate <- lpo2_22fdx_act_cate[lpo2_22fdx_act_cate[5]!="Generated Mask", ]
 lpo2_22fdx_act_cate <- lpo2_22fdx_act_cate[lpo2_22fdx_act_cate[5]!="Unknown", ]
-write.csv(x = lpo2_22fdx_act_cate, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo2_22fdx_act_cate.csv", sep = "") )
+#write.csv(x = lpo2_22fdx_act_cate, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo2_22fdx_act_cate.csv", sep = "") )
 #re-bind 3 columns
 lpo2_22fdx_act_cate_3cols <- cbind(lpo2_22fdx_act_cate[1],lpo2_22fdx_act_cate[2],lpo2_22fdx_act_cate[3])
 #remove duplicates
@@ -36,11 +34,10 @@ colnames(last_row) <- colnames(lpo2_22fdx_act_cate_dedup)
 allowlayer1 <- rbind(lpo2_22fdx_act_cate_dedup, last_row)
 write.csv(x = allowlayer1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_allow_layer_ans.csv", sep = "") )
 #do summary table
-sum_count <- rbind( dim(lpo2_22fdx),dim(lpo2_22fdx_act),dim(lpo2_22fdx_act_cate),dim(lpo2_22fdx_act_cate_dedup) )
-rownames(sum_count) <- c("LPO_22FDX","LPO_filter1","LPO_filter2","LPO_ans")
-colnames(sum_count) <- c("ea rows","ea columns")
-write.csv(x = sum_count, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum_count.csv", sep = "") )
-####################################################end
+#sum_count <- rbind( dim(lpo2_22fdx),dim(lpo2_22fdx_act),dim(lpo2_22fdx_act_cate),dim(lpo2_22fdx_act_cate_dedup) )
+#rownames(sum_count) <- c("LPO_22FDX","LPO_filter1","LPO_filter2","LPO_ans")
+#colnames(sum_count) <- c("ea rows","ea columns")
+#write.csv(x = sum_count, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sum_count.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
