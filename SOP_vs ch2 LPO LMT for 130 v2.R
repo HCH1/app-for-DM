@@ -1,14 +1,9 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 180BCDlite-GEN2_DM-000456_Rev2_v0.5_0.0 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-##i1 = read.csv("1 130BCDLite_DM000064_V1040DRC01 ch2 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-##i1 = read.csv("1 DM-000064_25_Aug 2018 130BCDL-PTF - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
-##i1 = read.csv("1 DM-000282_8_30 June 2018 - Copy ch2 sum.csv", header = TRUE, stringsAsFactors=FALSE)
-##i2 = read.csv("2 LCN-002393 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002698 180BSL (v2).csv", header = TRUE, stringsAsFactors=FALSE)
-i3 = read.csv("3 LM-0106.038.csv", header = TRUE, stringsAsFactors=FALSE)
-#i3 = read.csv("3 LM-0001.090 - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-i4tv = "DM-000456"
+i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002745 130G-LP (v31).csv", header = TRUE, stringsAsFactors=FALSE)
+i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
+i4tv = "DM-000450"
 #dim(i1)
 #dim(i2)
 #dim(i3)
@@ -84,16 +79,22 @@ file = paste(format(Sys.time(), "%Y%m%d_%H"), "_vs ch2 LPO LMT Category freq v2.
 ###export sub LPO by wanted Category
 #do OR_filter; use inner_join will keep only correct rows
 sublpo_Category <- inner_join(i2, i1_v33_cate, by = "Layer.Category")
+#grep invert = TRUE; can not choose Enablement for auto sync ch2.
+sublpo_Category <- sublpo_Category[ grep("Marker Enablement", 
+sublpo_Category$Layer.Category, invert = TRUE), ]
+#str(sublpo_Category)
+#table(sublpo_Category$Layer.Category)
 #do filter for correct TV
 ###
 #grep dataframe contain keywords
 #grep TV=i4tv from sub-LPO
 subLPO_TV_v2 <- sublpo_Category[grep(i4tv, sublpo_Category$Tech.Variant...Included.in.PDK),]
-str(subLPO_TV_v2)
+#str(subLPO_TV_v2)
 #replace NA to blank
 subLPO_TV_v2[ is.na( subLPO_TV_v2 ) ] <- ""
 #order Data.Layer.Name
 subLPO_TV_v2 <- subLPO_TV_v2[ order(subLPO_TV_v2[2]), ] #order reverse
+#table(subLPO_TV_v2$Layer.Category)
 write.csv(x = subLPO_TV_v2, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo_Category_TV_for_LCN_using.csv", sep = "") )
 ###
