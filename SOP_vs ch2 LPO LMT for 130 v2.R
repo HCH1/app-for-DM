@@ -1,9 +1,10 @@
 library(dplyr)
 ##input:
-i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("1 130BCD_DM000282_V0950PRE01_Base_Editable ch2 - Copy - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i4tv = "DM-000282"
+#i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 i2 = read.csv("2 LCN-002745 130G-LP (v31).csv", header = TRUE, stringsAsFactors=FALSE)
 i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-i4tv = "DM-000450"
 #dim(i1)
 #dim(i2)
 #dim(i3)
