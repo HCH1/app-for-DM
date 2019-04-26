@@ -425,3 +425,28 @@ in4 <- full_join(in4, in3_v11, by = "Cadence.Layer.Purpose")
 in4[ is.na( in4 ) ] <- ""
 ####################################################end
 ####################################################end
+####################################################end
+library(qdapDictionaries)
+library(NLP)
+library(tm)
+library(SnowballC)
+###https://www.rdocumentation.org/packages/tm/versions/0.7-6/topics/Corpus
+###load the dataset
+i1 = read.csv("130BCDLITE_Rev1.0_4.0_DRC03_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
+dataset_original <- i1
+str(dataset_original)
+corpus = VCorpus(VectorSource(dataset_original$Description))
+#corpus = tm_map(corpus, content_transformer(tolower))
+corpus = tm_map(corpus, removeNumbers)
+corpus = tm_map(corpus, removePunctuation)
+corpus = tm_map(corpus, removeWords, stopwords())
+corpus = tm_map(corpus, stemDocument)
+corpus = tm_map(corpus, stripWhitespace)
+corpus
+###Creating the Bag of Words model
+dtm = TermDocumentMatrix(corpus)
+dtm = removeSparseTerms(dtm, 0.999)
+dataset = as.data.frame(as.matrix(dtm))
+####################################################end
+####################################################end
+####################################################end
