@@ -450,3 +450,52 @@ dataset = as.data.frame(as.matrix(dtm))
 ####################################################end
 ####################################################end
 ####################################################end
+###case: dm.desc.split="" in.dict="" LV=has
+###logic check by contain
+desc_map_lpo2$ans.missing.ly = ifelse(
+desc_map_lpo2$dm.desc.split == ""
+& desc_map_lpo2$in.dict == ""
+& grepl("LV",desc_map_lpo2$ï..Number),"missing ly",0)
+####################################################end
+####################################################end
+####################################################end
+library(qdapDictionaries)
+#create custom function
+is.word <- function(x) x %in% GradyAugmented # or use any dataset from package
+#use this function to filter words, df = dataframe from corpus
+df0 <- desc_split_freq
+df <- desc_split_freq
+###dict only has lower case.
+#df0$Data.Layer.Name <- tolower(df0$Data.Layer.Name)
+df <- df[which(is.word(df$Data.Layer.Name)),]
+###dm vs af-dict
+desc_vs_dict <- full_join(df0, df, by = "Data.Layer.Name")
+colnames(desc_vs_dict)[2] <- "dm.desc.split"
+colnames(desc_vs_dict)[3] <- "in.dict"
+write.csv(x = desc_vs_dict, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict v1.csv", sep = "") )
+####################################################end
+####################################################end
+####################################################end
+###https://www.rdocumentation.org/packages/tm/versions/0.7-6/topics/Corpus
+install.packages('tm')
+install.packages('SnowballC')
+library(tm)
+library(SnowballC)
+#load the dataset
+dataset_original = read.csv(file.choose(), stringsAsFactors = FALSE)
+corpus = VCorpus(VectorSource(dataset_original$Review))
+corpus = tm_map(corpus, content_transformer(tolower))
+corpus = tm_map(corpus, removeNumbers)
+corpus = tm_map(corpus, removePunctuation)
+corpus = tm_map(corpus, removeWords, stopwords())
+corpus = tm_map(corpus, stemDocument)
+corpus = tm_map(corpus, stripWhitespace)
+###Creating the Bag of Words model
+dtm = DocumentTermMatrix(corpus)
+dtm = removeSparseTerms(dtm, 0.999)
+dataset = as.data.frame(as.matrix(dtm))
+dataset$Liked = dataset_original$Liked
+####################################################end
+####################################################end
+####################################################end
