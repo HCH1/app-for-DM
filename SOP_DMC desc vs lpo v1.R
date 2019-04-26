@@ -46,8 +46,8 @@ df <- desc_split_freq
 df <- df[which(is.word(df$Data.Layer.Name)),]
 ###dm vs af-dict
 desc_vs_dict <- full_join(df0, df, by = "Data.Layer.Name")
-colnames(desc_vs_dict)[2] <- "dm.desc.split"
-colnames(desc_vs_dict)[3] <- "in.dict"
+colnames(desc_vs_dict)[2] <- "dm.desc.split.freq"
+colnames(desc_vs_dict)[3] <- "in.dict.freq"
 write.csv(x = desc_vs_dict, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict v1.csv", sep = "") )
 ####################################################end
@@ -72,7 +72,7 @@ desc_map_lpo2 <- desc_map_lpo
 desc_map_lpo2$ans.missing.ly = ifelse(
 desc_map_lpo2$dm.desc.split == ""
 & desc_map_lpo2$in.dict == ""
-& grepl("LV",desc_map_lpo2$ï..Number),"missing ly",0)
+& grepl("LV",desc_map_lpo2$ï..Number),"missing ly, need GR",0)
 
 ###case: dm.desc.split=has in.dict="" LV=has
 desc_map_lpo2$ans.ly.in.GR.desc = ifelse(
