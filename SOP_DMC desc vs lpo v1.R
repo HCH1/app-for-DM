@@ -89,7 +89,7 @@ desc_map_lpo2$dm.desc.split > 0
 desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]], decreasing = TRUE), ]
 str(desc_map_lpo2)
 write.csv(x = desc_map_lpo2, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict vs ALL v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict vs sub-ALL v1.csv", sep = "") )
 ####################################################end
 #search then replace
 #gsub("[^\\(\\)\\[\\]\\{\\}]", "", x)
