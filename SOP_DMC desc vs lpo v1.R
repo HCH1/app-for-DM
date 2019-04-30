@@ -1,9 +1,9 @@
 library(dplyr)
 ##input:
-i1 = read.csv("130BCDLITE_Rev1.0_4.0_DRC03_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("130BCD_Rev0.9_5.0_PRE01_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
 i4tv = "DM-000282"
 #i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002718 130G-LP (v29).csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-002802 130G-LP (v33).csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 ###make a sub-ALL
 TV_uwant <- "DM-000064"
@@ -86,7 +86,12 @@ desc_map_lpo2$dm.desc.split > 0
 & desc_map_lpo2$in.dict > 0
 & grepl("",desc_map_lpo2$ï..Number),"word in dict",0)
 
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]], decreasing = TRUE), ]
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]], 
+decreasing = TRUE), ]
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]-1], 
+decreasing = TRUE), ]
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]-2], 
+decreasing = TRUE), ]
 str(desc_map_lpo2)
 write.csv(x = desc_map_lpo2, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict vs sub-ALL v1.csv", sep = "") )
