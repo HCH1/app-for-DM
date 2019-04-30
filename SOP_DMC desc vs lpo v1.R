@@ -72,7 +72,7 @@ desc_map_lpo2 <- desc_map_lpo
 desc_map_lpo2$ans.missing.ly = ifelse(
 desc_map_lpo2$dm.desc.split == ""
 & desc_map_lpo2$in.dict == ""
-& grepl("LV",desc_map_lpo2$ï..Number),"missing ly, need GR",0)
+& grepl("LV",desc_map_lpo2$ï..Number),"ly do not have GR",0)
 
 ###case: dm.desc.split=has in.dict="" LV=has
 desc_map_lpo2$ans.ly.in.GR.desc = ifelse(
