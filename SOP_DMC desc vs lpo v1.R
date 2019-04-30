@@ -1,12 +1,11 @@
 library(dplyr)
 ##input:
 i1 = read.csv("130BCD_Rev0.9_5.0_PRE01_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
-i4tv = "DM-000282"
 #i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 i2 = read.csv("2 LCN-002802 130G-LP (v33).csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 ###make a sub-ALL
-TV_uwant <- "DM-000064"
+TV_uwant <- "DM-000282"
 ly_st <- "Active"
 ly_cat <- "Marker Enablement"
 ###
