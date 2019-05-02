@@ -1,6 +1,6 @@
 library(dplyr)
 ##input:
-i1 = read.csv("130BCD_Rev0.9_5.0_PRE01_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("130BCD_Rev0.9_5.0_PRE01_internal.psv - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 i2 = read.csv("2 LCN-002802 130G-LP (v33).csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
@@ -131,8 +131,21 @@ str(i1_v1)
 #i1_v1$desc2 <- gsub("[^\\(\\)]", "", i1_v1$desc2)
 #i1_v1$desc2 <- gsub("\\w|\\s|[.]|[<]|[>]|[/]|[-]|[\"]|[$]|[=]|[+]|[%]|[,]|[:]|[;]|[&]|[#]|[']|[~]", 
 #"", i1_v1$Description)
-write.csv(x = i1_v1, row.names = TRUE, 
+write.csv(x = i1_v1, row.names = TRUE, order
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc bracket v1.csv", sep = "") )
+####################################################end
+###dig out lack full stop dot.
+###grep invert = TRUE
+i1_v1_v1 <- i1
+###end is not .
+i1_v1_v1 <- i1_v1_v1[grep("[.]$", i1_v1_v1$Description, invert = TRUE),]
+###end is not ]
+i1_v1_v1 <- i1_v1_v1[grep("\\]$", i1_v1_v1$Description, invert = TRUE),]
+#replace NA to blank
+i1_v1_v1[ is.na( i1_v1_v1 ) ] <- ""
+write.csv(x = i1_v1_v1, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), 
+"_DMC_desc lack full stop dot v1.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
