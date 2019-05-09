@@ -5,12 +5,12 @@ i1 = read.csv("2 LCN-003147 130G-LP (v35).csv", header = TRUE, stringsAsFactors=
 i2 = read.csv("2 LCN-002803 130RFSOI (v22).csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 ###make a sub-ALL
-TV_uwant <- "DM-000282"
-ly_st <- "Active"
-ly_cat <- "Marker Enablement"
+#TV_uwant <- "DM-000282"
+#ly_st <- "Active"
+#ly_cat <- "Marker Enablement"
 ###
-i1_v1 <- i1
-i2_v1 <- i2
+#i1_v1 <- i1
+#i2_v1 <- i2
 ##combine gds# as unique
 i1_v1 <- cbind( i1[1:36], paste( i1[,3],i1[,4],i1[,17],i1[,18],i1[,23],i1[,24], 
 sep = ";", collapse = NULL ) )
