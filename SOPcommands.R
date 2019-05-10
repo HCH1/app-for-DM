@@ -110,8 +110,10 @@ length(sum1)
 #search then replace
 sum2 <- gsub("<entry", "\n<entry", sum2)
 sum2 <- gsub("<title", "\n<title", sum2)
-##replace df text, use gsub, only can add new col.
+##replace df text, use gsub, can add new col.
 diffdm1$v1 <- gsub("Same", "Updated", diffdm1$Type)
+###or replace same col
+diffdm1$Type <- gsub("Same", "Updated", diffdm1$Type)
 #mulit-search then replace
 gsub('^.*This\\s*|\\s*first.*$', '', x)
 #replace lower a-z, lead \\s, end \\s 
