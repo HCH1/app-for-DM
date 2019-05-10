@@ -46,13 +46,13 @@ i1_v1[ is.na( i1_v1 ) ] <- ""
 write.csv(x = i1_v1, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lmt from sub-lpo.csv", sep = "") )
 ####################################################end
-###col 3 5 6
-i1_v2 <- cbind( paste( i1_v1[,3],i1_v1[,5],i1_v1[,6],
+###col 5 6 3
+i1_v2 <- cbind( paste( i1_v1[,5],i1_v1[,6],i1_v1[,3],
 sep = ";", collapse = NULL ) )
 i1_v2 <- as.data.frame(table(i1_v2))
 colnames(i1_v2)[1] <- "name"
 
-i2_v2 <- cbind( paste( i2[,3],i2[,5],i2[,6],
+i2_v2 <- cbind( paste( i2[,5],i2[,6],i2[,3],
 sep = ";", collapse = NULL ) )
 i2_v2 <- as.data.frame(table(i2_v2))
 colnames(i2_v2)[1] <- "name"
@@ -67,7 +67,30 @@ sublpo_lmt_diff <- sublpo_lmt_diff[ order( sublpo_lmt_diff[2]
 
 #sublpo_lmt_diff[ is.na( sublpo_lmt_diff ) ] <- ""
 write.csv(x = sublpo_lmt_diff, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo_lmt_diff v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo vs lmt diff v1.csv", sep = "") )
+####################################################end
+###col 5 6
+i1_v3 <- cbind( paste( i1_v1[,5],i1_v1[,6],
+sep = ";", collapse = NULL ) )
+i1_v3 <- as.data.frame(table(i1_v3))
+colnames(i1_v3)[1] <- "GDS pair"
+
+
+i2_v3 <- cbind( paste( i2[,5],i2[,6],
+sep = ";", collapse = NULL ) )
+i2_v3 <- as.data.frame(table(i2_v3))
+colnames(i2_v3)[1] <- "GDS pair"
+
+sublpo_lmt_gds_diff <- full_join( i1_v3, i2_v3, by = "GDS pair")
+colnames(sublpo_lmt_gds_diff)[2:3] <- c("sub-lpo","sub-lmt")
+###re-order
+sublpo_lmt_gds_diff <- sublpo_lmt_gds_diff[ order( sublpo_lmt_gds_diff[3]
+, na.last = TRUE, decreasing = TRUE ), ] #order reverse
+sublpo_lmt_gds_diff <- sublpo_lmt_gds_diff[ order( sublpo_lmt_gds_diff[2]
+, na.last = FALSE, decreasing = TRUE ), ] #order reverse
+
+write.csv(x = sublpo_lmt_gds_diff, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo vs lmt GDS diff v1.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
