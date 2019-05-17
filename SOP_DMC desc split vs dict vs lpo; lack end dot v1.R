@@ -57,6 +57,22 @@ sub_ALL <- sub_ALL[grep(ly_st, sub_ALL$Layer.Status),]
 sub_ALL <- sub_ALL[grep(ly_cat, sub_ALL$Layer.Category, invert = TRUE),]
 #str(sub_ALL)
 ####################################################end
+###map LCN vs desc slpi freq
+sub_all_vs_desc_split <- full_join(sub_ALL, desc_split_freq, by = "Data.Layer.Name")
+#replace NA to blank
+sub_all_vs_desc_split[ is.na( sub_all_vs_desc_split ) ] <- ""
+
+sub_all_vs_desc_split <- sub_all_vs_desc_split[
+grep("LV", sub_all_vs_desc_split$ï..Number),]
+
+sub_all_vs_desc_split <- sub_all_vs_desc_split[ 
+order(sub_all_vs_desc_split[dim(sub_all_vs_desc_split)[2]], 
+decreasing = TRUE), ]
+
+write.csv(x = sub_all_vs_desc_split, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), 
+"_DMC_sub_all_vs_desc_split v1.csv", sep = "") )
+####################################################end
 ###vlookup sub-ALL vs desc_split vs dict
 desc_map_lpo <- full_join( desc_vs_dict, sub_ALL, by = "Data.Layer.Name")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
