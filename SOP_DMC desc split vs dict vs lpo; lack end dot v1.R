@@ -57,7 +57,7 @@ sub_ALL <- sub_ALL[grep(ly_st, sub_ALL$Layer.Status),]
 sub_ALL <- sub_ALL[grep(ly_cat, sub_ALL$Layer.Category, invert = TRUE),]
 #str(sub_ALL)
 ####################################################end
-###map LCN vs desc slpi freq
+###map sub-ALL vs desc split freq
 sub_all_vs_desc_split <- full_join(sub_ALL, desc_split_freq, by = "Data.Layer.Name")
 #replace NA to blank
 sub_all_vs_desc_split[ is.na( sub_all_vs_desc_split ) ] <- ""
@@ -71,7 +71,7 @@ decreasing = TRUE), ]
 
 write.csv(x = sub_all_vs_desc_split, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-"_DMC_sub_all_vs_desc_split v1.csv", sep = "") )
+"_DMC_sub-ALL_vs_desc_split v1.csv", sep = "") )
 ####################################################end
 ###vlookup sub-ALL vs desc_split vs dict
 desc_map_lpo <- full_join( desc_vs_dict, sub_ALL, by = "Data.Layer.Name")
@@ -163,5 +163,26 @@ write.csv(x = i1_v1_v1, row.names = TRUE,
 file = paste(format(Sys.time(), "%Y%m%d_%H"), 
 "_DMC_desc lack full stop dot v1.csv", sep = "") )
 ####################################################end
+###map LCN vs desc split freq
+lcn_vs_desc_split <- full_join(sub_ALL, desc_split_freq, by = "Data.Layer.Name")
+desc_map_lpo3 <- desc_map_lpo2
+
+desc_map_lpo3 <- cbind(desc_map_lpo3[1],
+desc_map_lpo3[ (dim(desc_map_lpo3)[2]-2) : dim(desc_map_lpo3)[2] ] )
+
+lcn_vs_desc_split2 <- full_join(lcn_vs_desc_split, desc_map_lpo3, by = "Data.Layer.Name")
+#replace NA to blank
+lcn_vs_desc_split2[ is.na( lcn_vs_desc_split2 ) ] <- ""
+#str(lcn_vs_desc_split2)
+#lcn_vs_desc_split <- lcn_vs_desc_split[
+#grep("LV", lcn_vs_desc_split$ï..Number),]
+
+#lcn_vs_desc_split <- lcn_vs_desc_split[ 
+#order(lcn_vs_desc_split[dim(lcn_vs_desc_split)[2]], 
+#decreasing = TRUE), ]
+
+write.csv(x = lcn_vs_desc_split2, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"), 
+"_DMC_lcn vs desc_split vs dict v1.csv", sep = "") )
 ####################################################end
 ####################################################end
