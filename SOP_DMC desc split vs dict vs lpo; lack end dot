@@ -1,11 +1,11 @@
 library(dplyr)
 ##input:
-i1 = read.csv("130BCD_Rev0.9_5.0_PRE01_internal.psv - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("130BCDLITE-GEN2_Rev0.1_0.0_SYN02_internal - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
 #i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-i2 = read.csv("2 LCN-002802 130G-LP (v33).csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-003174 130G-LP (v38).csv", header = TRUE, stringsAsFactors=FALSE)
 #i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 ###make a sub-ALL
-TV_uwant <- "DM-000282"
+TV_uwant <- "DM-000450"
 ly_st <- "Active"
 ly_cat <- "Marker Enablement"
 ###
@@ -31,8 +31,8 @@ desc_split_freq <- table(desc_split)
 desc_split_freq <- as.data.frame(desc_split_freq)
 colnames(desc_split_freq)[1] <- "Data.Layer.Name"
 #str(desc_split_freq)
-write.csv(x = desc_split_freq, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc split v1.csv", sep = "") )
+#write.csv(x = desc_split_freq, row.names = TRUE, 
+#file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC desc_split v1.csv", sep = "") )
 ####################################################end
 library(qdapDictionaries)
 #create custom function
@@ -48,9 +48,10 @@ desc_vs_dict <- full_join(df0, df, by = "Data.Layer.Name")
 colnames(desc_vs_dict)[2] <- "dm.desc.split.freq"
 colnames(desc_vs_dict)[3] <- "in.dict.freq"
 write.csv(x = desc_vs_dict, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
+"_DMC desc vs dict v1.csv", sep = "") )
 ####################################################end
-###make a sub-ALL
+###create a sub-ALL
 sub_ALL <- i2_v1
 sub_ALL <- sub_ALL[grep(TV_uwant, sub_ALL$Tech.Variant...Included.in.PDK),]
 sub_ALL <- sub_ALL[grep(ly_st, sub_ALL$Layer.Status),]
@@ -69,9 +70,9 @@ len1 <- dim(sub_all_vs_desc_split)
 sub_all_vs_desc_split <- sub_all_vs_desc_split[ 
 order(sub_all_vs_desc_split[len1[2]], decreasing = TRUE), ]
 
-write.csv(x = sub_all_vs_desc_split, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-"_DMC_sub-ALL_vs_desc_split v1.csv", sep = "") )
+#write.csv(x = sub_all_vs_desc_split, row.names = TRUE, 
+#file = paste(format(Sys.time(), "%Y%m%d_%H"), 
+#"_DMC sub-ALL map desc_freq v1.csv", sep = "") )
 ####################################################end
 ###vlookup sub-ALL vs desc_split vs dict
 desc_map_lpo <- full_join( desc_vs_dict, sub_ALL, by = "Data.Layer.Name")
@@ -108,17 +109,24 @@ desc_map_lpo2$ans.missing.ly < 1
 & desc_map_lpo2$ans.word.in.dict < 1,"word not in dict",0)
 
 len2 <- dim(desc_map_lpo2)[2]
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2], 
+desc_map_lpo2 <- cbind(desc_map_lpo2[(len2-3):len2],
+desc_map_lpo2[4],
+desc_map_lpo2[1],
+desc_map_lpo2[5:(len2-4)],
+desc_map_lpo2[2:3])
+
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[4], 
 decreasing = TRUE), ]
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2-1], 
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[3], 
 decreasing = TRUE), ]
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2-2], 
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[2], 
 decreasing = TRUE), ]
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2-3], 
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[1], 
 decreasing = TRUE), ]
 #str(desc_map_lpo2)
 write.csv(x = desc_map_lpo2, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict vs sub-ALL v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
+"_DMC summary sub-ALL vs ly GR missing; desc_split; dict v1.csv", sep = "") )
 ####################################################end
 #search then replace
 #gsub("[^\\(\\)\\[\\]\\{\\}]", "", x)
@@ -157,7 +165,8 @@ i1_v1$bk_check56 <- ifelse(i1_v1$bk5 == i1_v1$bk6,"same","bracket missing")
 #i1_v1$desc2 <- gsub("\\w|\\s|[.]|[<]|[>]|[/]|[-]|[\"]|[$]|[=]|[+]|[%]|[,]|[:]|[;]|[&]|[#]|[']|[~]", 
 #"", i1_v1$Description)
 write.csv(x = i1_v1, row.names = TRUE, order
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc bracket v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
+"_DMC desc bracket v1.csv", sep = "") )
 ####################################################end
 ###dig out lack full stop dot.
 ###grep invert = TRUE
@@ -169,41 +178,8 @@ i1_v1_v1 <- i1_v1_v1[grep("\\]$", i1_v1_v1$Description, invert = TRUE),]
 #replace NA to blank
 i1_v1_v1[ is.na( i1_v1_v1 ) ] <- ""
 write.csv(x = i1_v1_v1, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-"_DMC_desc lack full stop dot v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
+"_DMC desc lack full stop dot v1.csv", sep = "") )
 ####################################################end
-###map sun-ALL vs desc split freq
-lcn_vs_desc_split <- full_join(sub_ALL, desc_split_freq, by = "Data.Layer.Name")
-desc_map_lpo3 <- desc_map_lpo2
-
-len3 <- dim(desc_map_lpo3)[2]
-desc_map_lpo3 <- cbind(desc_map_lpo3[1],
-desc_map_lpo3[ (len3-3) : len3 ] )
-
-len4 <- dim(lcn_vs_desc_split2)[2]
-lcn_vs_desc_split2 <- full_join(desc_map_lpo3, lcn_vs_desc_split, by = "Data.Layer.Name")
-lcn_vs_desc_split2 <- cbind(lcn_vs_desc_split2[2:5]
-,lcn_vs_desc_split2[6]
-,lcn_vs_desc_split2[1]
-,lcn_vs_desc_split2[7:len4])
-#str(lcn_vs_desc_split2)
-#lcn_vs_desc_split <- lcn_vs_desc_split[
-#grep("LV", lcn_vs_desc_split$ï..Number),]
-#lcn_vs_desc_split <- lcn_vs_desc_split[ 
-#order(lcn_vs_desc_split[dim(lcn_vs_desc_split)[2]], 
-#decreasing = TRUE), ]
-lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[4], 
-decreasing = TRUE), ]
-lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[3], 
-decreasing = TRUE), ]
-lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[2], 
-decreasing = TRUE), ]
-lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[1], 
-decreasing = TRUE), ]
-#replace NA to blank
-lcn_vs_desc_split2[ is.na( lcn_vs_desc_split2 ) ] <- ""
-write.csv(x = lcn_vs_desc_split2, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-"_DMC sub-ALL vs desc_split vs dict v1.csv", sep = "") )
 ####################################################end
 ####################################################end
