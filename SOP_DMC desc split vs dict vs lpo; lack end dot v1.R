@@ -23,14 +23,14 @@ i1_v1$ch_ly1 <- gsub("[.]$", "", i1_v1$ch_ly1)
 #insdie dataframe is factor -> character -> list -> character
 desc_split <- unlist( strsplit( i1_v1$ch_ly1, '\\s' ) )
 desc_split <- as.data.frame(desc_split)
-str(desc_split)
+#str(desc_split)
 ###remove end is .
 desc_split$desc_split <- gsub("[.]$", "", desc_split$desc_split)
 ###freq
 desc_split_freq <- table(desc_split)
 desc_split_freq <- as.data.frame(desc_split_freq)
 colnames(desc_split_freq)[1] <- "Data.Layer.Name"
-str(desc_split_freq)
+#str(desc_split_freq)
 write.csv(x = desc_split_freq, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc split v1.csv", sep = "") )
 ####################################################end
@@ -65,9 +65,9 @@ sub_all_vs_desc_split[ is.na( sub_all_vs_desc_split ) ] <- ""
 sub_all_vs_desc_split <- sub_all_vs_desc_split[
 grep("LV", sub_all_vs_desc_split$ï..Number),]
 
+len1 <- dim(sub_all_vs_desc_split)
 sub_all_vs_desc_split <- sub_all_vs_desc_split[ 
-order(sub_all_vs_desc_split[dim(sub_all_vs_desc_split)[2]], 
-decreasing = TRUE), ]
+order(sub_all_vs_desc_split[len1[2]], decreasing = TRUE), ]
 
 write.csv(x = sub_all_vs_desc_split, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), 
@@ -101,13 +101,22 @@ desc_map_lpo2$dm.desc.split > 0
 & desc_map_lpo2$in.dict > 0
 & grepl("",desc_map_lpo2$ï..Number),"word in dict",0)
 
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]], 
+###case: dm.desc.split="" in.dict="" LV=""
+desc_map_lpo2$ans.word.not.in.dict = ifelse(
+desc_map_lpo2$ans.missing.ly < 1
+& desc_map_lpo2$ans.ly.in.GR.desc < 1
+& desc_map_lpo2$ans.word.in.dict < 1,"word not in dict",0)
+
+len2 <- dim(desc_map_lpo2)[2]
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2], 
 decreasing = TRUE), ]
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]-1], 
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2-1], 
 decreasing = TRUE), ]
-desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[dim(desc_map_lpo2)[2]-2], 
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2-2], 
 decreasing = TRUE), ]
-str(desc_map_lpo2)
+desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[len2-3], 
+decreasing = TRUE), ]
+#str(desc_map_lpo2)
 write.csv(x = desc_map_lpo2, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC_desc vs dict vs sub-ALL v1.csv", sep = "") )
 ####################################################end
@@ -142,7 +151,7 @@ i1_v1$bk6 <- gsub("[\\}]", "3", i1_v1$bk6)
 i1_v1$bk_check12 <- ifelse(i1_v1$bk1 == i1_v1$bk2,"same","bracket missing")
 i1_v1$bk_check34 <- ifelse(i1_v1$bk3 == i1_v1$bk4,"same","bracket missing")
 i1_v1$bk_check56 <- ifelse(i1_v1$bk5 == i1_v1$bk6,"same","bracket missing")
-str(i1_v1)
+#str(i1_v1)
 #i1_v1$desc2 <- gsub("[[:punct:]]|\\w|\\s", "", i1_v1$Description)
 #i1_v1$desc2 <- gsub("[^\\(\\)]", "", i1_v1$desc2)
 #i1_v1$desc2 <- gsub("\\w|\\s|[.]|[<]|[>]|[/]|[-]|[\"]|[$]|[=]|[+]|[%]|[,]|[:]|[;]|[&]|[#]|[']|[~]", 
@@ -163,26 +172,38 @@ write.csv(x = i1_v1_v1, row.names = TRUE,
 file = paste(format(Sys.time(), "%Y%m%d_%H"), 
 "_DMC_desc lack full stop dot v1.csv", sep = "") )
 ####################################################end
-###map LCN vs desc split freq
+###map sun-ALL vs desc split freq
 lcn_vs_desc_split <- full_join(sub_ALL, desc_split_freq, by = "Data.Layer.Name")
 desc_map_lpo3 <- desc_map_lpo2
 
+len3 <- dim(desc_map_lpo3)[2]
 desc_map_lpo3 <- cbind(desc_map_lpo3[1],
-desc_map_lpo3[ (dim(desc_map_lpo3)[2]-2) : dim(desc_map_lpo3)[2] ] )
+desc_map_lpo3[ (len3-3) : len3 ] )
 
-lcn_vs_desc_split2 <- full_join(lcn_vs_desc_split, desc_map_lpo3, by = "Data.Layer.Name")
-#replace NA to blank
-lcn_vs_desc_split2[ is.na( lcn_vs_desc_split2 ) ] <- ""
+len4 <- dim(lcn_vs_desc_split2)[2]
+lcn_vs_desc_split2 <- full_join(desc_map_lpo3, lcn_vs_desc_split, by = "Data.Layer.Name")
+lcn_vs_desc_split2 <- cbind(lcn_vs_desc_split2[2:5]
+,lcn_vs_desc_split2[6]
+,lcn_vs_desc_split2[1]
+,lcn_vs_desc_split2[7:len4])
 #str(lcn_vs_desc_split2)
 #lcn_vs_desc_split <- lcn_vs_desc_split[
 #grep("LV", lcn_vs_desc_split$ï..Number),]
-
 #lcn_vs_desc_split <- lcn_vs_desc_split[ 
 #order(lcn_vs_desc_split[dim(lcn_vs_desc_split)[2]], 
 #decreasing = TRUE), ]
-
+lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[4], 
+decreasing = TRUE), ]
+lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[3], 
+decreasing = TRUE), ]
+lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[2], 
+decreasing = TRUE), ]
+lcn_vs_desc_split2 <- lcn_vs_desc_split2[ order(lcn_vs_desc_split2[1], 
+decreasing = TRUE), ]
+#replace NA to blank
+lcn_vs_desc_split2[ is.na( lcn_vs_desc_split2 ) ] <- ""
 write.csv(x = lcn_vs_desc_split2, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-"_DMC_lcn vs desc_split vs dict v1.csv", sep = "") )
+"_DMC sub-ALL vs desc_split vs dict v1.csv", sep = "") )
 ####################################################end
 ####################################################end
