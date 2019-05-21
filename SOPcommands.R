@@ -37,9 +37,21 @@ lpo = readLines("LPO-000202.csv", warn = FALSE)
 lpo1 <- lpo
 #save without col_id by date
 write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo1_dm1.csv", sep = "") )
+###make a sub-ALL
+TV_uwant <- "DM-000450"
+ly_st <- "Active"
+ly_cat <- "Marker Enablement"
+###re-order
+in1 <- in1[ order(in1[1], 
+decreasing = TRUE), ]
+###clean NA
+in1[ is.na( in1 ) ] <- ""
+###save as certain words
+write.csv(x = in1, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
+"_ans v1.csv", sep = "") )
 #save as txt
 write.table(x = drc1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_drc1.txt", sep = "") )
-
 #create new col
 lpo1$x <- paste( lpo1$Data.Layer.Name, lpo1$GDS.Number, lpo1$GDS.Datatype, sep = "|", collapse = NULL )
 #do filter
