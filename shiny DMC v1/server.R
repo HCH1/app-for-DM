@@ -144,13 +144,14 @@ desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[1],
 desc_map_lpo2
 })
 ####
+###https://shiny.rstudio.com/articles/download.html
 # Downloadable csv of selected dataset ----
 output$downloadData <- downloadHandler(
   filename = function() {
     paste(input$file1, ".csv", sep = "")
   },
   content = function(file) {
-    write.csv(output$op1, file, row.names = TRUE)
+    write.csv(desc_map_lpo2(), file, row.names = TRUE)
   }
 )
 ###
