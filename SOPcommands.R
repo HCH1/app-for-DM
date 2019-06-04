@@ -513,3 +513,99 @@ dataset$Liked = dataset_original$Liked
 ####################################################end
 ####################################################end
 ####################################################end
+###app - DMC desc split vs dict vs lpo; lack end dot
+###2019 June
+library(shiny)
+ui <- fluidPage(
+  titlePanel("app - DMC desc split vs dict vs lpo"),
+  sidebarLayout(
+    sidebarPanel(
+      textInput("text1", "what's your Tech Variant?", value = "DM-000456"),
+      fileInput("file1", "File 1 = internal_PSV.csv",
+                multiple = TRUE,
+                accept = c("text/csv",
+                           "text/comma-separated-values,text/plain",
+                           ".csv")),
+      fileInput("file2", "File 2 = LCN.csv",
+                multiple = TRUE,
+                accept = c("text/csv",
+                           "text/comma-separated-values,text/plain",
+                           ".csv")),
+      ##code HTML in shiny
+      ##https://shiny.rstudio.com/articles/tag-glossary.html
+      tags$a(
+        href="http://mptweb1/~pdkwadm/design_rules_diff_reports/WIP/130NM/BCD/Rev0.9_5.0_DRC02_D1/PSV/", 
+        "e.g. PSV"),
+      #tags$a(href="https://text-compare.com/", "(2) Suggest to check text_diff"),
+      ## <a href="www.rstudio.com">Click here!</a>
+      tags$br(),
+      tags$br(),
+      tags$a(
+        href="https://drive.google.com/open?id=1cQLD3LPuqlf46k_puNMeIvux5tGXoks0", 
+        "e.g. LCN"),
+      #tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "(3) Upload to google drive"),
+      
+      tags$br(),
+      tags$br(),
+      #radioButtons("filetype", "File type:",
+      #             choices = c("csv", "tsv")),
+#      downloadButton('downloadData', 'Download'),
+      tags$br(),
+      tags$br()
+    ),
+    mainPanel(
+      ###https://rstudio.github.io/DT/shiny.html
+      ###can sort/filter table
+      dataTableOutput("op1")
+    )
+  )
+)
+####################################################end
+#Warning: Error in runApp: Can't call `runApp()` from within `runApp()`. 
+#If your application code contains `runApp()`, please remove it.
+#must below command separately
+#runApp()
+####################################################end
+####################################################end
+###app - DMC desc split vs dict vs lpo
+###2019 June
+#library(reshape2)
+library(dplyr)
+options(shiny.maxRequestSize=30*1024^2) 
+server <- function(input, output) {
+####################################################
+###https://rstudio.github.io/DT/shiny.html
+###can sort/filter table
+output$op1 <- renderDataTable({
+req(input$file1)
+i1 <- read.csv(input$file1$datapath, header = TRUE)
+##
+req(input$file2)
+i2 <- read.csv(input$file2$datapath, header = TRUE)
+##
+TV_uwant <- input$text1
+ly_st <- "Active"
+ly_cat <- "Marker Enablement"
+ly_cat2 <- "Generated Mask"
+###
+i1_v1 <- i1
+i2_v1 <- i2
+####################################################end
+####################################################end
+####################################################end
+desc_map_lpo2
+})
+####
+###https://shiny.rstudio.com/articles/download.html
+# Our dataset
+#data <- mtcars
+#output$downloadData <- downloadHandler(
+#  filename = function() {
+#    paste("data-", Sys.Date(), ".csv", sep="")
+#  },
+#  content = function(file) {
+#    write.csv(desc_map_lpo2, file)
+#  }
+#)
+###
+}
