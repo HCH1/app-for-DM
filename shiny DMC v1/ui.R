@@ -2,7 +2,7 @@
 ###2019 June
 library(shiny)
 ui <- fluidPage(
-  titlePanel("app - DMC desc split vs dict vs lpo; lack end dot"),
+  titlePanel("app - DMC desc split vs dict vs lpo"),
   sidebarLayout(
     sidebarPanel(
       textInput("text1", "what's your Tech Variant?", value = "DM-000456"),
