@@ -87,7 +87,7 @@ sub_ly_ch_vs_desc_split <- sub_ly_ch_vs_desc_split[
 #file = paste(format(Sys.time(), "%Y%m%d_%H"), 
 #"_DMC sub-ALL map desc_freq v1.csv", sep = "") )
 ####################################################end
-###vlookup sub-ALL vs desc_split vs dict
+###vlookup sub_ly_ch vs desc_split vs dict
 desc_map_lpo <- full_join( desc_vs_dict, sub_ly_ch, by = "Data.Layer.Name")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
@@ -97,7 +97,7 @@ desc_map_lpo[ is.na( desc_map_lpo ) ] <- ""
 #desc_map_lpo <- desc_map_lpo[ order(desc_map_lpo[3], decreasing = TRUE), ]
 #
 desc_map_lpo2 <- desc_map_lpo
-colnames(desc_map_lpo2)[1] <- "lv.Number"
+colnames(desc_map_lpo2)[4] <- "lv.Number"
 ###case: dm.desc.split="" in.dict="" LV=has
 desc_map_lpo2$ans.missing.ly = ifelse(
   desc_map_lpo2$dm.desc.split == ""
@@ -140,7 +140,7 @@ desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[1],
 #str(desc_map_lpo2)
 ###write.csv(x = desc_map_lpo2, row.names = TRUE, 
 #          file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
-#                       "_DMC summary sub-ALL vs ly GR missing; desc_split; dict v1.csv", sep = "") )
+#                       "_DMC summary sub_ly_ch vs ly GR missing; desc_split; dict v1.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
