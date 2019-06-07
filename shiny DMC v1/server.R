@@ -1,4 +1,4 @@
-###app - DMC desc split vs dict vs lpo; lack end dot
+###app - DMC desc split vs dict vs lpo
 ###2019 June
 #library(reshape2)
 library(dplyr)
@@ -18,6 +18,7 @@ TV_uwant <- input$text1
 ly_st <- "Active"
 ly_cat <- "Marker Enablement"
 ly_cat2 <- "Generated Mask"
+ly_cat3 <- "Cadence Auxiliary"
 ###
 i1_v1 <- i1
 i2_v1 <- i2
@@ -61,31 +62,33 @@ colnames(desc_vs_dict)[3] <- "in.dict.freq"
 #          file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
 #                       "_DMC desc vs dict v1.csv", sep = "") )
 ####################################################end
-###create a sub-ALL
-sub_ALL <- i2_v1
-sub_ALL <- sub_ALL[grep(TV_uwant, sub_ALL$Tech.Variant...Included.in.PDK),]
-sub_ALL <- sub_ALL[grep(ly_st, sub_ALL$Layer.Status),]
-sub_ALL <- sub_ALL[grep(ly_cat, sub_ALL$Layer.Category, invert = TRUE),]
-#str(sub_ALL)
+###create a sub_ly_ch
+sub_ly_ch <- i2_v1
+sub_ly_ch <- sub_ly_ch[grep(TV_uwant, sub_ly_ch$Tech.Variant...Included.in.PDK),]
+sub_ly_ch <- sub_ly_ch[grep(ly_st, sub_ly_ch$Layer.Status),]
+sub_ly_ch <- sub_ly_ch[grep(ly_cat, sub_ly_ch$Layer.Category, invert = TRUE),]
+sub_ly_ch <- sub_ly_ch[grep(ly_cat2, sub_ly_ch$Layer.Category, invert = TRUE),]
+sub_ly_ch <- sub_ly_ch[grep(ly_cat3, sub_ly_ch$Layer.Category, invert = TRUE),]
+#str(sub_ly_ch)
 ####################################################end
 ###map sub-ALL vs desc split freq
-sub_all_vs_desc_split <- full_join(sub_ALL, desc_split_freq, by = "Data.Layer.Name")
+sub_ly_ch_vs_desc_split <- full_join(sub_ly_ch, desc_split_freq, by = "Data.Layer.Name")
 #replace NA to blank
-sub_all_vs_desc_split[ is.na( sub_all_vs_desc_split ) ] <- ""
-colnames(sub_all_vs_desc_split)[1] <- "lv.Number"
-sub_all_vs_desc_split <- sub_all_vs_desc_split[
-  grep("LV", sub_all_vs_desc_split$lv.Number),]
+sub_ly_ch_vs_desc_split[ is.na( sub_ly_ch_vs_desc_split ) ] <- ""
+colnames(sub_ly_ch_vs_desc_split)[1] <- "lv.Number"
+sub_ly_ch_vs_desc_split <- sub_ly_ch_vs_desc_split[
+  grep("LV", sub_ly_ch_vs_desc_split$lv.Number),]
 
-len1 <- dim(sub_all_vs_desc_split)
-sub_all_vs_desc_split <- sub_all_vs_desc_split[ 
-  order(sub_all_vs_desc_split[len1[2]], decreasing = TRUE), ]
+len1 <- dim(sub_ly_ch_vs_desc_split)
+sub_ly_ch_vs_desc_split <- sub_ly_ch_vs_desc_split[ 
+  order(sub_ly_ch_vs_desc_split[len1[2]], decreasing = TRUE), ]
 
-#write.csv(x = sub_all_vs_desc_split, row.names = TRUE, 
+#write.csv(x = sub_ly_ch_vs_desc_split, row.names = TRUE, 
 #file = paste(format(Sys.time(), "%Y%m%d_%H"), 
 #"_DMC sub-ALL map desc_freq v1.csv", sep = "") )
 ####################################################end
 ###vlookup sub-ALL vs desc_split vs dict
-desc_map_lpo <- full_join( desc_vs_dict, sub_ALL, by = "Data.Layer.Name")
+desc_map_lpo <- full_join( desc_vs_dict, sub_ly_ch, by = "Data.Layer.Name")
 #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
 #head(i1_v3)
 #replace NA to blank
