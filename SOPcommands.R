@@ -513,99 +513,156 @@ dataset$Liked = dataset_original$Liked
 ####################################################end
 ####################################################end
 ####################################################end
-###app - DMC desc split vs dict vs lpo; lack end dot
-###2019 June
+###v2 2018
+###v3 2019 June; re-write 
+###v4 use DT
 library(shiny)
+library(DT)
 ui <- fluidPage(
-  titlePanel("app - DMC desc split vs dict vs lpo"),
+  titlePanel("app - LMS-to-ALL & LMS-to-DMC"),
   sidebarLayout(
     sidebarPanel(
-      textInput("text1", "what's your Tech Variant?", value = "DM-000456"),
-      fileInput("file1", "File 1 = internal_PSV.csv",
-                multiple = TRUE,
-                accept = c("text/csv",
-                           "text/comma-separated-values,text/plain",
-                           ".csv")),
-      fileInput("file2", "File 2 = LCN.csv",
-                multiple = TRUE,
-                accept = c("text/csv",
-                           "text/comma-separated-values,text/plain",
-                           ".csv")),
-      ##code HTML in shiny
-      ##https://shiny.rstudio.com/articles/tag-glossary.html
-      tags$a(
-        href="http://mptweb1/~pdkwadm/design_rules_diff_reports/WIP/130NM/BCD/Rev0.9_5.0_DRC02_D1/PSV/", 
-        "e.g. PSV"),
-      #tags$a(href="https://text-compare.com/", "(2) Suggest to check text_diff"),
-      ## <a href="www.rstudio.com">Click here!</a>
-      tags$br(),
-      tags$br(),
-      tags$a(
-        href="https://drive.google.com/open?id=1cQLD3LPuqlf46k_puNMeIvux5tGXoks0", 
-        "e.g. LCN"),
-      #tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "(3) Upload to google drive"),
-      
-      tags$br(),
-      tags$br(),
-      #radioButtons("filetype", "File type:",
-      #             choices = c("csv", "tsv")),
-#      downloadButton('downloadData', 'Download'),
-      tags$br(),
-      tags$br()
+	  textInput("text1", "what's your Tech Variant?", value = "000282"),
+	  fileInput("file1", "File 1 = DM_psv.csv",
+	            multiple = TRUE,
+	            accept = c("text/csv",
+	                       "text/comma-separated-values,text/plain",
+	                       ".csv")),
+	  fileInput("file2", "File 2 = LCN.csv",
+	            multiple = TRUE,
+	            accept = c("text/csv",
+	                       "text/comma-separated-values,text/plain",
+	                       ".csv")),
+##code HTML in shiny
+##https://shiny.rstudio.com/articles/tag-glossary.html
+tags$a(
+  href="http://mptweb1/~pdkwadm/design_rules_diff_reports/WIP/130NM/BCD/Rev0.9_5.0_DRC02_D1/PSV/", 
+  "e.g. PSV"),
+#tags$a(href="https://text-compare.com/", "(2) Suggest to check text_diff"),
+## <a href="www.rstudio.com">Click here!</a>
+tags$br(),
+tags$br(),
+tags$a(
+  href="https://drive.google.com/open?id=1cQLD3LPuqlf46k_puNMeIvux5tGXoks0", 
+  "e.g. LCN"),
+#tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "ALL uUpload to google drive"),
+tags$br(),
+tags$br(),
+###
+tags$a(href="https://text-compare.com/", "Suggest to check ALL text_diff"),
+## <a href="www.rstudio.com">Click here!</a>
+tags$br(),
+tags$br(),
+tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "Upload to google drive"),
+tags$br(),
+tags$br()
+#            downloadButton("downloadData", "Download")
     ),
-    mainPanel(
-      ###https://rstudio.github.io/DT/shiny.html
-      ###can sort/filter table
-      dataTableOutput("op1")
-    )
+    #mainPanel(
+      #DTOutput tableOutput
+      #DTOutput("DRC_grep")
+###2 tables
+#https://stackoverflow.com/questions/47915924/conditional-format-multiple-tables-in-shiny-r
+fluidRow(
+  column(12 
+         , fluidRow(
+           column(6, DT::dataTableOutput('op1'), style = "font-size: 
+                  75%; width: 50%"),
+           column(6, DT::dataTableOutput('op2'), style = "font-size: 
+                  75%; width: 50%")
+        )))
+    #)
   )
 )
 ####################################################end
-#Warning: Error in runApp: Can't call `runApp()` from within `runApp()`. 
-#If your application code contains `runApp()`, please remove it.
+####################################################end
 #must below command separately
-#runApp()
+##runApp()
 ####################################################end
 ####################################################end
-###app - DMC desc split vs dict vs lpo
-###2019 June
+####################################################end
 #library(reshape2)
-library(dplyr)
+###v2 2018
+###v3 2019 June; re-write 
+###v4 use DT
 options(shiny.maxRequestSize=30*1024^2) 
 server <- function(input, output) {
 ####################################################
-###https://rstudio.github.io/DT/shiny.html
-###can sort/filter table
-output$op1 <- renderDataTable({
-req(input$file1)
-i1 <- read.csv(input$file1$datapath, header = TRUE)
-##
+#renderDT renderTable
+output$op1 <- renderDT({
 req(input$file2)
-i2 <- read.csv(input$file2$datapath, header = TRUE)
-##
-TV_uwant <- input$text1
-ly_st <- "Active"
-ly_cat <- "Marker Enablement"
-ly_cat2 <- "Generated Mask"
+diffdm0 <- read.csv(input$file2$datapath, header = TRUE)
+lpo <- diffdm0
 ###
-i1_v1 <- i1
-i2_v1 <- i2
-####################################################end
-####################################################end
-####################################################end
-desc_map_lpo2
+allowlayer1 <- rbind(lpo2_22fdx_act_cate_dedup, last_row)
+###
+###DT e.g.
+#https://datatables.net/examples/basic_init/
+DT::datatable(allowlayer1, 
+              ###col search
+              #https://rstudio.github.io/DT/009-searchable.html
+              #https://shiny.rstudio.com/articles/datatables.html
+              #filter = list(position = 'top', clear = FALSE),
+              ###download
+              #https://github.com/rstudio/DT/issues/267
+              extensions = 'Buttons'
+              , options = list( 
+                ###highlight color
+                #https://rstudio.github.io/DT/006-highlight.html
+                lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
+                , dom = "Blfrtip"
+                , buttons = 
+                  list("copy", list(
+                    extend = "collection"
+                    #, buttons = c("csv", "excel", "pdf")
+                    , buttons = c("csv")
+                    , text = "Download"
+                  ) ) )# end of buttons customization
+              )
+###
 })
-####
-###https://shiny.rstudio.com/articles/download.html
-# Our dataset
-#data <- mtcars
-#output$downloadData <- downloadHandler(
-#  filename = function() {
-#    paste("data-", Sys.Date(), ".csv", sep="")
-#  },
-#  content = function(file) {
-#    write.csv(desc_map_lpo2, file)
-#  }
-#)
+###
+#renderDT renderTable 2
+output$op2 <- renderDT({
+  req(input$file1)
+  i1 <- read.csv(input$file1$datapath, header = TRUE)
+  i1_v1 <- i1
+  ##
+  req(input$file2)
+  i2 <- read.csv(input$file2$datapath, header = TRUE)
+  i2_v1 <- i2
+  ##
+  TV_uwant <- input$text1
+  ly_st <- "Active"
+  ly_cat <- "Marker Enablement"
+  ly_cat2 <- "Generated Mask"
+  ly_cat3 <- "Cadence Auxiliary"
+  ###
+###DT e.g.
+  #https://datatables.net/examples/basic_init/
+  DT::datatable(desc_map_lpo2, 
+                ###col search
+                #https://rstudio.github.io/DT/009-searchable.html
+                #https://shiny.rstudio.com/articles/datatables.html
+                #filter = list(position = 'top', clear = FALSE),
+                ###download
+                #https://github.com/rstudio/DT/issues/267
+                extensions = 'Buttons'
+                , options = list( 
+                  ###highlight color
+                  #https://rstudio.github.io/DT/006-highlight.html
+                  lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
+                  , dom = "Blfrtip"
+                  , buttons = 
+                    list("copy", list(
+                      extend = "collection"
+                      #, buttons = c("csv", "excel", "pdf")
+                      , buttons = c("csv")
+                      , text = "Download"
+                    ) ) )# end of buttons customization
+  )
+  ###
+})
+###
 ###
 }
