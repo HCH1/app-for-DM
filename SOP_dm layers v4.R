@@ -25,9 +25,10 @@ lpo2_22fdx_act_cate <- lpo2_22fdx_act[lpo2_22fdx_act[5]!="", ]
 dm_ly_v1 <- lpo2_22fdx_act_cate
 dm_ly_v1 <- cbind(dm_ly_v1[1],dm_ly_v1[7],
 #use ;, but webdm is :
-paste(dm_ly_v1$GDS.Number, dm_ly_v1$GDS.Number ,sep=";") )
+paste(dm_ly_v1$GDS.Number, dm_ly_v1$GDS.Datatype,sep=";") )
 colnames(dm_ly_v1)[1:3] <- c("CAD Level","Description","GDS")
 dm_ly_v1 <- dm_ly_v1[ order(dm_ly_v1[1], decreasing = FALSE), ]
+###ALPad 130;0
 write.csv(x = dm_ly_v1, row.names = FALSE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"), 
 "_",TV_uwant,"_dm_layers_ans.csv", sep = "") )
