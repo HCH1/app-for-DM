@@ -7,6 +7,7 @@ lpo2 <- cbind(lpo[2],lpo[17],lpo[18],lpo[6],lpo[7],lpo[11],lpo[8],lpo[9])
 ###or replace same col
 lpo2$Layer.Category <- gsub("Cadence Auxiliary", "", lpo2$Layer.Category)
 lpo2$Layer.Category <- gsub("Generated Mask", "", lpo2$Layer.Category)
+lpo2$Layer.Category <- gsub("Marker Enablement", "", lpo2$Layer.Category)
 #str(lpo2)
 lpo2 <- cbind(lpo2[1:4],
 paste(lpo2$Layer.Category,lpo2$Layer.Sub.Category,sep=""),
