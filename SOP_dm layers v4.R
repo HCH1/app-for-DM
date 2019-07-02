@@ -1,30 +1,21 @@
 ###v4: copy from ALL, for dm ly using, due to excel app can not work on SS.
-lpo = read.csv("2 LCN-003181 130G-LP (v42).csv", header = TRUE)
+lpo = read.csv("2 LCN-003260 130G-LP (v43).csv", header = TRUE)
 TV_uwant <- "DM-000450"
-#merge col 2 6 7 17 18 8 9
-lpo2 <- cbind(lpo[2],lpo[17],lpo[18],lpo[6],lpo[7],lpo[11],lpo[8],lpo[9])
+lpo2 <- lpo
+colnames(lpo2)[1] <- c("LV")
+colnames(lpo2)[11] <- c("TV")
 #str(lpo2)
-###or replace same col
-lpo2$Layer.Category <- gsub("Cadence Auxiliary", "", lpo2$Layer.Category)
-lpo2$Layer.Category <- gsub("Generated Mask", "", lpo2$Layer.Category)
-lpo2$Layer.Category <- gsub("Marker Enablement", "", lpo2$Layer.Category)
+#grep dataframe contain keywords
+lpo2 <- lpo2[grep("Cadence Auxiliary", lpo2$Layer.Category, invert = TRUE),]
+lpo2 <- lpo2[grep("Generated Mask", lpo2$Layer.Category, invert = TRUE),]
+lpo2 <- lpo2[grep("Marker Enablement", lpo2$Layer.Category, invert = TRUE),]
 #str(lpo2)
-lpo2 <- cbind(lpo2[1:4],
-paste(lpo2$Layer.Category,lpo2$Layer.Sub.Category,sep=""),
-lpo2[6],lpo[9])
-colnames(lpo2)[5] <- c("Layer.Category")
-colnames(lpo2)[6] <- c("TV")
+lpo2 <- lpo2[grep(TV_uwant, lpo2$TV, invert = FALSE),]
+lpo2 <- lpo2[grep("Active", lpo2$Layer.Status, invert = FALSE),]
 #str(lpo2)
-lpo2_22fdx <- lpo2[lpo2[6]!="", ]
-#str(lpo2_22fdx)
-#grep dataframe contain TV
-lpo2_22fdx <- lpo2_22fdx[grep(TV_uwant, lpo2_22fdx$TV),]
-lpo2_22fdx_act <- lpo2_22fdx[lpo2_22fdx[4]=="Active", ]
-#filter new Layer Category != 
-lpo2_22fdx_act_cate <- lpo2_22fdx_act[lpo2_22fdx_act[5]!="", ]
 #rename
-dm_ly_v1 <- lpo2_22fdx_act_cate
-dm_ly_v1 <- cbind(dm_ly_v1[1],dm_ly_v1[7],
+dm_ly_v1 <- lpo2
+dm_ly_v1 <- cbind(dm_ly_v1[2],dm_ly_v1[9],
 #use ;, but webdm is :
 paste(dm_ly_v1$GDS.Number, dm_ly_v1$GDS.Datatype,sep=";") )
 colnames(dm_ly_v1)[1:3] <- c("CAD Level","Description","GDS")
