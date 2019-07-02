@@ -136,6 +136,10 @@ sum2v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum2, value = TRUE) #grep /ent
 sum1v1 <- grep("[/]entry|[/]title|[_][-]fn[0-9]", sum1, value = TRUE) #grep /entry & /title & _-fn#
 #grep dataframe contain keywords
 lpo5 <- lpo4[grep("28LPSE", lpo4$TV),]
+#grep dataframe contain keywords
+lpo2 <- lpo2[grep("Cadence Auxiliary", lpo2$Layer.Category, invert = TRUE),]
+lpo2 <- lpo2[grep("Generated Mask", lpo2$Layer.Category, invert = TRUE),]
+lpo2 <- lpo2[grep("arker Enablement", lpo2$Layer.Category, invert = TRUE),]
 #grep invert = TRUE
 ddrc1 <- grep("space", drc1, value = TRUE, invert = TRUE)
 #grep 2K patterns
