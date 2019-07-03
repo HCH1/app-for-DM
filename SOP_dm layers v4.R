@@ -1,14 +1,16 @@
 ###v4: copy from ALL, for dm ly using, due to excel app can not work on SS.
 lpo = read.csv("2 LCN-003260 130G-LP (v43).csv", header = TRUE)
-TV_uwant <- "DM-000450"
+TV_uwant <- "DM-000064"
 lpo2 <- lpo
 colnames(lpo2)[1] <- c("LV")
 colnames(lpo2)[11] <- c("TV")
+table(lpo2$Layer.Category)
 #str(lpo2)
 #grep dataframe contain keywords
 lpo2 <- lpo2[grep("Cadence Auxiliary", lpo2$Layer.Category, invert = TRUE),]
 lpo2 <- lpo2[grep("Generated Mask", lpo2$Layer.Category, invert = TRUE),]
 lpo2 <- lpo2[grep("Marker Enablement", lpo2$Layer.Category, invert = TRUE),]
+table(lpo2$Layer.Category)
 #str(lpo2)
 lpo2 <- lpo2[grep(TV_uwant, lpo2$TV, invert = FALSE),]
 lpo2 <- lpo2[grep("Active", lpo2$Layer.Status, invert = FALSE),]
