@@ -1,9 +1,10 @@
+#v1 
+#v2 re-code save file name 
 library(dplyr)
 ##input:
-i11 = read.csv("2 LCN-003147 130G-LP (v35).csv", header = TRUE, stringsAsFactors=FALSE)
+i11 = read.csv("2 LCN-003290 130G-LP (v44).csv", header = TRUE, stringsAsFactors=FALSE)
 #i1 = read.csv("1 Editable V0100FINAL DM000450 (Rev. 1.0_0.3) - Copy.csv", header = TRUE, stringsAsFactors=FALSE)
-i22 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
-#i3 = read.csv("3 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
+i22 = read.csv("1 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALSE)
 ###make a sub-ALL
 #TV_uwant <- "DM-000282"
 #ly_st <- "Active"
@@ -12,6 +13,7 @@ lmt_col3p3 <- "Generic"
 lmt_col1 <- "LM-0001.091"
 lmt_col2 <- "Layer Mapping Table"
 lmt_col4 <- "Layer"
+lpo_col1 <- "LCN-003290"
 ###
 i1 <- i11
 i2 <- i22
@@ -44,7 +46,8 @@ i1_v1$Layer.Number <- gsub("__", "_", i1_v1$Layer.Number, ignore.case = TRUE)
 i1_v1[ is.na( i1_v1 ) ] <- ""
 #str(i1_v1)
 write.csv(x = i1_v1, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lmt from sub-lpo.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1
+,"_from sub-lpo.csv", sep = "") )
 ####################################################end
 ###col 5 6 3
 i1_v2 <- cbind( paste( i1_v1[,5],i1_v1[,6],i1_v1[,3],
@@ -67,14 +70,14 @@ sublpo_lmt_diff <- sublpo_lmt_diff[ order( sublpo_lmt_diff[2]
 
 #sublpo_lmt_diff[ is.na( sublpo_lmt_diff ) ] <- ""
 write.csv(x = sublpo_lmt_diff, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo vs lmt diff v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1,"_vs_",lpo_col1
+, "_diff v1.csv", sep = "") )
 ####################################################end
 ###col 5 6
 i1_v3 <- cbind( paste( i1_v1[,5],i1_v1[,6],
 sep = ";", collapse = NULL ) )
 i1_v3 <- as.data.frame(table(i1_v3))
 colnames(i1_v3)[1] <- "GDS pair"
-
 
 i2_v3 <- cbind( paste( i2[,5],i2[,6],
 sep = ";", collapse = NULL ) )
@@ -90,7 +93,8 @@ sublpo_lmt_gds_diff <- sublpo_lmt_gds_diff[ order( sublpo_lmt_gds_diff[2]
 , na.last = FALSE, decreasing = TRUE ), ] #order reverse
 
 write.csv(x = sublpo_lmt_gds_diff, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"), "_sublpo vs lmt GDS diff v1.csv", sep = "") )
+file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1,"_vs_",lpo_col1
+, "_GDS diff v1.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
