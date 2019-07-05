@@ -1,5 +1,5 @@
 #v1 
-#v2 re-code save file name 
+#v2 re-code write.csv file name 
 library(dplyr)
 ##input:
 i11 = read.csv("2 LCN-003290 130G-LP (v44).csv", header = TRUE, stringsAsFactors=FALSE)
@@ -9,6 +9,9 @@ i22 = read.csv("1 LM-0001.091 130G-LP.csv", header = TRUE, stringsAsFactors=FALS
 #TV_uwant <- "DM-000282"
 #ly_st <- "Active"
 #ly_cat <- "Marker Enablement"
+#e.g. in LM#
+#Drawn_HALL_MK_Generic
+#Mask_ALPad_9S_Generic
 lmt_col3p3 <- "Generic"
 lmt_col1 <- "LM-0001.091"
 lmt_col2 <- "Layer Mapping Table"
