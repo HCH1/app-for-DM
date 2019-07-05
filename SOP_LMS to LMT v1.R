@@ -47,7 +47,7 @@ i1_v1[ is.na( i1_v1 ) ] <- ""
 #str(i1_v1)
 write.csv(x = i1_v1, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1
-,"_from sub-lpo.csv", sep = "") )
+,"_from sub-lpo by R v1.csv", sep = "") )
 ####################################################end
 ###col 5 6 3
 i1_v2 <- cbind( paste( i1_v1[,5],i1_v1[,6],i1_v1[,3],
@@ -71,7 +71,7 @@ sublpo_lmt_diff <- sublpo_lmt_diff[ order( sublpo_lmt_diff[2]
 #sublpo_lmt_diff[ is.na( sublpo_lmt_diff ) ] <- ""
 write.csv(x = sublpo_lmt_diff, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1,"_vs_",lpo_col1
-, "_diff v1.csv", sep = "") )
+, "_diff by R v1.csv", sep = "") )
 ####################################################end
 ###col 5 6
 i1_v3 <- cbind( paste( i1_v1[,5],i1_v1[,6],
@@ -92,9 +92,9 @@ sublpo_lmt_gds_diff <- sublpo_lmt_gds_diff[ order( sublpo_lmt_gds_diff[3]
 sublpo_lmt_gds_diff <- sublpo_lmt_gds_diff[ order( sublpo_lmt_gds_diff[2]
 , na.last = FALSE, decreasing = TRUE ), ] #order reverse
 
-write.csv(x = sublpo_lmt_gds_diff, row.names = TRUE, 
-file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1,"_vs_",lpo_col1
-, "_GDS diff v1.csv", sep = "") )
+#write.csv(x = sublpo_lmt_gds_diff, row.names = TRUE, 
+#file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",lmt_col1,"_vs_",lpo_col1
+#, "_GDS diff by R v1.csv", sep = "") )
 ####################################################end
 ####################################################end
 ####################################################end
