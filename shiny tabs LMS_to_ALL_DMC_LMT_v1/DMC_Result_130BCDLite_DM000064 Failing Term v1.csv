@@ -1,0 +1,736 @@
+Failing Term
+um
+um
+1TSRAM_MK
+36V_MK
+40V_MK
+50V_MK
+5V_MK
+60V_MK
+ALPad
+ANTIFUSE_MK
+AP2
+CB3
+CLHERE
+COMP_Dummy
+COMP_Label
+Contact
+Contact_Label
+DNI
+DNWELL_Label
+DUMWL_MK
+EFUSE_MK
+ESD_CLAMP_MK
+ESD_WAIVE_MK
+ESF_MK_TYPE1
+FUSEMARK
+FuseWindow
+G1Cell1
+G1Cell2
+G1Cell3
+G2Cell1
+G2Cell2
+G2Cell3
+G3Cell3
+GA_MK_SST
+HALL_MK
+HV_Bias_MK
+HV_NODE_MK
+HV_NODE_MK_M1
+HV_NODE_MK_M2
+HV_NODE_MK_M3
+HV_NODE_MK_M4
+HV_NODE_MK_M5
+HV_NODE_MK_M6
+HV_NODE_MK_M7
+HV_NODE_MK_MT
+IP_MACRO_MK
+IP_RING_MK
+LASER_ALIGN_Label
+LATCHUP_MK_TYPE1
+LDMOS_XTOR
+LNN
+LVS_DONUT
+LVS_ESD_GND
+LVS_ESD_IO
+LVS_IO
+LVS_PSUB2
+LVS_RF
+LVT
+Laser_Align_key
+M1S_EXCL
+M2S_EXCL
+M3S_EXCL
+M4S_EXCL
+M5S_EXCL
+M6S_EXCL
+M7S_EXCL
+MCELL_BEOL_MK
+MDIODE
+MIM_ALIGN
+MOM_M1_MK
+MOM_M2_MK
+MOM_M3_MK
+MOM_M4_MK
+MOM_M5_MK
+MOM_M6_MK
+MOM_M7_MK
+MOS_CAP_MK
+MOS_MK_TYPE1
+MOS_MK_TYPE2
+MOS_MK_TYPE4
+MOS_SOURCE_TYPE1
+MS_EXCL
+MTPCELL1
+MTPCELL1_Label
+MTPCELL2
+MTPCELL2_Label
+MTS_EXCL
+MVNVT
+MVPSD
+MVSD
+Metal1_BLK
+Metal1_Dummy
+Metal1_Label
+Metal1_Res
+Metal1_Slot
+Metal2
+Metal2_BLK
+Metal2_Dummy
+Metal2_Label
+Metal2_Res
+Metal2_Slot
+Metal3
+Metal3_BLK
+Metal3_Dummy
+Metal3_Label
+Metal3_Res
+Metal3_Slot
+Metal4
+Metal4_BLK
+Metal4_Dummy
+Metal4_Label
+Metal4_Res
+Metal4_Slot
+Metal5
+Metal5_BLK
+Metal5_Dummy
+Metal5_Label
+Metal5_Res
+Metal5_Slot
+Metal6
+Metal6_Dummy
+Metal6_Label
+Metal6_Res
+Metal6_Slot
+Metal7
+Metal7_Dummy
+Metal7_Label
+Metal7_Res
+Metal7_Slot
+Metal8_Res
+MetalRDL
+MetalT_BLK
+MetalTop_Dummy
+MetalTop_Label
+MetalTop_Slot
+NH
+NMTP_G2C_MK
+NON_HV_NODE_MK
+NON_HV_NODE_MK_M1
+NON_HV_NODE_MK_M2
+NON_HV_NODE_MK_M3
+NON_HV_NODE_MK_M4
+NON_HV_NODE_MK_M5
+NON_HV_NODE_MK_M6
+NON_HV_NODE_MK_M7
+NON_HV_NODE_MK_MT
+NW1A_Label
+NWDIODE_MK
+Nplus
+Nwell
+Nwell_Label
+OPC_drc
+OUTLINE_IND
+PA_MK_SST
+PBO1
+PF1VA_Label
+PFDIODE_MK
+PField
+PField_Label
+PIB
+PIN_IND
+PISCAP
+POWERCELL_MK
+PRES
+PROBE_MK
+PR_bndry
+Pad
+Pad2
+Poly2_Dummy
+Poly2_Label
+Pplus
+RDL_MK
+RES_MK_ALRDL
+Resistor
+SLMOUTLINE
+SRAM_BCM_MK
+STRAP_MK
+SramCore
+TANRES
+TANRES_L_MK
+TANRES_MK
+TN
+TP
+TW_MK_TYPE1
+UBM2
+UBMEPlate
+UBMEPlate_Label
+UBMPArray
+UBMPArray_Label
+UBMPPeri
+UBMPPeri_Label
+V16_XTOR
+VCID
+Via1
+Via1_Label
+Via2
+Via2_Label
+Via3
+Via3_Label
+Via4
+Via4_Label
+Via5
+Via5_Label
+Via6
+Via6_Label
+ViaRDL
+ViaTop_Label
+ALPad <sup>3</sup>
+COMP
+CellSD
+Contact
+DNWELL
+Dualgate
+ESD
+FuseBot
+FuseTop
+HVNDDD
+HVP
+LNN
+LPN
+MIM_Align
+MTPCELL1
+MTPCELL2
+MVNVT
+MVPVT
+Metal1
+Metal2
+Metal3
+Metal4
+Metal5
+Metal6
+Metal7
+MetalTop
+NH
+NLDBODY
+NVT <sup>7</sup>
+NW1A
+Nplus
+Nwell
+PF1VA
+PField
+PIB<sup>4</sup>
+PLDBODY
+PVT <sup>6</sup>
+PWHV
+Pad
+Pad2 <sup>5</sup>
+Poly1
+Poly2
+Pplus
+PreDope
+Resistor
+SAB
+TANRES
+TN
+TP
+TUNOX
+Via1
+Via2
+Via3
+Via4
+Via5
+Via6
+ViaTop
+Win2 <sup>2</sup>
+ZENER
+10X
+12_MK
+1.00E+03
+1.00E+06
+1K
+2K
+2KV
+2LM
+36_MK
+3LM
+4LM
+5LM
+5X
+6LM
+7LM
+8LM
+AC
+AE
+AND
+APMOM
+BEOL
+CD
+CMOS
+COMP_label
+CONTACT
+CUP
+Co1
+Co11ect
+Co22ect
+Co33ect
+Co44ect
+Co55ect
+Co66ect
+DCGS
+DF17a
+DFM
+DIODE
+DRC
+DUMWL
+Diode
+Diode_MK
+ESF1_Cell
+ESF1_HV
+ESF1_TW
+ET
+FEOL
+FieldPlate
+GGNMOS
+GLOBALFOUNDRIES
+GUARD
+HBM
+HVBJT
+HVESD
+HVNW
+HVPNP
+HVWELL
+HV_Bias_NK
+III
+INSIDE
+INTERACT
+IO
+IP
+IV
+LDNMOS
+LV
+LVNMOS
+LVPMOS
+LVS
+Latchup
+M1
+M2
+M3
+M4
+M5
+M6
+M7
+MATCHED
+MIM
+MOM
+MOM_M1
+MOM_Mx_MK
+MOS
+MOSFET
+MT
+MV
+MVN
+MVNMOS
+MVPMOS
+Ma1imum
+Ma2imum
+Ma3imum
+Ma4imum
+Ma5imum
+Ma6imum
+Ma7imum
+MaVTimum
+Memcell
+Metal
+Metal1_label
+MetalTop_label
+Metal_1
+Metal_x
+Metaln
+Metaln_label
+Mi1
+Mi1imum
+Mi2imum
+Mi3imum
+Mi4imum
+Mi5imum
+Mi6imum
+MnS
+MnS_EXCL
+NCOMP
+NHPD
+NHZ
+NMOS
+NMTP
+NON_HV_NODE_M1
+NON_HV_NODE_M2
+NON_HV_NODE_M3
+NON_HV_NODE_M4
+NON_HV_NODE_M5
+NON_HV_NODE_M6
+NON_HV_NODE_M7
+NON_HV_NODE_MT
+NOT
+NPN
+NTAP
+NTMP_G1C_MK
+NWELL
+OR
+OSE
+OTP
+OUTSIDE
+PAD
+PCOMP
+PID
+PMNDNY
+PMOS
+PNP
+POLY2
+POWERCELL
+PTAP
+Pad_ALI
+Poly2_label
+RDL
+RES
+RF
+Res
+Res_MK
+SB
+SCGS
+SD
+SLM
+SOA
+SRAM
+STACK
+STI
+STKESD
+STRAP
+STRAP_DUMWL
+Schottky
+Schottky_Diode
+TV
+TW
+Top
+Top_Label
+Type1
+Type2
+UBM
+ULR
+ULRMOS
+ULRNMOS
+ULRPMOS
+V1
+V5
+VDD
+VIA
+VSS
+VT
+ViaVT
+WLBGA
+Within10
+Within15
+a1d
+a2d
+a3d
+a4d
+a5d
+a6d
+aTVd
+coTVTVect
+commo1
+draw1
+draw2
+draw3
+draw4
+draw5
+draw6
+e1actly
+e1close
+e2actly
+e2close
+e3actly
+e3close
+e4actly
+e4close
+e5actly
+e5close
+e6actly
+e6close
+e7actly
+fF
+fingersWide
+ge1erate
+i1
+le1gth
+leTVgth
+li1e
+li1es
+mA
+ma1
+ma1imum
+ma2
+ma2imum
+ma3
+ma3imum
+ma4
+ma4imum
+ma5
+ma5imum
+ma6
+ma6imum
+ma7
+ma7imum
+metal1
+ndash
+ndash_MK
+o1e
+oTVe
+poly2
+thaTV
+usi1g
+usi2g
+usi3g
+usi4g
+usi5g
+usi6g
+via
+via_Label
+vialess
+vialess_finger
+vialess_strip
+wheTV
+widthHVNWELL
+within10
+COMP.Consider
+G.DF.13
+G.DF.26
+G.HVMV.1
+G.HVMV.2
+G.HVMV.3
+G.IO.11
+G.Mn.2d
+G.PAD.3
+G.PL.14b
+G.PL.3d
+G.VTK.4a
+Min.W
+Vn.8b.SR
+layers.E.g
+net.Metal
+net.Metam
+net.Metan
+x
+x
+x
+x
+x
+x
+z
+10V_MK
+12V_MK
+16V_MK
+20V_MK
+24V_MK
+30V_MK
+36V_MK
+5V_MK
+ANTIFUSE_MK
+CellSD
+DEV_NF_MK
+DIODE_MK
+DNI
+DUMWL_MK
+ESF_MK_TYPE1
+HVP
+HV_Bias_MK
+LVS_IO
+MOS_MK_TYPE1
+MOS_MK_TYPE2
+MOS_MK_TYPE3
+MOS_SOURCE_TYPE1
+MTPCELL1
+MTPCELL2
+Memcell_MK
+NH
+NLDBODY
+NWDIODE_MK
+Nwell
+OTP_MK
+PLDBODY
+POWERCELL_MK
+Poly1
+RDL_FILL
+STRAP_MK
+TUNOX
+TW_MK
+Via1
+Via2
+Via3
+Via4
+Via5
+Via6
+LDPMOS
+BJT
+HV
+LDPMOS
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+"10V ULR NMOS (W = 50 µm, L = 0.3 µm, Fingers = 4), 16V LDNMOS SOA Region more than 1.1 Times Operation Voltage, 5V Thick Gate NMOS, Accessing the Attached Device Options File in PDF, Cross-Coupled Connection Layout, Device Cross-Section, Gate Driver Switching, Illustration of Layout of LV SAB LV GGNMOS, Illustration of Layout of LV SAB LV GPPMOS, Illustration of Layout of MV GGNMOS with SAB, Illustration of Layout of N+/PField (or N+/PF1VA) Diode, Illustration of Layout of P+/Nwell (or P+/NW1A) Diode, Irms Characterization, Multiple Finger LDPMOS Sample Layout (1 of 2), Multiple Finger LDPMOS Sample Layout (2 of 2), Multiple Finger ULRPMOS Sample Layout, NMOS, Output Driver, Output Over and Under Shoots, PMOS, TLP Current vs. Voltage Plot and Leakage Plot on Recommended LV GGNMOS Dimension, TLP Current vs. Voltage Plot and Leakage Plot on Recommended MV GGNMOS Dimension, TLP Current vs. Voltage Plot and Leakage on Recommended LV GPPMOS Dimension"
+20V_ULR_NMOS_2.png
+20V_ULR_PMOS.png
+20V_ULR_PMOS_2.png
+5V_NMOS_snap_back_curve_for_typical_device_T_175C.png
+BCDLite_Multiple_Finger_LDPMOS_Sample_Layout_p268.png
+BCDLite_Multiple_finger_ULRPMOS_sample_layout.png
+Layout_of_LV_SAB_LV_GGNMOS.png
+Layout_of_LV_SAB_LV_GPPMOS.png
+Layout_of_MV_GGNMOS_with_SAB.png
+Layout_of_N_PField_or_N_PF1VA_Diode.png
+Layout_of_P_Nwell_or_P_NW1A_Diode.png
+gen2.png
+Empty
+_4d73ab0f-f9c5-4332-babc-7a95c6c266d1
+Change Request List - Revision 1.0_4.0
+GEN2: 3 µm Thicker MetalTop MT and TV and 0.8 µm MT-1 and TV-1 (Optional) Design Rules
+GEN2: 3µm Thicker MetalTop Design Rules
+GEN2: 5V Thick Gate Asymmetric NMOS (Under Development)
+GEN2: COMP Common Design Rules
+GEN2: Contact Design Rules
+GEN2: DNWELL Design Rules
+GEN2: HV Latch-up Related Design Rules and Guidelines for LDNMOS Connected to I/O Pads
+GEN2: HVNWELL Common Design Rules
+"GEN2: LV (1.5V) NMOS (LV GGNMOS with Salicide Block, no Extra ESD Implant)"
+GEN2: N+/PField (or N+/PF1VA) Diode Design Rules
+GEN2: NMTP Design Rules
+GEN2: Native NMOS Design Rules
+GEN2: Nplus Common Design Rules
+GEN2: P+/Nwell (or P+/NW1A) Diode Design Rules
+GEN2: PF1VA Design Rules
+GEN2: PPLUS Common Design Rules
+GEN2: PWHV Common Design Rules
+GEN2: Poly2 Common Design Rules
+GEN2: Poly2 for HV Design Rules
+GEN2: Poly2 for LV Design Rules
+GEN2: Poly2 for MV Design Rules
+GEN2: Salicide Block (SAB) Design Rules
+GEN2: Using HVNDDD as High Voltage Diode and/or High Voltage Resistor
+Gate Leakage
+IV Curves
+Metal Slotting Design Rules
+Mismatch Performance
+Noise Performance
+Noise Performance
+QGD
+SRAM Cell Design Rules
+Sample Layout Schemes
+Schematic Layout Samples
+Snapback SOA
+Summary Table of Mismatch
+TLP
+eFuse Design Rules
+N/A
+A
+E
+K
+V
+k
+µ
+Å
+GEN2: Mask Layer Numbering
+fn303149034_1_IDF-fn355866214_tbl_-fn1
+fn303149034_1_IDF-fn355866214_tbl_-fn2
+fn303149034_1_IDF-fn355866214_tbl_-fn3
+fn303149034_1_IDF-fn355866214_tbl_-fn4
+fn417265614_1_IDF-fn559879444_tbl_-fn2
+fn417265614_1_IDF-fn559879444_tbl_-fn3
+fn600671811_1_IDF-fn454908814_tbl_-fn1
+fn80080709_1_IDF-fn705369163_tbl_-fn2
+fn925907115_1_IDF-fn661721720_tbl_-fn1
+Common Design Levels
+2-Top Metal for DESIGN ACTIVITIES
+2-Top Metal for INTERNAL REFERENCE ONLY
+3 µm Thicker MetalTop Design Rules
+3 µm Thicker MetalTop MT and TV and 0.8 µm MT-1 and TV-1 (Optional) Design Rules
+Antenna Ratio Design Rules
+Aug-15
+Aug-16
+COMP Common Design Rules
+Circuit-Under-Pad (CUP) Common Design Rules
+Contact Design Rules
+Core Transistor Options for 0.13 µm Technology
+Current 130BCDLite PDK Version Support Following BEOL Options**
+DNWELL Design Rules
+Dec-13
+Dec-14
+Design Rule Checking Abbreviations
+Dummy Aluminum RDL Generation Design Rules
+Feb-13
+Feb-14
+Generation Design Rules for Dummy COMP Fill
+HV Latch-up Related Design Rules and Guidelines for LDNMOS Connected to I/O Pads
+HVNDDD as High Voltage Diode and/or High Voltage Resistor Design Rules
+HVNWELL Common Design Rules
+I/O Transistor Options for 0.13 µm Technology
+Jan-14
+"LV (1.5V) NMOS (LV GGNMOS with Salicide Block, no Extra ESD Implant)"
+"LV (1.5V) PMOS (LV GPPMOS with Salicide Block, no Extra ESD Implant)"
+"MV GGNMOS Device Design Rules (with Salicide Block, no Extra ESD Implant)"
+MVN-Stack ESD Device for 30V Design Rules
+Mask Layer Numbering
+May-16
+May 2016 (Part2)
+May-17
+N+/PField (or N+/PF1VA) Diode Design Rules
+NMTP Design Rules
+Native NMOS Design Rules
+Nov-11
+Nplus Common Design Rules
+Oct-14
+P+/Nwell (or P+/NW1A) Diode Design Rules
+PF1VA Design Rules
+PWHV Common Design Rules
+Poly2 Common Design Rules
+Poly2 for HV Design Rules
+Poly2 for LV Design Rules
+Poly2 for MV Design Rules
+Pplus Common Design Rules
+Salicide Block (SAB) Design Rules
+Single-Top Metal for DESIGN ACTIVITIES
+Single-Top Metal for INTERNAL REFERENCE ONLY
+Summary of 5V GGNMOS ESD Parameters
+Summary of ESD N+/PField (or N+/PF1VA) Diode Parameters
+Summary of ESD P+/Nwell (or P+/NW1A) Diode Parameters
+Summary of LV GGNMOS ESD Parameters
+Summary of LV GPPMOS ESD Parameters
