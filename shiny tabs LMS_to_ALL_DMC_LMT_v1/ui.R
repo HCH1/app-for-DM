@@ -3,10 +3,12 @@
 #install.packages("DT")
 #install.packages("dplyr")
 #install.packages("reshape2")
+#install.packages("qdapDictionaries")
 library(shiny)
 library(DT)
 library(dplyr)
 library(reshape2)
+library(qdapDictionaries)
 #
 ui <- fluidPage(
   titlePanel("app - LMS to ALL;DMC pre-check;LMT pre-check;rev history"),
