@@ -1,463 +1,134 @@
 #v1 combine 3 apps in 1
-options(shiny.maxRequestSize=30*1024^2) 
-server <- function(input, output) {
+#install.packages("shiny")
+#install.packages("DT")
+#install.packages("dplyr")
+#install.packages("reshape2")
+#install.packages("qdap")
+library(shiny)
+library(DT)
+library(dplyr)
+library(reshape2)
+library(qdap)
+#
+ui <- fluidPage(
+  titlePanel("app - LMS to ALL;DMC pre-check;LMT pre-check;rev history"),
+  sidebarLayout(
+    sidebarPanel(
+	  textInput("text1", "what's your Tech Variant?", value = "DM-000282"),
+	  fileInput("file1", "File 1 = DM_GR_psv.csv",
+	            multiple = TRUE,
+	            accept = c("text/csv",
+	                       "text/comma-separated-values,text/plain",
+	                       ".csv")),
+	  fileInput("file2", "File 2 = LCN.csv",
+	            multiple = TRUE,
+	            accept = c("text/csv",
+	                       "text/comma-separated-values,text/plain",
+	                       ".csv")),
+#draft###################################################
+	  fileInput("file3", "File 3 = LM#.csv",
+	            multiple = TRUE,
+	            accept = c("text/csv",
+	                       "text/comma-separated-values,text/plain",
+	                       ".csv")),
+	  fileInput("file4", "File 4 = datamart_DRCTrack.csv",
+	            multiple = TRUE,
+	            accept = c("text/csv",
+	                       "text/comma-separated-values,text/plain",
+	                       ".csv")),					   
 ####################################################
-#renderDT renderTable 1
-output$op1 <- renderDT({
-req(input$file2)
-diffdm0 <- read.csv(input$file2$datapath, header = TRUE)
-lpo <- diffdm0
+##code HTML in shiny
+##https://shiny.rstudio.com/articles/tag-glossary.html
+tags$a(
+  href="http://mptweb1/~pdkwadm/design_rules_diff_reports/WIP/130NM/BCD/Rev0.9_5.0_DRC02_D1/PSV/", 
+  "e.g. PSV"),
+#tags$a(href="https://text-compare.com/", "(2) Suggest to check text_diff"),
+## <a href="www.rstudio.com">Click here!</a>
+tags$br(),
+tags$br(),
+tags$a(
+  href="https://drive.google.com/open?id=1cQLD3LPuqlf46k_puNMeIvux5tGXoks0", 
+  "e.g. LCN"),
+#tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "ALL uUpload to google drive"),
+tags$br(),
+tags$br(),
+tags$a(
+  href="https://www.global-foundryview.com/Agile/PLMServlet?fromPCClient=true&module=ItemHandler&requestUrl=module%3DItemHandler%26opcode%3DdisplayObject%26classid%3D10000%26objid%3D444828717%26tabid%3D0%26", 
+  "e.g. LM#"),
+tags$br(),
+tags$br(),
+tags$a(
+  href="http://mptweb1/~pdkwadm/design_rules_diff_reports/130NM/BCDLITE/Rev1.0_4.0_20190424/DRC/", 
+  "e.g. DRCTrack.csv"),
+tags$br(),
+tags$br(),
 ###
-#merge column 2 6 7 17 18 8
-lpo2 <- cbind(lpo[2],lpo[17],lpo[18],lpo[6],lpo[7],lpo[11],lpo[8])
-#str(lpo2)
-###or replace same col
-lpo2$Layer.Category <- gsub("Cadence Auxiliary", "", lpo2$Layer.Category)
-lpo2$Layer.Category <- gsub("Generated Mask", "", lpo2$Layer.Category)
-#str(lpo2)
-lpo2 <- cbind(lpo2[1:4],
-paste(lpo2$Layer.Category,lpo2$Layer.Sub.Category,sep=""),
-lpo2[6])
-colnames(lpo2)[5] <- c("Layer.Category")
-colnames(lpo2)[6] <- c("TV")
-#str(lpo2)
-lpo2_22fdx <- lpo2[lpo2[6]!="", ]
-#str(lpo2_22fdx)
-#grep dataframe contain keywords
-lpo2_22fdx <- lpo2_22fdx[grep(input$text1, lpo2_22fdx$TV),]
-#str(lpo2_22fdx)
-lpo2_22fdx_act <- lpo2_22fdx[lpo2_22fdx[4]=="Active", ]
-#filter new Layer Category != 
-lpo2_22fdx_act_cate <- lpo2_22fdx_act[lpo2_22fdx_act[5]!="", ]
-#re-bind 3 columns
-lpo2_22fdx_act_cate_3cols <- cbind(lpo2_22fdx_act_cate[1],
-lpo2_22fdx_act_cate[2],lpo2_22fdx_act_cate[3])
-#remove duplicates
-lpo2_22fdx_act_cate_dedup <- unique(lpo2_22fdx_act_cate_3cols) 
-#re-order col 2 & 3
-lpo2_22fdx_act_cate_dedup <- lpo2_22fdx_act_cate_dedup[ 
-order(lpo2_22fdx_act_cate_dedup[,2], lpo2_22fdx_act_cate_dedup[,3]), ]
-###
-last_row <- matrix(c("Customer_Reserved_layers", "2000-2300", "0-9999"), nrow = 1)
-colnames(last_row) <- colnames(lpo2_22fdx_act_cate_dedup)
-allowlayer1 <- rbind(lpo2_22fdx_act_cate_dedup, last_row)
-###
-###DT e.g.
-#https://datatables.net/examples/basic_init/
-DT::datatable(allowlayer1, 
-              ###col search
-              #https://rstudio.github.io/DT/009-searchable.html
-              #https://shiny.rstudio.com/articles/datatables.html
-              #filter = list(position = 'top', clear = FALSE),
-              ###download
-              #https://github.com/rstudio/DT/issues/267
-              extensions = 'Buttons'
-              , options = list( 
-                ###highlight color
-                #https://rstudio.github.io/DT/006-highlight.html
-                lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
-                , dom = "Blfrtip"
-                , buttons = 
-                  list("copy", list(
-                    extend = "collection"
-                    #, buttons = c("csv", "excel", "pdf")
-                    , buttons = c("csv")
-                    , text = "Download"
-                  ) ) )# end of buttons customization
-              )
-###
-})
-###
-###
-###
-#renderDT renderTable 1b
-output$op1b <- renderDT({
-  req(input$file1)
-  i1 <- read.csv(input$file1$datapath, header = TRUE)
-  i1_v1 <- i1
-  ##
-  req(input$file2)
-  i2 <- read.csv(input$file2$datapath, header = TRUE)
-  i2_v1 <- i2
-  ##
-  TV_uwant <- input$text1
-  ly_st <- "Active"
-  ly_cat <- "Marker Enablement"
-  ly_cat2 <- "Generated Mask"
-  ly_cat3 <- "Cadence Auxiliary"
-  ###
-  i1_v1 <- i1
-  i2_v1 <- i2
-  i1_v1$ch_ly1 <- gsub("[_]", "999", i1_v1$Description)
-  i1_v1$ch_ly1 <- gsub("[.]", "888", i1_v1$ch_ly1)
-  i1_v1$ch_ly1 <- gsub("n[']t", "777", i1_v1$ch_ly1)
-  i1_v1$ch_ly1 <- gsub("[[:punct:]]", " ", i1_v1$ch_ly1)
-  ###keep _ and .
-  i1_v1$ch_ly1 <- gsub("999", "_", i1_v1$ch_ly1)
-  i1_v1$ch_ly1 <- gsub("888", ".", i1_v1$ch_ly1)
-  i1_v1$ch_ly1 <- gsub("777", "n't", i1_v1$ch_ly1)
-  i1_v1$ch_ly1 <- gsub("[.]$", "", i1_v1$ch_ly1)
-  #insdie dataframe is factor -> character -> list -> character
-  desc_split <- unlist( strsplit( i1_v1$ch_ly1, '\\s' ) )
-  desc_split <- as.data.frame(desc_split)
-  #str(desc_split)
-  ###remove end is .
-  desc_split$desc_split <- gsub("[.]$", "", desc_split$desc_split)
-  ###freq
-  desc_split_freq <- table(desc_split)
-  desc_split_freq <- as.data.frame(desc_split_freq)
-  colnames(desc_split_freq)[1] <- "Data.Layer.Name"
-  #str(desc_split_freq)
-  #write.csv(x = desc_split_freq, row.names = TRUE, 
-  #file = paste(format(Sys.time(), "%Y%m%d_%H"), "_DMC desc_split v1.csv", sep = "") )
-  ####################################################end
-  library(qdapDictionaries)
-  #create custom function
-  is.word <- function(x) x %in% GradyAugmented # or use any dataset from package
-  #use this function to filter words, df = dataframe from corpus
-  df0 <- desc_split_freq
-  df <- desc_split_freq
-  ###dict only has lower case.
-  #df0$Data.Layer.Name <- tolower(df0$Data.Layer.Name)
-  df <- df[which(is.word(df$Data.Layer.Name)),]
-  ###dm vs af-dict
-  desc_vs_dict <- full_join(df0, df, by = "Data.Layer.Name")
-  colnames(desc_vs_dict)[2] <- "dm.desc.split.freq"
-  colnames(desc_vs_dict)[3] <- "in.dict.freq"
-  #write.csv(x = desc_vs_dict, row.names = TRUE, 
-  #          file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
-  #                       "_DMC desc vs dict v1.csv", sep = "") )
-  ####################################################end
-  ###create a sub_ly_ch
-  sub_ly_ch <- i2_v1
-  sub_ly_ch <- sub_ly_ch[grep(TV_uwant, sub_ly_ch$Tech.Variant...Included.in.PDK),]
-  sub_ly_ch <- sub_ly_ch[grep(ly_st, sub_ly_ch$Layer.Status),]
-  sub_ly_ch <- sub_ly_ch[grep(ly_cat, sub_ly_ch$Layer.Category, invert = TRUE),]
-  sub_ly_ch <- sub_ly_ch[grep(ly_cat2, sub_ly_ch$Layer.Category, invert = TRUE),]
-  sub_ly_ch <- sub_ly_ch[grep(ly_cat3, sub_ly_ch$Layer.Category, invert = TRUE),]
-  #str(sub_ly_ch)
-  ####################################################end
-  ###map sub-ALL vs desc split freq
-  sub_ly_ch_vs_desc_split <- full_join(sub_ly_ch, desc_split_freq, by = "Data.Layer.Name")
-  #replace NA to blank
-  sub_ly_ch_vs_desc_split[ is.na( sub_ly_ch_vs_desc_split ) ] <- ""
-  colnames(sub_ly_ch_vs_desc_split)[1] <- "lv.Number"
-  sub_ly_ch_vs_desc_split <- sub_ly_ch_vs_desc_split[
-    grep("LV", sub_ly_ch_vs_desc_split$lv.Number),]
-  
-  len1 <- dim(sub_ly_ch_vs_desc_split)
-  sub_ly_ch_vs_desc_split <- sub_ly_ch_vs_desc_split[ 
-    order(sub_ly_ch_vs_desc_split[len1[2]], decreasing = TRUE), ]
-  
-  #write.csv(x = sub_ly_ch_vs_desc_split, row.names = TRUE, 
-  #file = paste(format(Sys.time(), "%Y%m%d_%H"), 
-  #"_DMC sub-ALL map desc_freq v1.csv", sep = "") )
-  ####################################################end
-  ###vlookup sub-ALL vs desc_split vs dict
-  desc_map_lpo <- full_join( desc_vs_dict, sub_ly_ch, by = "Data.Layer.Name")
-  #dim(i1_v3) #sometimes will suffer more dim, due to duplicate gds.pair
-  #head(i1_v3)
-  #replace NA to blank
-  desc_map_lpo[ is.na( desc_map_lpo ) ] <- ""
-  #desc_map_lpo <- desc_map_lpo[ order(desc_map_lpo[4], decreasing = FALSE), ]
-  #desc_map_lpo <- desc_map_lpo[ order(desc_map_lpo[3], decreasing = TRUE), ]
-  #
-  desc_map_lpo2 <- desc_map_lpo
-  colnames(desc_map_lpo2)[4] <- "lv.Number"
-  ###case: dm.desc.split="" in.dict="" LV=has
-  desc_map_lpo2$ans.missing.ly = ifelse(
-    desc_map_lpo2$dm.desc.split == ""
-    & desc_map_lpo2$in.dict == ""
-    & grepl("LV",desc_map_lpo2$lv.Number),"ly do not have GR",0)
-  
-  ###case: dm.desc.split=has in.dict="" LV=has
-  desc_map_lpo2$ans.ly.in.GR.desc = ifelse(
-    desc_map_lpo2$dm.desc.split > 0
-    & desc_map_lpo2$in.dict == ""
-    & grepl("LV",desc_map_lpo2$lv.Number),"ly in GR desc",0)
-  
-  ###case: dm.desc.split=has in.dict=has LV=""
-  desc_map_lpo2$ans.word.in.dict = ifelse(
-    desc_map_lpo2$dm.desc.split > 0
-    & desc_map_lpo2$in.dict > 0
-    & grepl("",desc_map_lpo2$lv.Number),"word in dict",0)
-  
-  ###case: dm.desc.split="" in.dict="" LV=""
-  desc_map_lpo2$ans.word.not.in.dict = ifelse(
-    desc_map_lpo2$ans.missing.ly < 1
-    & desc_map_lpo2$ans.ly.in.GR.desc < 1
-    & desc_map_lpo2$ans.word.in.dict < 1,"word not in dict",0)
-  
-  len2 <- dim(desc_map_lpo2)[2]
-  desc_map_lpo2 <- cbind(desc_map_lpo2[(len2-3):len2],
-                         desc_map_lpo2[4],
-                         desc_map_lpo2[1],
-                         desc_map_lpo2[5:(len2-4)],
-                         desc_map_lpo2[2:3])
-  
-  desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[4], 
-                                        decreasing = TRUE), ]
-  desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[3], 
-                                        decreasing = TRUE), ]
-  desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[2], 
-                                        decreasing = TRUE), ]
-  desc_map_lpo2 <- desc_map_lpo2[ order(desc_map_lpo2[1], 
-                                        decreasing = TRUE), ]
-  #str(desc_map_lpo2)
-  ###write.csv(x = desc_map_lpo2, row.names = TRUE, 
-  #          file = paste(format(Sys.time(), "%Y%m%d_%H"),"_",TV_uwant, 
-  #                       "_DMC summary sub-ALL vs ly GR missing; desc_split; dict v1.csv", sep = "") )
-  ####################################################end
-  ###DT e.g.
-  #https://datatables.net/examples/basic_init/
-  DT::datatable(desc_map_lpo2, 
-                ###col search
-                #https://rstudio.github.io/DT/009-searchable.html
-                #https://shiny.rstudio.com/articles/datatables.html
-                #filter = list(position = 'top', clear = FALSE),
-                ###download
-                #https://github.com/rstudio/DT/issues/267
-                extensions = 'Buttons'
-                , options = list( 
-                  ###highlight color
-                  #https://rstudio.github.io/DT/006-highlight.html
-                  lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
-                  , dom = "Blfrtip"
-                  , buttons = 
-                    list("copy", list(
-                      extend = "collection"
-                      #, buttons = c("csv", "excel", "pdf")
-                      , buttons = c("csv")
-                      , text = "Download"
-                    ) ) )# end of buttons customization
+tags$a(href="https://text-compare.com/", "Suggest to check ALL text_diff"),
+## <a href="www.rstudio.com">Click here!</a>
+tags$br(),
+tags$br(),
+tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "Upload to google drive"),
+tags$br(),
+tags$br()
+#            downloadButton("downloadData", "Download")
+    ),
+    #mainPanel(
+      #DTOutput tableOutput
+      #DTOutput("DRC_grep")
+###2 tables
+#https://stackoverflow.com/questions/47915924/conditional-format-multiple-tables-in-shiny-r
+#fluidRow(
+#  column(12 
+#         , fluidRow(
+#           column(6, DT::dataTableOutput('op1'), style = "font-size: 
+#                  88%; width: 50%"),
+#           column(6, DT::dataTableOutput('op2'), style = "font-size: 
+#                  88%; width: 50%")
+#        )))
+#draft###################################################
+#https://shiny.rstudio.com/gallery/datatables-demo.html
+    mainPanel(
+      tabsetPanel(
+        id = 'dataset',
+        tabPanel("ALL;DMC pre-check",
+fluidRow(
+  column(12 
+         , fluidRow(
+           column(6, DT::dataTableOutput('op1'), style = "font-size: 
+                  77%; width: 50%"),
+           column(6, DT::dataTableOutput('op1b'), style = "font-size: 
+                  77%; width: 50%")
+        )))		
+		),
+#
+        tabPanel("LMT pre-check", 
+fluidRow(
+  column(12 
+         , fluidRow(
+           column(6, DT::dataTableOutput('op2'), style = "font-size: 
+                  77%; width: 50%"),
+           column(6, DT::dataTableOutput('op2b'), style = "font-size: 
+                  77%; width: 50%")
+        )))			
+		),
+#		
+        tabPanel("rev history", DT::dataTableOutput("op3"))
+      )
+	)
+####################################################
+    #)
   )
-  ###
-})
-###
-###
-#renderDT renderTable 2
-output$op2b <- renderDT({
-  req(input$file2)
-  i11 <- read.csv(input$file2$datapath, header = TRUE)
-  ##
-  req(input$file3)
-  i22 <- read.csv(input$file3$datapath, header = TRUE)
-###
-#TV_uwant <- input$text1
-lmt_col3p3 <- "Generic"
-lmt_col1 <- "LM-0001.091"
-lmt_col2 <- "Layer Mapping Table"
-lmt_col4 <- "Layer"
-lpo_col1 <- "LCN-003290"
-###
-i1 <- i11
-i2 <- i22
-#str(i1)
-i1 <- i1[grep("Mask|Drawn", i1$Layer.Type),]
-i1 <- i1[grep("Active", i1$Layer.Status),]
-#str(i1)
-#i1 <- i1[grep("", i1$Tech.Variant...Included.in.PDK, invert = TRUE),]
-##combine LPO col M B == LMT col C
-col3 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col3[ is.na( col3 ) ] <- lmt_col3p3
-
-col1 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col1[ is.na( col1 ) ] <- lmt_col1
-
-col2 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col2[ is.na( col2 ) ] <- lmt_col2
-
-col4 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col4[ is.na( col4 ) ] <- lmt_col4
-###LMT Layer.Number = LPO col 13 2 36 dummy
-###col 17 18 25 26
-i1_v1 <- cbind( col1,col2,
-paste( i1[,13],i1[,2],i1[,36],col3, sep = "_", collapse = NULL )
-,col4,i1[17:18],i1[25:26] )
-colnames(i1_v1) <- colnames(i2[1,])[1:8]
-#str(i1_v1)
-i1_v1$Layer.Number <- gsub("__", "_", i1_v1$Layer.Number, ignore.case = TRUE)
-#str(i1_v1)
-i1_v1[ is.na( i1_v1 ) ] <- ""
-#str(i1_v1)
-###
-###DT e.g.
-#https://datatables.net/examples/basic_init/
-DT::datatable(i1_v1, 
-              ###col search
-              #https://rstudio.github.io/DT/009-searchable.html
-              #https://shiny.rstudio.com/articles/datatables.html
-              #filter = list(position = 'top', clear = FALSE),
-              ###download
-              #https://github.com/rstudio/DT/issues/267
-              extensions = 'Buttons'
-              , options = list( 
-                ###highlight color
-                #https://rstudio.github.io/DT/006-highlight.html
-                lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
-                , dom = "Blfrtip"
-                , buttons = 
-                  list("copy", list(
-                    extend = "collection"
-                    #, buttons = c("csv", "excel", "pdf")
-                    , buttons = c("csv")
-                    , text = "Download"
-                  ) ) )# end of buttons customization
-              )
-###
-})
-###
-###
-###
-#renderDT renderTable 2b
-output$op2 <- renderDT({
-  req(input$file2)
-  i11 <- read.csv(input$file2$datapath, header = TRUE)
-  ##
-  req(input$file3)
-  i22 <- read.csv(input$file3$datapath, header = TRUE)
-###
-#TV_uwant <- input$text1
-lmt_col3p3 <- "Generic"
-lmt_col1 <- "LM-0001.091"
-lmt_col2 <- "Layer Mapping Table"
-lmt_col4 <- "Layer"
-lpo_col1 <- "LCN-003290"
-###
-i1 <- i11
-i2 <- i22
-#str(i1)
-i1 <- i1[grep("Mask|Drawn", i1$Layer.Type),]
-i1 <- i1[grep("Active", i1$Layer.Status),]
-#str(i1)
-#i1 <- i1[grep("", i1$Tech.Variant...Included.in.PDK, invert = TRUE),]
-##combine LPO col M B == LMT col C
-col3 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col3[ is.na( col3 ) ] <- lmt_col3p3
-
-col1 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col1[ is.na( col1 ) ] <- lmt_col1
-
-col2 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col2[ is.na( col2 ) ] <- lmt_col2
-
-col4 <- matrix( NA, nrow=dim(i1)[1], ncol=1 ) #create dummy n*1
-col4[ is.na( col4 ) ] <- lmt_col4
-###LMT Layer.Number = LPO col 13 2 36 dummy
-###col 17 18 25 26
-i1_v1 <- cbind( col1,col2,
-paste( i1[,13],i1[,2],i1[,36],col3, sep = "_", collapse = NULL )
-,col4,i1[17:18],i1[25:26] )
-colnames(i1_v1) <- colnames(i2[1,])[1:8]
-#str(i1_v1)
-i1_v1$Layer.Number <- gsub("__", "_", i1_v1$Layer.Number, ignore.case = TRUE)
-#str(i1_v1)
-i1_v1[ is.na( i1_v1 ) ] <- ""
-###col 5 6 3
-i1_v2 <- cbind( paste( i1_v1[,5],i1_v1[,6],i1_v1[,3],
-sep = ";", collapse = NULL ) )
-i1_v2 <- as.data.frame(table(i1_v2))
-colnames(i1_v2)[1] <- "name"
-
-i2_v2 <- cbind( paste( i2[,5],i2[,6],i2[,3],
-sep = ";", collapse = NULL ) )
-i2_v2 <- as.data.frame(table(i2_v2))
-colnames(i2_v2)[1] <- "name"
-
-sublpo_lmt_diff <- full_join( i1_v2, i2_v2, by = "name")
-colnames(sublpo_lmt_diff)[2:3] <- c("sub-lpo","sub-lmt")
-###re-order
-sublpo_lmt_diff <- sublpo_lmt_diff[ order( sublpo_lmt_diff[3]
-, na.last = FALSE, decreasing = TRUE ), ] #order reverse
-sublpo_lmt_diff <- sublpo_lmt_diff[ order( sublpo_lmt_diff[2]
-, na.last = FALSE, decreasing = TRUE ), ] #order reverse
-  ####################################################end
-  ###DT e.g.
-  #https://datatables.net/examples/basic_init/
-  DT::datatable(sublpo_lmt_diff, 
-                ###col search
-                #https://rstudio.github.io/DT/009-searchable.html
-                #https://shiny.rstudio.com/articles/datatables.html
-                #filter = list(position = 'top', clear = FALSE),
-                ###download
-                #https://github.com/rstudio/DT/issues/267
-                extensions = 'Buttons'
-                , options = list( 
-                  ###highlight color
-                  #https://rstudio.github.io/DT/006-highlight.html
-                  lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
-                  , dom = "Blfrtip"
-                  , buttons = 
-                    list("copy", list(
-                      extend = "collection"
-                      #, buttons = c("csv", "excel", "pdf")
-                      , buttons = c("csv")
-                      , text = "Download"
-                    ) ) )# end of buttons customization
-  )
-  ###
-})
-###
-###
-#renderDT renderTable 3
-output$op3 <- renderDT({
-req(input$file4)
-diffdm0 <- read.csv(input$file4$datapath, header = TRUE)
-diffdm <- diffdm0
-###
-#extract 3 columns
-diffdm1 <- cbind( diffdm[3], diffdm[7], diffdm[1] )
-diffdm2 <- diffdm1[ which( diffdm1[2]=="Added"|diffdm1[2]=="Removed"|diffdm1[2]=="Modified"|diffdm1[2]=="Same"), ]
-#order Section
-diffdm2 <- diffdm2[order(diffdm2[1]), ]
-#length(t(diffdm4_uni)) == 113
-diffdm4_uni <- unique(diffdm2[1]) 
-#create dummy 113*1
-ans_o1 <- matrix( NA, nrow=length(t(diffdm4_uni)), ncol=1 ) 
-#write a loop, run 113ea
-for ( i in 1:length(t(diffdm4_uni)) ){
-  #filter the i-th Scetion, e.g. i=1 to 113 
-  a3 <- diffdm2[diffdm2[1]==paste( diffdm4_uni[i,],collapse=" " ), ]
-  #e.g. 1st Section, then extract columns of "Type & Rule"
-  #due to we want to merge them
-  a4 <- cbind( a3[2], a3[3] ) #n*2 matrix
-  a4t <- as.matrix( t(a4) ) #2*n matrix
-  a4tv <- as.vector(a4t) #convert to line
-  #due to repeat "Added or Removed or Modified", so need to do de-duplicated this vector
-  a4t_v_d <- a4tv[!duplicated(a4tv)]
-  #lines -> character (~ 1*1)
-  a5 <- paste( t(a4t_v_d),collapse=" " )
-  #save to i-th row
-  ans_o1[i] <- a5
-}
-#create opuput format
-ans_o2 <- cbind( diffdm4_uni, ans_o1 )
+)
 ####################################################end
-  ###DT e.g.
-  #https://datatables.net/examples/basic_init/
-  DT::datatable(ans_o2, 
-                ###col search
-                #https://rstudio.github.io/DT/009-searchable.html
-                #https://shiny.rstudio.com/articles/datatables.html
-                #filter = list(position = 'top', clear = FALSE),
-                ###download
-                #https://github.com/rstudio/DT/issues/267
-                extensions = 'Buttons'
-                , options = list( 
-                  ###highlight color
-                  #https://rstudio.github.io/DT/006-highlight.html
-                  lengthMenu = c(99999, -1), pageLength = 99999, searchHighlight = TRUE
-                  , dom = "Blfrtip"
-                  , buttons = 
-                    list("copy", list(
-                      extend = "collection"
-                      #, buttons = c("csv", "excel", "pdf")
-                      , buttons = c("csv")
-                      , text = "Download"
-                    ) ) )# end of buttons customization
-  )
-  ###
-})
-###
-###
-}
+####################################################end
+#must below command separately
+##runApp()
+####################################################end
+####################################################end
+#Deploying applications
+#http://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications
+#rsconnect::setAccountInfo(name='hch1', token='41CC9A84435E2E7CAE08CE65D932569D', secret='mEv+SQx+ACmrHLfl1qbGFdH/cc9EQj7lP8fymw3x')
+##library(rsconnect)
+##deployApp()
+####################################################end
+####################################################end
