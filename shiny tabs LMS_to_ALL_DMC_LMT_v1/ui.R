@@ -50,6 +50,16 @@ tags$a(
 #tags$a(href="https://drive.google.com/open?id=1MKb-9hGF7S4KKJ16Cv54CuJrdXpNd_6G", "ALL uUpload to google drive"),
 tags$br(),
 tags$br(),
+tags$a(
+  href="https://www.global-foundryview.com/Agile/PLMServlet?fromPCClient=true&module=ItemHandler&requestUrl=module%3DItemHandler%26opcode%3DdisplayObject%26classid%3D10000%26objid%3D444828717%26tabid%3D0%26", 
+  "e.g. LM#"),
+tags$br(),
+tags$br(),
+tags$a(
+  href="http://mptweb1/~pdkwadm/design_rules_diff_reports/130NM/BCDLITE/Rev1.0_4.0_20190424/DRC/", 
+  "e.g. DRCTrack.csv"),
+tags$br(),
+tags$br(),
 ###
 tags$a(href="https://text-compare.com/", "Suggest to check ALL text_diff"),
 ## <a href="www.rstudio.com">Click here!</a>
