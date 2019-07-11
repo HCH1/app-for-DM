@@ -236,12 +236,12 @@ output$op1b <- renderDT({
 ###
 ###
 #renderDT renderTable 2
-output$op2 <- renderDT({
+output$op2b <- renderDT({
   req(input$file2)
-  i11 <- read.csv(input$file1$datapath, header = TRUE)
+  i11 <- read.csv(input$file2$datapath, header = TRUE)
   ##
   req(input$file3)
-  i22 <- read.csv(input$file2$datapath, header = TRUE)
+  i22 <- read.csv(input$file3$datapath, header = TRUE)
 ###
 #TV_uwant <- input$text1
 lmt_col3p3 <- "Generic"
@@ -310,12 +310,12 @@ DT::datatable(i1_v1,
 ###
 ###
 #renderDT renderTable 2b
-output$op2b <- renderDT({
+output$op2 <- renderDT({
   req(input$file2)
-  i11 <- read.csv(input$file1$datapath, header = TRUE)
+  i11 <- read.csv(input$file2$datapath, header = TRUE)
   ##
   req(input$file3)
-  i22 <- read.csv(input$file2$datapath, header = TRUE)
+  i22 <- read.csv(input$file3$datapath, header = TRUE)
 ###
 #TV_uwant <- input$text1
 lmt_col3p3 <- "Generic"
@@ -402,7 +402,7 @@ sublpo_lmt_diff <- sublpo_lmt_diff[ order( sublpo_lmt_diff[2]
 #renderDT renderTable 3
 output$op3 <- renderDT({
 req(input$file4)
-diffdm0 <- read.csv(input$file1$datapath, header = TRUE)
+diffdm0 <- read.csv(input$file4$datapath, header = TRUE)
 diffdm <- diffdm0
 ###
 #extract 3 columns
