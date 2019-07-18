@@ -10,14 +10,30 @@ i11 = read.csv("2 LCN-003290 130G-LP (v44).csv", header = TRUE, stringsAsFactors
 lpo_col1 <- "LCN-003290"
 i1 <- i11
 #i1b <- i1[grep("124;0|130;0|201;0|234;39|28;0", i1$name),]
-i1b <- i1[grep("_MK	|_XTOR|_TYPE|_Res|_Label|_EXCL", i1$Data.Layer.Name),]
-###re-order
-i1b <- i1b[ order( i1b$name
+i1a <- i1[grep("_MK|_XTOR|_TYPE|_Res|_Label|_EXCL", i1$Data.Layer.Name),]
+i1b <- i1a
+#replace certain col many words
+i1b$Data.Layer.Name <- gsub("[_]MK|[_]XTOR|[_]TYPE|[_]Res|[_]Label|[_]EXCL", "", i1b$Data.Layer.Name)
+#count freq
+i1c <- table(i1b$Data.Layer.Name)
+i1c <- as.data.frame(i1c)
+###re-order 1
+i1c <- i1c[ order( i1c$Freq
+, na.last = FALSE, decreasing = TRUE ), ] #order reverse
+###re-order 2
+i1a <- i1a[ order( i1a$Data.Layer.Name
 , na.last = FALSE, decreasing = FALSE ), ] #order reverse
-write.csv(x = i1b, row.names = TRUE, 
+
+#save 1
+write.csv(x = i1c, row.names = TRUE, 
 file = paste(format(Sys.time(), "%Y%m%d_%H")
 ,"_",lpo_col1
-, "_grep _xx by R v1.csv", sep = "") )
+, "_xx sum freq by R v1.csv", sep = "") )
+#save 2
+write.csv(x = i1a, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H")
+,"_",lpo_col1
+, "_grep lcn _xx by R v1.csv", sep = "") )
 ####################################################end
 #v1 filter many gds
 library(dplyr)
