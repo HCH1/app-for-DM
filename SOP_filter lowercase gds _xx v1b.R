@@ -8,20 +8,29 @@ i11 = read.csv("2 LCN-003290 130G-LP (v44).csv", header = TRUE, stringsAsFactors
 #lmt_col2 <- "Layer Mapping Table"
 #lmt_col4 <- "Layer"
 lpo_col1 <- "LCN-003290"
+colnames(i11)[1] <- "lv"
 i1 <- i11
-#i1b <- i1[grep("124;0|130;0|201;0|234;39|28;0", i1$name),]
-i1a <- i1[grep("_MK|_XTOR|_TYPE|_Res|_Label|_EXCL", i1$Data.Layer.Name),]
+#grep words at tail
+i1a <- i1[grep("_MK$|_XTOR$|_TYPE$|_Res$|_Label$|_EXCL$", i1$Data.Layer.Name),]
 i1b <- i1a
-#replace certain col many words
-i1b$Data.Layer.Name <- gsub("[_]MK|[_]XTOR|[_]TYPE|[_]Res|[_]Label|[_]EXCL", "", i1b$Data.Layer.Name)
+#replace certain col many words 
+i1b$Data.Layer.Name <- gsub("[_]MK$|[_]XTOR$|[_]TYPE$|[_]Res$|[_]Label$|[_]EXCL$", "", i1b$Data.Layer.Name)
 #count freq
 i1c <- table(i1b$Data.Layer.Name)
 i1c <- as.data.frame(i1c)
+colnames(i1c)[1] <- "Data.Layer.Name"
+#map freq vs lcn
+i1d <- left_join(i1c, i11, by = "Data.Layer.Name")
+i1d[ is.na( i1d ) ] <- ""
+
 ###re-order 1
 i1c <- i1c[ order( i1c$Freq
 , na.last = FALSE, decreasing = TRUE ), ] #order reverse
 ###re-order 2
 i1a <- i1a[ order( i1a$Data.Layer.Name
+, na.last = FALSE, decreasing = FALSE ), ] #order reverse
+###re-order 3
+i1d <- i1d[ order( i1d$lv
 , na.last = FALSE, decreasing = FALSE ), ] #order reverse
 
 #save 1
@@ -34,6 +43,11 @@ write.csv(x = i1a, row.names = TRUE,
 file = paste(format(Sys.time(), "%Y%m%d_%H")
 ,"_",lpo_col1
 , "_grep lcn _xx by R v1.csv", sep = "") )
+#save 3
+write.csv(x = i1d, row.names = TRUE, 
+file = paste(format(Sys.time(), "%Y%m%d_%H")
+,"_",lpo_col1
+, "_xx map vs lcn by R v1.csv", sep = "") )
 ####################################################end
 #v1 filter many gds
 library(dplyr)
