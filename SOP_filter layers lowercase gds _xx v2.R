@@ -1,4 +1,36 @@
 #v1b grep only e.g. _MK	|_XTOR|_TYPE|_Res|_Label|_EXCL
+#v1b replace only [_]MK$|[_]XTOR$|[_]TYPE$|[_]Res$|[_]Label$|[_]EXCL$
+#v2 grep multi layers; CC_error vs LCN
+library(dplyr)
+##input:
+i1 = read.csv("DM-000290 cc error v1.csv", header = TRUE, stringsAsFactors=FALSE)
+i2 = read.csv("2 LCN-003331 180BSL (v7).csv", header = TRUE, stringsAsFactors=FALSE)
+i4tv = "DM-000290"
+###
+###SOP to check two files diff: add new key col > xxx_join() > logic check > replace NA > save as
+i1_v1 <- i1
+i2_v1 <- i2
+i1_v1 <- data.frame( table(i1_v1) ) #can do freq sum
+i1_v1 #check freq, can't > 1
+colnames(i1_v1)[1] <- "Data.Layer.Name"
+#str(i1_v1)
+#str(i2_v1)
+i1_v2 <- i1_v1 #1 col
+#str(i1_v2)
+i1_v2_col1 <- as.vector(t(i1_v2[,1]))
+ptn11 <- paste(i1_v2_col1, collapse="|") #"A|B|C"
+ptn11
+###
+ans1 <- i2_v1[grep(ptn11, i2_v1$Data.Layer.Name),]
+ans1[ is.na( ans1 ) ] <- ""
+str(ans1)
+#dim(ans1)
+#dim(i2_v1)
+write.csv(x = ans1, row.names = TRUE, file = paste(format(Sys.time(), "%Y%m%d_%H")
+,"_",i4tv
+, "_grep multi layers v1.csv", sep = "") )
+####################################################end
+####################################################end
 library(dplyr)
 ##input:
 i11 = read.csv("2 LCN-003290 130G-LP (v44).csv", header = TRUE, stringsAsFactors=FALSE)
@@ -49,6 +81,7 @@ file = paste(format(Sys.time(), "%Y%m%d_%H")
 ,"_",lpo_col1
 , "_xx map vs lcn by R v1.csv", sep = "") )
 ####################################################end
+####################################################end
 #v1 filter many gds
 library(dplyr)
 ##input:
@@ -69,6 +102,7 @@ write.csv(x = i1b, row.names = TRUE,
 file = paste(format(Sys.time(), "%Y%m%d_%H")
 ,"_",lmt_col1,"_vs_",lpo_col1
 , "_filter many gds by R v1.csv", sep = "") )
+####################################################end
 ####################################################end
 #v0 dmc report then grep only lowercase
 dmc = read.csv("DMC_Result_130BCDLite_DM000064 Failing Term v1.csv", header = TRUE)
