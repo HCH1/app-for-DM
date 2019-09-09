@@ -1,0 +1,146 @@
+Rule,Internal,Section,Status,Deck Developer Comments,Who,Type,Bug ID,Order
+HSK.7c,,High Voltage Schottky Diode Design Rules (40V),,,,Added,,1
+LSC.8a,,Level Shift Circuitry Design Rules,,,,Added,,2
+LSC.8b,,Level Shift Circuitry Design Rules,,,,Added,,3
+MIM2M.21,,2-Mask MIM Capacitor Design Rules,,,,Added,,4
+N85.43,,High Voltage ISO BODY LDNMOS Common Design Rules (40V/65V/85V),,,,Added,,5
+P85.43,,High Voltage LDPMOS Common Design Rules (40V/65V/85V),,,,Added,,6
+PROHIBIT,,Design Geometry Rules,,,,Added,,7
+UR5.15,,Ultra Low Rdson NMOS Design Rules (5V),,,,Added,,8
+2MT.13_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,1
+2MT.14_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,2
+2MT.6_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,3
+2MT.9_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,4
+2MTK.10_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,5
+2MTK.13_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,6
+2MTK.14_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,7
+2MTK.4a_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,8
+2MTK.6_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,9
+2MTK.9a_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,10
+2MTK.9b_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,11
+ACI_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,12
+CO.11_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,13
+CO.1_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,14
+CO.5_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,15
+CUP_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,16
+ESDR.1_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,17
+LSC.9,,Level Shift Circuitry Common Design Rules (30V/85V),,,,Removed,,18
+MTK.4_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,19
+MTP.1,,MTP Design Rules,,,,Removed,,20
+MTP.10,,MTP Design Rules,,,,Removed,,21
+MTP.11,,MTP Design Rules,,,,Removed,,22
+MTP.2,,MTP Design Rules,,,,Removed,,23
+MTP.4,,MTP Design Rules,,,,Removed,,24
+MTP.5,,MTP Design Rules,,,,Removed,,25
+MTP.6,,MTP Design Rules,,,,Removed,,26
+MTP.7,,MTP Design Rules,,,,Removed,,27
+MTP.8a,,MTP Design Rules,,,,Removed,,28
+MTP.8b,,MTP Design Rules,,,,Removed,,29
+MTP.9a,,MTP Design Rules,,,,Removed,,30
+MTP.9b,,MTP Design Rules,,,,Removed,,31
+PAD.3_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,32
+VTK.1_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,33
+VTK.3_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,34
+VTK.4a_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,35
+VTK.7_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,36
+VTK.8_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,37
+Vn.1_SRa,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,38
+Vn.1_SRb,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,39
+Vn.3_SRa,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,40
+Vn.3_SRb,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,41
+Vn.4_SR,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,42
+Vn.7_SRa,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,43
+Vn.7_SRb,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,44
+Vn.8a_SRa,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,45
+Vn.8a_SRb,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,46
+Vn.8b_SRa,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,47
+Vn.8b_SRb,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules (Continued)",,,,Removed,,48
+UR5.12,,Ultra Low Rdson NMOS Design Rules (5V),,,,Renamed,,1
+2MT.9,,0.8 um MetalTop MT and TV and 0.8 um MT-1 and TV-1 Design Rules (Optional),,,,Modified,,1
+ACI.1,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,2
+ACI.10,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,3
+ACI.11,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,4
+ACI.13c,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,5
+ACI.13d,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,6
+ACI.1a,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,7
+ACI.2,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,8
+ACI.2a,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,9
+ACI.2b,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,10
+ACI.2c,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,11
+ACI.6,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,12
+ACI.7b,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,13
+ACI.8,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,14
+ANT.16,,Antenna Ratio Design Rules,,,,Modified,,15
+ANT.17,,Antenna Ratio Design Rules,,,,Modified,,16
+CO.1,,Contact Design Rules,,,,Modified,,17
+CO.4b,,Contact Design Rules,,,,Modified,,18
+CO.5,,Contact Design Rules,,,,Modified,,19
+DAL.3,,Dummy Aluminum RDL Generation Design Rules,,,,Modified,,20
+DF.10,,COMP Common Design Rules,,,,Modified,,21
+DF.8b,,COMP Common Design Rules,,,,Modified,,22
+DN.1,,DNWELL Design Rules,,,,Modified,,23
+DN.5,,DNWELL Design Rules,,,,Modified,,24
+DT.1,,D_TRENCH Design Rules,,,,Modified,,25
+DT.10,,D_TRENCH Design Rules,,,,Modified,,26
+DT.14,,D_TRENCH Design Rules,,,,Modified,,27
+DT.16,,D_TRENCH Design Rules,,,,Modified,,28
+DT.9,,D_TRENCH Design Rules,,,,Modified,,29
+G.ACI.13a,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,30
+G.ACI.13b,,Aluminum Cap/Al RDL/Al Interconnect Design Rules,,,,Modified,,31
+G.LSC.10a,,Level Shift Circuitry Design Rules,,,,Modified,,32
+G.LSC.10b,,Level Shift Circuitry Design Rules,,,,Modified,,33
+G.PAD.3,,Bond Pad Common Design Rules,,,,Modified,,34
+GR.3,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules",,,,Modified,,35
+GR.4,,"Design of the Crackstop, Moisture Oxidation Barrier, and Sealring Design Rules",,,,Modified,,36
+G_DT.7b,,D_TRENCH Design Rules,,,,Modified,,37
+HRES.11,,High Sheet Rho P-type Poly Resistor Design Rules (ppolyf_u_2k_dw),,,,Modified,,38
+HVESD.25,,40V/65V/85V ESD Device Common Design Rules,,,,Modified,,39
+HVNW.13,,HVNWELL Design Rules,,,,Modified,,40
+HVNW.14,,HVNWELL Design Rules,,,,Modified,,41
+LSC.1,,Level Shift Circuitry Design Rules,,,,Modified,,42
+LSC.11,,Level Shift Circuitry Design Rules,,,,Modified,,43
+LSC.12,,Level Shift Circuitry Design Rules,,,,Modified,,44
+LSC.2a,,Level Shift Circuitry Design Rules,,,,Modified,,45
+LSC.2b,,Level Shift Circuitry Design Rules,,,,Modified,,46
+LSC.3a,,Level Shift Circuitry Design Rules,,,,Modified,,47
+LSC.3b,,Level Shift Circuitry Design Rules,,,,Modified,,48
+LSC.4a,,Level Shift Circuitry Design Rules,,,,Modified,,49
+LSC.4b,,Level Shift Circuitry Design Rules,,,,Modified,,50
+LSC.4c,,Level Shift Circuitry Design Rules,,,,Modified,,51
+LSC.5,,Level Shift Circuitry Design Rules,,,,Modified,,52
+LSC.6,,Level Shift Circuitry Design Rules,,,,Modified,,53
+LSC.7,,Level Shift Circuitry Design Rules,,,,Modified,,54
+LSC.8,,Level Shift Circuitry Design Rules,,,,Modified,,55
+M1.2d.16,,Metal-n Design Rules (6V to 85V),,,,Modified,,56
+MC.8,,Matched Pair MIM/MOM Capacitor Design Rules,,,,Modified,,57
+Mn.2d,,Metal-n Design Rules (6V to 85V),,,,Modified,,58
+Mn.2e,,Metal-n Design Rules (6V to 85V),,,,Modified,,59
+Mn.2f,,Metal-n Design Rules (6V to 85V),,,,Modified,,60
+Mn.2f.30,,Metal-n Design Rules (6V to 85V),,,,Modified,,61
+Mn.2g,,Metal-n Design Rules (6V to 85V),,,,Modified,,62
+Mn.2h,,Metal-n Design Rules (6V to 85V),,,,Modified,,63
+Mn.2i,,Metal-n Design Rules (6V to 85V),,,,Modified,,64
+Mn.2j,,Metal-n Design Rules (6V to 85V),,,,Modified,,65
+N12.14e,,High Voltage Isolated LDNMOS Design Rules (12V),,,,Modified,,66
+N85.31,,High Voltage ISO BODY LDNMOS Common Design Rules (40V/65V/85V),,,,Modified,,67
+N85.47,,High Voltage ISO BODY LDNMOS Common Design Rules (40V/65V/85V),,,,Modified,,68
+NAT.3a,,Native Vt NMOS Common Design Rules,,,,Modified,,69
+NAT.3b,,Native Vt NMOS Common Design Rules,,,,Modified,,70
+NAT.3c,,Native Vt NMOS Common Design Rules,,,,Modified,,71
+NP.11,,Nplus Common Design Rules,,,,Modified,,72
+NP.4a,,Nplus Common Design Rules,,,,Modified,,73
+NP.4c,,Nplus Common Design Rules,,,,Modified,,74
+NP.7,,Nplus Common Design Rules,,,,Modified,,75
+P85.42,,High Voltage LDPMOS Common Design Rules (40V/65V/85V),,,,Modified,,76
+PF.2,,PField Design Rules,,,,Modified,,77
+PWHV.16,,PWHV Design Rules,,,,Modified,,78
+PWHV.7,,PWHV Design Rules,,,,Modified,,79
+SB.14,,Salicide Block (SAB) Design Rules,,,,Modified,,80
+SB.4,,Salicide Block (SAB) Design Rules,,,,Modified,,81
+SB.9,,Salicide Block (SAB) Design Rules,,,,Modified,,82
+UR5.6,,Ultra Low Rdson NMOS Design Rules (5V),,,,Modified,,83
+VTK.1,,ViaTop for 3 um Thicker MetalTop Design Rules,,,,Modified,,84
+VTK.3,,ViaTop for 3 um Thicker MetalTop Design Rules,,,,Modified,,85
+VTK.4a,,ViaTop for 3 um Thicker MetalTop Design Rules,,,,Modified,,86
+VTK.7,,ViaTop for 3 um Thicker MetalTop Design Rules,,,,Modified,,87
+VTK.8,,ViaTop for 3 um Thicker MetalTop Design Rules,,,,Modified,,88
