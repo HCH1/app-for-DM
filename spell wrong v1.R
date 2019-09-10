@@ -3,11 +3,15 @@ library(qdap)
 ##https://cran.r-project.org/web/packages/textclean/readme/README.html#stashing-character-pre-sub
 library(textclean)
 ##input:
-#i1 = read.csv("11 130BCD_Rev0.9_5.0_DRC01_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
+i1 = read.csv("11 130BCD_Rev0.9_5.0_DRC01_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
+text <- i1$Description
+write.csv(x = text, row.names = TRUE, 
+          file = "file.csv" )
+#only read certain col
+text2 <- readLines("file.csv", warn = FALSE)
 ##https://cran.r-project.org/web/packages/hunspell/vignettes/intro.html
 ##hunspell
-text <- readLines("11 130BCD_Rev0.9_5.0_DRC01_internal.psv.csv", warn = FALSE)
-bad_words <- hunspell(text, format = "latex")
+bad_words <- hunspell(text2, format = "latex")
 bad2 <- sort(unique(unlist(bad_words)))
 #bad3 is df
 bad3 <- as.data.frame(bad2)
