@@ -1,4 +1,4 @@
-#v1 combine 3 apps in 1
+#v1 combine apps in 1
 #v2 add DM layers
 options(shiny.maxRequestSize=30*1024^2) 
 server <- function(input, output) {
@@ -627,26 +627,21 @@ server <- function(input, output) {
   #renderDT renderTable 4c spell typo
   output$op4c <- renderDT({
     req(input$file1)
-    diffdm0 <- readLines(input$file1$datapath, warn = FALSE)
+    diffdm0 <- read.csv(input$file1$datapath, header = TRUE)
     diffdm <- diffdm0
     ###
-    bad_words <- hunspell(diffdm, format = "latex")
+    ##input:
+    text <- diffdm$Description
+    write.csv(x = text, row.names = TRUE, 
+              file = "file.csv" )
+    #only read certain col
+    text2 <- readLines("file.csv", warn = FALSE)
+    ##https://cran.r-project.org/web/packages/hunspell/vignettes/intro.html
+    ##hunspell
+    bad_words <- hunspell(text2, format = "latex")
     bad2 <- sort(unique(unlist(bad_words)))
     #bad3 is df
     bad3 <- as.data.frame(bad2)
-    #str(i1_v1)
-    #invert grep dataframe contain keywords
-#    i1_v1b <- i1_v1[grep("â|Å|Γ|Ç|ª|ê|å|╧", i1_v1$Description, invert = TRUE),]
-    #str(i1_v1b)
-    #bad is group of list
-#    bad <- hunspell(i1_v1b$Description)
-    #bad2 is chr
-#    bad2 <- sort(unique(unlist(bad)))
-#    bad22 <- as.character(bad2)
-    #bad3 is df
-#    bad3 <- as.data.frame(bad22)
-    #replace NA to blank
-#    bad3[ is.na( bad3 ) ] <- ""
     ####################################################end
     ###DT e.g.
     #https://datatables.net/examples/basic_init/
