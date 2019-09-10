@@ -670,3 +670,18 @@ output$op2 <- renderDT({
 ###
 ###
 }
+####################################################end
+####################################################end
+####################################################end
+##input:
+#i1 = read.csv("11 130BCD_Rev0.9_5.0_DRC01_internal.psv.csv", header = TRUE, stringsAsFactors=FALSE)
+##https://cran.r-project.org/web/packages/hunspell/vignettes/intro.html
+##hunspell
+text <- readLines("11 130BCD_Rev0.9_5.0_DRC01_internal.psv.csv", warn = FALSE)
+bad_words <- hunspell(text, format = "latex")
+bad2 <- sort(unique(unlist(bad_words)))
+#bad3 is df
+bad3 <- as.data.frame(bad2)
+####################################################end
+####################################################end
+####################################################end
