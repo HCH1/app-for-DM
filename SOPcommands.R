@@ -56,6 +56,13 @@ write.table(x = drc1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d
 lpo1$x <- paste( lpo1$Data.Layer.Name, lpo1$GDS.Number, lpo1$GDS.Datatype, sep = "|", collapse = NULL )
 #do filter
 lpo2 <- lpo1[ which( lpo1[6]=="Active" ), ]
+# filter year in df
+# https://blog.exploratory.io/filter-with-date-function-ce8e84be680
+fig2019 <- filter(fig2b, Date.Originated >= "2019-01-01"
+                  & Date.Originated <= "2019-12-31")
+# split text in df
+i1d <- separate(i1c,Date.Originated,sep=" "
+                ,into=c("Date.Originated","v2","v3"))
 #do OR_filter
 lpo22 <- lpo2[ which( lpo2[7]=="Common Design FEOL" | lpo2[7]=="Common Design BEOL" 
                      | lpo2[7]=="Marker Devices" | lpo2[7]=="Marker Voltage"
