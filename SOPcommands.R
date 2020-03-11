@@ -692,3 +692,11 @@ bad3 <- as.data.frame(bad2)
 ####################################################end
 ####################################################end
 ####################################################end
+# Grouped Box Plots
+# https://plot.ly/r/box-plots/
+fig <- plot_ly(df
+               , x = ~LTN, y = ~date_diff
+               , color = ~only.year, type = "box")
+fig <- fig %>% layout(boxmode = "group")
+fig
+
