@@ -41,6 +41,18 @@ write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m
 TV_uwant <- "DM-000450"
 ly_st <- "Active"
 ly_cat <- "Marker Enablement"
+#cal col freq
+library(dplyr)
+i1 = read.csv("8SWAPACPRE01 DM000432 (V1.3_1.0).csv", 
+              header = TRUE, stringsAsFactors=FALSE)
+ans <- table(i1)
+ans <- as.data.frame(ans)
+ans <- ans[ order(ans[2],
+                  decreasing = TRUE), ]
+ans[ is.na( ans ) ] <- ""
+write.csv(x = ans, row.names = TRUE, 
+          file = paste(format(Sys.time(), "%Y%m%d_%H"), 
+                       "_8SWAPACPRE01 DM000432.csv", sep = "") )
 ###re-order
 in1 <- in1[ order(in1[1], 
 decreasing = TRUE), ]
