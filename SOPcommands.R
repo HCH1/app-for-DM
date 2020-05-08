@@ -488,7 +488,8 @@ dataset = as.data.frame(as.matrix(dtm))
 ####################################################end
 ####################################################end
 ###case: dm.desc.split="" in.dict="" LV=has
-###logic check by contain
+###logic check by partial contain; use ifelse grepl
+df$loc01 <- ifelse(grepl("non",df$loc_01),'outside','inside')
 desc_map_lpo2$ans.missing.ly = ifelse(
 desc_map_lpo2$dm.desc.split == ""
 & desc_map_lpo2$in.dict == ""
