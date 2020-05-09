@@ -712,4 +712,38 @@ fig <- plot_ly(df
                , color = ~only.year, type = "box")
 fig <- fig %>% layout(boxmode = "group")
 fig
-
+####################################################end
+#add col 2 to memo col 1 pattern
+df_gds_xy$ans1 <- ifelse(grepl("LAYER",df_gds_xy$V1),1,
+                        ifelse(grepl("DATATYPE",df_gds_xy$V1),2,
+                        0 ))
+#
+m0 <- t( as.data.frame(c(0)) )
+for (i in 1:dim(df_gds_xy)[1]) {
+  #make a new df2, 1st row fix, equal sweep from i=2, check df1 logic, then do on df2.
+  m1 <- ifelse(i==1,1,
+               ifelse(df_gds_xy$ans1[i]==1,
+               m0[(i-1)]+1,
+               m0[i]
+               ))
+    #after merge, then return to m0, so can loop
+    m0 <- rbind(m0,m1)
+}
+#
+m0 <- t( as.data.frame(c(0)) )
+for (i in 1:dim(df_gds_xy)[1]) {
+  #i=1
+  m1 <- ifelse(i==1,paste(df3col[1,1],df3col[2,1], sep = "", 
+                          collapse = NULL),
+	       #check df1 logic, then do on df2.
+               ifelse(df3col$shape[i]==df3col$shape[(i-1)],
+                      m0[i],
+                      paste(df3col[i,1],df3col[(i+1),1], sep = "", 
+                            collapse = NULL)
+               ))
+  m0 <- rbind(m0,m1)
+}
+#split df col by text
+df5col_v1 <- separate(df4col_v1, V1, 
+                      sep=";" ,into=c("x","y"))
+############################################################
