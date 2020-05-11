@@ -747,3 +747,31 @@ for (i in 1:dim(df_gds_xy)[1]) {
 df5col_v1 <- separate(df4col_v1, V1, 
                       sep=";" ,into=c("x","y"))
 ############################################################
+#Pcell convert to layer/device TT
+#find the position 1, then we know what is the start point fo each group.
+string <- as.character( t(pcell2TTv4b[2]) )
+pattern <- c("1")
+pos1 <- grep(pattern, string)
+pos1 <- as.character(pos1)
+#e.g. 3 groups should have 4 vertex
+pos1b <- c( pos1, ( dim(pcell2TTv4b)[1]+1 ) )
+#
+m0 <- t( as.data.frame(c(0,0,0)) )
+for (i in 1:length(pos1)) {
+  #i=1
+  a <- as.numeric( pos1b[i] )
+  b <- as.numeric( pos1b[(i+1)] ) - 1
+  #same as filter each group
+  m1 <- pcell2TTv4b[a:b,]
+  #gds de-duplicate
+  m1_uni <- unique( m1[1] )
+  m2 <- cbind(i,m1[1,1],m1_uni)
+  #remove lv1 NAME data
+  m2 <- m2[-1,]
+  colnames(m2) <- c("group","device","gds")
+  colnames(m0) <- colnames(m2)
+  m3 <- rbind(m0,m2)
+  #end -> new start
+  m0 <- m3
+}
+############################################################
