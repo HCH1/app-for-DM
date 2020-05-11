@@ -774,4 +774,8 @@ for (i in 1:length(pos1)) {
   #end -> new start
   m0 <- m3
 }
+#https://www.rforexcelusers.com/make-pivottable-in-r/
+pcell_TTv2 = dcast(pcell_TT, device ~ gds, value.var = "TT")
+pcell_TTv2[ is.na( pcell_TTv2 ) ] <- 0
+#
 ############################################################
