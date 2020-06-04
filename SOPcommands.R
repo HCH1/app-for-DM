@@ -779,3 +779,38 @@ pcell_TTv2 = dcast(pcell_TT, device ~ gds, value.var = "TT")
 pcell_TTv2[ is.na( pcell_TTv2 ) ] <- 0
 #
 ############################################################
+#library(tidyr)
+#due to col=Layer.Sub.Category might be DM1;DM2;DM3, need to split DM# to rows
+lcn_demo2 <- separate_rows(lcn_demo2, Layer.Sub.Category, sep = ";")
+#split multi devices into rows, then do a df 
+m0 <- as.data.frame( t( as.data.frame(c(0,0)) ) )
+for (i in 1:dim(lcn_demo4[1])[1] ) {
+  #i=1
+  a1 <- lcn_demo4[i,2]
+  a2 <- as.data.frame( strsplit( as.character(a1), "," ) )
+  a3 <- cbind(lcn_demo4[i,1], a2)
+    colnames(a3) <- c("V1","V2")
+  m1 <- rbind(m0,a3)
+  m0 <- m1
+}
+lcn_demo5 <- m0[-1,]
+#
+m0 <- as.data.frame( t( as.data.frame(c(0,0)) ) )
+for (i in 1:dim(lcn_demo_glo2_col1)[1] ) {
+  #i=1
+  a0 <- lcn_demo_glo2_col1[i,1]
+  a1 <- lcn_demo_glo2[ which( lcn_demo_glo2[1]==a0 ), ]
+  a2 <- as.data.frame( paste( a1[2], sep = ",", collapse = NULL ) )
+  a3 <- cbind(a0, a2)
+  colnames(a3) <- c("V1","V2")
+  m1 <- rbind(m0,a3)
+  m0 <- m1
+}
+lcn_demo_glo3 <- m0[-1,]
+#clean text
+lcn_demo_glo3$V2 <- gsub('["]', "", lcn_demo_glo3$V2) #if want to replace ", then use '["]'
+#multi cols -> 1 col
+lcn_demo_glo5 <- unite(lcn_demo_glo4, V3, V4, V5
+                       ,col = "Description", sep = "")
+  colnames(lcn_demo_glo5) <- c("Abbreviation","Notes","Definition")
+############################################################
