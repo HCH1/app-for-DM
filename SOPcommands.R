@@ -1,3 +1,6 @@
+## win10 command
+type *.cal > xx.csv
+
 ##auto-update R
 # installing/loading the package:
 if(!require(installr)) { install.packages("installr"); require(installr)} #load / install+load installr
