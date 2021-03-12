@@ -817,3 +817,18 @@ lcn_demo_glo5 <- unite(lcn_demo_glo4, V3, V4, V5
                        ,col = "Description", sep = "")
   colnames(lcn_demo_glo5) <- c("Abbreviation","Notes","Definition")
 ############################################################
+#If you have multiple CSV files instead of Excel files, here is one for you.
+library(readr)
+temp = list.files(pattern="*.csv")
+myfiles = lapply(temp, read.csv)
+len1 <- length(myfiles)
+col1 <- matrix(NA, nrow=1, ncol=1) #create dummy 1*1
+for (i in 1:len1) {
+  photo1 <- myfiles[[i]]$Mask.Number %>% unique %>% as.data.frame
+  colnames(photo1) <- "V1"
+  ans <- rbind(col1,photo1) %>% unique
+  ans <- as.data.frame(ans)
+  col1 <- ans
+}
+############################################################
+
