@@ -10,7 +10,7 @@ WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter 
 ------------------------------------------------------------------------------
 --sync to Git
 ------------------------------------------------------------------------------
-maxRevNum2 AS
+WITH maxRevNum2 AS
 (    
     SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB
     FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
