@@ -1,13 +1,77 @@
 --SQL
 --https://www.w3schools.com/sql/sql_syntax.asp
 SELECT --col
-    *
-FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS --#table
-WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter and order from big to small 按照數字排序
-WHERE tech_node = '14LP' ORDER BY TECH_NODE_PLMREV　DESC　--按照a-Z排序
+FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS --table
+WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter and order from big to small
+------------------------------------------------------------------------------
+WITH maxRevNum AS
+(    
+    SELECT  MAX(to_number(TECH_NODE_PLMREV)) AS TECH_NODE_PLMREV, TECH_NODE
+    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
+    WHERE tech_node <> 'Test_1234' and REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]') group by tech_node
+)
+--select * from maxrevnum
+--WHERE tech_node <> 'Test_1234' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　
+, LatestLCN AS
+(
+    SELECT LTN.TECH_NODE, LTN.TECH_NODE_PLMREV, LTN.CHANGE_NUMBER
+    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS LTN, MaxRevNum MRT
+    WHERE
+        LTN.TECH_NODE = MRT.TECH_NODE
+        AND LTN.TECH_NODE_PLMREV = TO_CHAR(MRT.TECH_NODE_PLMREV)
+        AND MRT.TECH_NODE_PLMREV IS NOT NULL
+)
+SELECT * FROM LatestLCN
+WHERE tech_node <> 'Test_1234' ORDER BY cast(TECH_NODE_PLMREV as int) DESC
 
+------------------------------------------------------------------------------
+WITH maxRevNum AS
+(
+    
+    SELECT  MAX(to_number(TECH_NODE_PLMREV)) AS TECH_NODE_PLMREV, TECH_NODE
+    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
+    WHERE tech_node <> 'Test_1234' and REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]') group by tech_node
+)
+--select * from maxrevnum
+--WHERE tech_node <> 'Test_1234' ORDER BY cast(TECH_NODE_PLMREV as int) DESC
+, LatestLCN AS
+(
+    SELECT LTN.TECH_NODE, LTN.TECH_NODE_PLMREV, LTN.CHANGE_NUMBER
+    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS LTN, MaxRevNum MRT
+    WHERE
+        LTN.TECH_NODE = MRT.TECH_NODE
+        AND LTN.TECH_NODE_PLMREV = TO_CHAR(MRT.TECH_NODE_PLMREV)
+        AND MRT.TECH_NODE_PLMREV IS NOT NULL
+)
+--SELECT * FROM LatestLCN
+, PrimaryData AS
+(
+    SELECT
+        VEC.*
+    FROM
+        AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS VEC,
+        AGILEPLM.V_LMS_REL_LAYER_TABLE REL,
+        LatestLCN LLCN
+    WHERE
+        REL.LV_PLMNUM = VEC.LV_PLMNUM
+        AND REL.LV_PLMREV = VEC.LV_PLMREV
+        AND NVL(VEC.RELEASE_TYPE,'xyz') <> 'Obsolete'
+        AND REL.CHANGE_NUMBER = LLCN.CHANGE_NUMBER
+)
+--select * from PrimaryData order by tech_node
+--SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB
+--ORDER BY MASK_NUMBER
+, PrimaryData2 AS
+(
+select * from PrimaryData --order by tech_node
+WHERE TECH_NODE='22FD' OR
+TECH_NODE='28SL'
+)
+--select * from PrimaryData2
+SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
+ORDER BY MASK_NUMBER
 
-
+------------------------------------------------------------------------------
 ## win10 command
 type *.cal > xx.csv
 
