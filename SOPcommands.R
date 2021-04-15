@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 --demo
 ------------------------------------------------------------------------------
-SELECT --col
+SELECT * --col
 FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS --table
 WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter and order from big to small
 
