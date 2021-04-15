@@ -1,29 +1,22 @@
 --SQL
 --https://www.w3schools.com/sql/sql_syntax.asp
+------------------------------------------------------------------------------
+--demo
+------------------------------------------------------------------------------
 SELECT --col
 FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS --table
 WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter and order from big to small
-------------------------------------------------------------------------------
-WITH maxRevNum AS
-(    
-    SELECT  MAX(to_number(TECH_NODE_PLMREV)) AS TECH_NODE_PLMREV, TECH_NODE
-    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
-    WHERE tech_node <> 'Test_1234' and REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]') group by tech_node
-)
---select * from maxrevnum
---WHERE tech_node <> 'Test_1234' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　
-, LatestLCN AS
-(
-    SELECT LTN.TECH_NODE, LTN.TECH_NODE_PLMREV, LTN.CHANGE_NUMBER
-    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS LTN, MaxRevNum MRT
-    WHERE
-        LTN.TECH_NODE = MRT.TECH_NODE
-        AND LTN.TECH_NODE_PLMREV = TO_CHAR(MRT.TECH_NODE_PLMREV)
-        AND MRT.TECH_NODE_PLMREV IS NOT NULL
-)
-SELECT * FROM LatestLCN
-WHERE tech_node <> 'Test_1234' ORDER BY cast(TECH_NODE_PLMREV as int) DESC
 
+------------------------------------------------------------------------------
+--sync to Git
+------------------------------------------------------------------------------
+maxRevNum2 AS
+(    
+    SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB
+    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
+    WHERE FAB IS NOT NULL AND FAB LIKE '%7%' ORDER BY TECH_NODE
+)
+SELECT * FROM maxRevNum2 --find Fab7 with LTN rev LCN
 ------------------------------------------------------------------------------
 WITH maxRevNum AS
 (
@@ -65,12 +58,48 @@ WITH maxRevNum AS
 (
 select * from PrimaryData --order by tech_node
 WHERE TECH_NODE='22FD' OR
-TECH_NODE='28SL'
+TECH_NODE='28SL' OR
+TECH_NODE='40LP' OR
+TECH_NODE='55LP' OR
+TECH_NODE='130G-LP' OR
+TECH_NODE='CSOI8SW' OR
+TECH_NODE='180BSL' OR
+TECH_NODE='110MCU' OR
+TECH_NODE='130RFSOI' OR
+TECH_NODE='CSOI9SW' OR
+TECH_NODE='65LP' OR
+TECH_NODE='45CD' OR
+TECH_NODE='45TTA' OR
+TECH_NODE='65CB' OR
+TECH_NODE='86SOIFSL' OR
+TECH_NODE='45SOI' OR
+TECH_NODE='65CM' OR
+TECH_NODE='65PMIC' OR
+TECH_NODE='65TTA' OR
+TECH_NODE='90LP' OR
+TECH_NODE='153CE' OR
+TECH_NODE='150LP' OR
+TECH_NODE='40BRCM' OR
+TECH_NODE='130ANA' OR
+TECH_NODE='45SOIFSL' OR
+TECH_NODE='65CD' OR
+TECH_NODE='65RFSOI' OR
+TECH_NODE='90CSOI' OR
+TECH_NODE='180SiGe' OR
+TECH_NODE='45CQ' OR
+TECH_NODE='55LPTTB' OR
+TECH_NODE='180RF' OR
+TECH_NODE='250LP' OR
+TECH_NODE='40CM' OR
+TECH_NODE='40TTD' OR
+TECH_NODE='65INTERPOSER' OR
+TECH_NODE='65K8' OR
+TECH_NODE='90K8' OR
+TECH_NODE='90SOI'
 )
 --select * from PrimaryData2
 SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
 ORDER BY MASK_NUMBER
-
 ------------------------------------------------------------------------------
 ## win10 command
 type *.cal > xx.csv
