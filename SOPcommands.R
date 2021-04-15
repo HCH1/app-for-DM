@@ -1,3 +1,13 @@
+## SQL
+#https://www.w3schools.com/sql/sql_syntax.asp
+SELECT
+    *
+FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
+WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　#按照數字排序
+WHERE tech_node = '14LP' ORDER BY TECH_NODE_PLMREV　DESC　#按照a-Z排序
+
+
+
 ## win10 command
 type *.cal > xx.csv
 
