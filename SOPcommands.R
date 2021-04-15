@@ -1,4 +1,4 @@
-## SQL
+##SQL
 #https://www.w3schools.com/sql/sql_syntax.asp
 SELECT #col
     *
