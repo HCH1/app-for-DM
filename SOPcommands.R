@@ -1,5 +1,4 @@
---SQL
---https://www.w3schools.com/sql/sql_syntax.asp
+--SQL --https://www.w3schools.com/sql/sql_syntax.asp
 ------------------------------------------------------------------------------
 --demo
 ------------------------------------------------------------------------------
@@ -70,8 +69,9 @@ WITH maxRevNum AS
 ------------------------------------------------------------------------------
 --Apr-15 get all Fab unique mask # DB
 ------------------------------------------------------------------------------
---SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB
---ORDER BY MASK_NUMBER
+--SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB by (1) use Mini's DB
+SELECT DISTINCT MASK_NUMBER FROM AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS --(2) or use LV DB.
+ORDER BY MASK_NUMBER
 ------------------------------------------------------------------------------
 --Apr-16 find Fab7's unique LTN into 1 col
 ------------------------------------------------------------------------------
