@@ -15,26 +15,27 @@ WHERE tech_node = '130G-LP'
     ORDER BY TECH_NODE,
         cast(TECH_NODE_PLMREV as int) DESC --filter and order from big to small
 )
-
---Apr-15 
-SELECT *--col
-FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS --table
-WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter and order from big to small
-------------------------------------------------------------------------------
---Mar: code by Mini
-------------------------------------------------------------------------------
+--Apr-16 count monthly loading
+FROM lcnDate
+WHERE RELEASE_DATE LIKE '%-21%'
+    AND RELEASE_DATE LIKE '%FEB%'
+--Apr-15 find Fab7 with LTN rev LCN
 WITH maxRevNum2 AS
 (    
     SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB
     FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
-    WHERE FAB IS NOT NULL AND FAB LIKE '%7%' ORDER BY TECH_NODE
+    WHERE FAB IS NOT NULL 
+        AND REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]')
+        AND FAB LIKE '%7%'
+            ORDER BY TECH_NODE, cast(TECH_NODE_PLMREV as int) DESC
 )
-SELECT * FROM maxRevNum2 --find Fab7 with LTN rev LCN
+--SELECT * FROM maxRevNum2
+------------------------------------------------------------------------------
+--Mar: code by Mini
 ------------------------------------------------------------------------------
 WITH maxRevNum AS
-(
-    
-    SELECT  MAX(to_number(TECH_NODE_PLMREV)) AS TECH_NODE_PLMREV, TECH_NODE
+(    
+    SELECT MAX(to_number(TECH_NODE_PLMREV)) AS TECH_NODE_PLMREV, TECH_NODE
     FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
     WHERE tech_node <> 'Test_1234' and REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]') group by tech_node
 )
