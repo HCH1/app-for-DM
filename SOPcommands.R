@@ -73,12 +73,11 @@ WITH maxRevNum AS
 SELECT DISTINCT MASK_NUMBER FROM AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS --(2) or use LV DB.
 ORDER BY MASK_NUMBER
 ------------------------------------------------------------------------------
---Apr-16 find Fab7's unique LTN into 1 col
+--Apr-16 get Fab7's LCN format DB
 ------------------------------------------------------------------------------
-, 
 WITH fab7ltn AS
 (    
-    SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB
+    SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB --get cols belong to Fab7
     FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
     WHERE FAB IS NOT NULL 
         AND REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]')
@@ -87,19 +86,30 @@ WITH fab7ltn AS
 )
 , fab7ltn2 AS
 (    
-    SELECT DISTINCT TECH_NODE --get unique LTN
+    SELECT DISTINCT TECH_NODE --get unique LTN of Fab7
     FROM fab7ltn    
 )
 --SELECT * FROM fab7ltn2
 --Apr-15 get Fab7 unique mask # DB 
-, PrimaryData2 AS
+, fab7ltn3 AS
 (
 --SELECT * FROM PrimaryData --(1) use Mini's DB
-SELECT * FROM AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS --(2) or use LV DB.
+SELECT * FROM AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS --(2) or use LV DB; get LCN DB of Fab7
 WHERE TECH_NODE IN (SELECT TECH_NODE FROM fab7ltn2) --same as multi OR
 )
-SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
+, fab7ltn4 AS
+(
+SELECT DISTINCT MASK_NUMBER FROM fab7ltn3 --get unique mask # DB of Fab7
 ORDER BY MASK_NUMBER
+)
+--SELECT * FROM fab7ltn4
+, fab7ltn4b AS
+(
+SELECT * FROM AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS --get LCN DB of Fab7 with unique mask # DB
+WHERE MASK_NUMBER IN (SELECT MASK_NUMBER FROM fab7ltn4) --same as multi OR
+ORDER BY MASK_NUMBER DESC, TECH_NODE DESC, LV_PLMREV DESC
+)
+SELECT * FROM fab7ltn4b
 ------------------------------------------------------------------------------
 --Apr-16 backup for LTN = Fab7
 ------------------------------------------------------------------------------
