@@ -32,6 +32,7 @@ WITH maxRevNum2 AS
 --SELECT * FROM maxRevNum2
 ------------------------------------------------------------------------------
 --Mar: code by Mini
+--3 DB: AGILEPLM.V_LMS_TECH_NODE_DETAILS AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS AGILEPLM.V_LMS_REL_LAYER_TABLE
 ------------------------------------------------------------------------------
 WITH maxRevNum AS
 (    
@@ -39,7 +40,7 @@ WITH maxRevNum AS
     FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
     WHERE tech_node <> 'Test_1234' and REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]') group by tech_node
 )
---select * from maxrevnum
+--SELECT * FROM maxrevnum
 --WHERE tech_node <> 'Test_1234' ORDER BY cast(TECH_NODE_PLMREV as int) DESC
 , LatestLCN AS
 (
@@ -65,16 +66,43 @@ WITH maxRevNum AS
         AND NVL(VEC.RELEASE_TYPE,'xyz') <> 'Obsolete'
         AND REL.CHANGE_NUMBER = LLCN.CHANGE_NUMBER
 )
---select * from PrimaryData order by tech_node
+--SELECT * FROM PrimaryData order by tech_node
 ------------------------------------------------------------------------------
 --Apr-15 get all Fab unique mask # DB
 ------------------------------------------------------------------------------
-SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB
-ORDER BY MASK_NUMBER
+--SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB
+--ORDER BY MASK_NUMBER
+------------------------------------------------------------------------------
+--Apr-16 find Fab7's unique LTN into 1 col
+------------------------------------------------------------------------------
+, 
+WITH fab7ltn AS
+(    
+    SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB
+    FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
+    WHERE FAB IS NOT NULL 
+        AND REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]')
+        AND FAB LIKE '%7%'
+            ORDER BY TECH_NODE, cast(TECH_NODE_PLMREV as int) DESC
+)
+, fab7ltn2 AS
+(    
+    SELECT DISTINCT TECH_NODE --get unique LTN
+    FROM fab7ltn    
+)
+--SELECT * FROM fab7ltn2
 --Apr-15 get Fab7 unique mask # DB 
 , PrimaryData2 AS
 (
-select * from PrimaryData --order by tech_node
+--SELECT * FROM PrimaryData --(1) use Mini's DB
+SELECT * FROM AGILEPLM.V_LMS_LAYER_VECTOR_DETAILS --(2) or use LV DB.
+WHERE TECH_NODE IN (SELECT TECH_NODE FROM fab7ltn2) --same as multi OR
+)
+SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
+ORDER BY MASK_NUMBER
+------------------------------------------------------------------------------
+--Apr-16 backup for LTN = Fab7
+------------------------------------------------------------------------------
 WHERE TECH_NODE='22FD' OR
     TECH_NODE='28SL' OR
     TECH_NODE='40LP' OR
@@ -114,8 +142,7 @@ WHERE TECH_NODE='22FD' OR
     TECH_NODE='65K8' OR
     TECH_NODE='90K8' OR
     TECH_NODE='90SOI'
-)
---select * from PrimaryData2
+--SELECT * FROM PrimaryData2
 SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
 ORDER BY MASK_NUMBER
 
