@@ -3,12 +3,25 @@
 ------------------------------------------------------------------------------
 --demo
 ------------------------------------------------------------------------------
-SELECT * --col
+--Apr-16 get LCN release date
+WITH lcnDate AS
+(
+SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, RELEASE_DATE
+FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
+WHERE tech_node = '130G-LP' 
+    OR tech_node = '180BSL'
+    OR tech_node = 'CSOI8SW'
+    OR tech_node = '160STM'
+    ORDER BY TECH_NODE,
+        cast(TECH_NODE_PLMREV as int) DESC --filter and order from big to small
+)
+
+--Apr-15 
+SELECT *--col
 FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS --table
 WHERE tech_node = '14LP' ORDER BY cast(TECH_NODE_PLMREV as int) DESC　--filter and order from big to small
-
 ------------------------------------------------------------------------------
---sync to Git
+--Mar: code by Mini
 ------------------------------------------------------------------------------
 WITH maxRevNum2 AS
 (    
@@ -52,8 +65,12 @@ WITH maxRevNum AS
         AND REL.CHANGE_NUMBER = LLCN.CHANGE_NUMBER
 )
 --select * from PrimaryData order by tech_node
---SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB
---ORDER BY MASK_NUMBER
+------------------------------------------------------------------------------
+--Apr-15 get all Fab unique mask # DB
+------------------------------------------------------------------------------
+SELECT DISTINCT MASK_NUMBER FROM PrimaryData --get all Fab unique mask # DB
+ORDER BY MASK_NUMBER
+--Apr-15 get Fab7 unique mask # DB 
 , PrimaryData2 AS
 (
 select * from PrimaryData --order by tech_node
@@ -100,6 +117,7 @@ TECH_NODE='90SOI'
 --select * from PrimaryData2
 SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
 ORDER BY MASK_NUMBER
+
 ------------------------------------------------------------------------------
 ## win10 command
 type *.cal > xx.csv
