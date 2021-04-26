@@ -65,6 +65,61 @@ WITH maxRevNum AS
         AND NVL(VEC.RELEASE_TYPE,'xyz') <> 'Obsolete'
         AND REL.CHANGE_NUMBER = LLCN.CHANGE_NUMBER
 )
+------------------------------------------------------------------------------
+--Apr-26 get details Fab7 DB
+------------------------------------------------------------------------------
+, PrimaryDataFab7 AS
+(
+    SELECT *
+    FROM PrimaryData
+	WHERE TECH_NODE='22FD' OR
+		TECH_NODE='28SL' OR
+		TECH_NODE='40LP' OR
+		TECH_NODE='55LP' OR
+		TECH_NODE='130G-LP' OR
+		TECH_NODE='CSOI8SW' OR
+		TECH_NODE='180BSL' OR
+		TECH_NODE='110MCU' OR
+		TECH_NODE='130RFSOI' OR
+		TECH_NODE='CSOI9SW' OR
+		TECH_NODE='65LP' OR
+		TECH_NODE='45CD' OR
+		TECH_NODE='45TTA' OR
+		TECH_NODE='65CB' OR
+		TECH_NODE='86SOIFSL' OR
+		TECH_NODE='45SOI' OR
+		TECH_NODE='65CM' OR
+		TECH_NODE='65PMIC' OR
+		TECH_NODE='65TTA' OR
+		TECH_NODE='90LP' OR
+		TECH_NODE='153CE' OR
+		TECH_NODE='150LP' OR
+		TECH_NODE='40BRCM' OR
+		TECH_NODE='130ANA' OR
+		TECH_NODE='45SOIFSL' OR
+		TECH_NODE='65CD' OR
+		TECH_NODE='65RFSOI' OR
+		TECH_NODE='90CSOI' OR
+		TECH_NODE='180SiGe' OR
+		TECH_NODE='45CQ' OR
+		TECH_NODE='55LPTTB' OR
+		TECH_NODE='180RF' OR
+		TECH_NODE='250LP' OR
+		TECH_NODE='40CM' OR
+		TECH_NODE='40TTD' OR
+		TECH_NODE='65INTERPOSER' OR
+		TECH_NODE='65K8' OR
+		TECH_NODE='90K8' OR
+		TECH_NODE='90SOI'
+		ORDER BY TECH_NODE DESC
+)
+SELECT * FROM PrimaryDataFab7
+------------------------------------------------------------------------------
+--Apr-26 get details Fab7 unique mask #DB
+------------------------------------------------------------------------------
+SELECT DISTINCT MASK_NUMBER 
+FROM PrimaryDataFab7
+ORDER BY MASK_NUMBER DESC
 --SELECT * FROM PrimaryData order by tech_node
 ------------------------------------------------------------------------------
 --Apr-15 get all Fab unique mask # DB
