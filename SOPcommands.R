@@ -23,7 +23,7 @@ WITH maxRevNum2 AS
 (    
     SELECT TECH_NODE_PLMREV, TECH_NODE, CHANGE_NUMBER, FAB
     FROM AGILEPLM.V_LMS_TECH_NODE_DETAILS
-    WHERE FAB IS NOT NULL 
+    WHERE FAB IS NOT NULL
         AND REGEXP_LIKE(TECH_NODE_PLMREV, '[[:digit:]]')
         AND FAB LIKE '%7%'
             ORDER BY TECH_NODE, cast(TECH_NODE_PLMREV as int) DESC
@@ -115,6 +115,18 @@ WITH maxRevNum AS
 )
 SELECT * FROM PrimaryDataFab7
 ------------------------------------------------------------------------------
+--Apr-27 CC_87	[warning] For any LCN, New "Mask Number" = ij, where i avoid using "0-9" (PDK team concern). 
+------------------------------------------------------------------------------
+, PrimaryDataFab7 AS
+(
+    SELECT *
+    FROM PrimaryData
+	WHERE MASK_NUMBER IS NOT NULL
+        AND MASK_NUMBER LIKE '2%'
+            ORDER BY MASK_NUMBER DESC
+)
+SELECT * FROM PrimaryDataFab7
+------------------------------------------------------------------------------
 --Apr-26 get details Fab7 unique mask #DB
 ------------------------------------------------------------------------------
 SELECT DISTINCT MASK_NUMBER 
@@ -165,51 +177,6 @@ WHERE MASK_NUMBER IN (SELECT MASK_NUMBER FROM fab7ltn4) --same as multi OR
 ORDER BY MASK_NUMBER DESC, TECH_NODE DESC, LV_PLMREV DESC
 )
 SELECT * FROM fab7ltn4b
-------------------------------------------------------------------------------
---Apr-16 backup for LTN = Fab7
-------------------------------------------------------------------------------
-WHERE TECH_NODE='22FD' OR
-    TECH_NODE='28SL' OR
-    TECH_NODE='40LP' OR
-    TECH_NODE='55LP' OR
-    TECH_NODE='130G-LP' OR
-    TECH_NODE='CSOI8SW' OR
-    TECH_NODE='180BSL' OR
-    TECH_NODE='110MCU' OR
-    TECH_NODE='130RFSOI' OR
-    TECH_NODE='CSOI9SW' OR
-    TECH_NODE='65LP' OR
-    TECH_NODE='45CD' OR
-    TECH_NODE='45TTA' OR
-    TECH_NODE='65CB' OR
-    TECH_NODE='86SOIFSL' OR
-    TECH_NODE='45SOI' OR
-    TECH_NODE='65CM' OR
-    TECH_NODE='65PMIC' OR
-    TECH_NODE='65TTA' OR
-    TECH_NODE='90LP' OR
-    TECH_NODE='153CE' OR
-    TECH_NODE='150LP' OR
-    TECH_NODE='40BRCM' OR
-    TECH_NODE='130ANA' OR
-    TECH_NODE='45SOIFSL' OR
-    TECH_NODE='65CD' OR
-    TECH_NODE='65RFSOI' OR
-    TECH_NODE='90CSOI' OR
-    TECH_NODE='180SiGe' OR
-    TECH_NODE='45CQ' OR
-    TECH_NODE='55LPTTB' OR
-    TECH_NODE='180RF' OR
-    TECH_NODE='250LP' OR
-    TECH_NODE='40CM' OR
-    TECH_NODE='40TTD' OR
-    TECH_NODE='65INTERPOSER' OR
-    TECH_NODE='65K8' OR
-    TECH_NODE='90K8' OR
-    TECH_NODE='90SOI'
---SELECT * FROM PrimaryData2
-SELECT DISTINCT MASK_NUMBER FROM PrimaryData2 --get Fab7 unique mask # DB
-ORDER BY MASK_NUMBER
 
 ------------------------------------------------------------------------------
 ## win10 command
