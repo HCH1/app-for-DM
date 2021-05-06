@@ -1014,7 +1014,7 @@ for (i in 1:len1) {
 ############################################################
 #May-6
 #Fab7 left mask# DB
-in1 = read.csv("fab7 mini db.csv", header=TRUE, stringsAsFactors=FALSE)
+in1 = read.csv("fab7 mini db May6.csv", header=TRUE, stringsAsFactors=FALSE)
 colnames(in1) <- c("V1","V2")
 abcd <- LETTERS[1:26] %>% as.data.frame
 colnames(abcd) <- c("V1")
@@ -1037,4 +1037,10 @@ ans <- col0 %>% drop_na()
 ans1 <- anti_join(ans, in1[1], by = "V1")
 write.csv(x = ans1, row.names = TRUE, 
           file = "fab7 left can use mask (by R).csv")
+
+ans2 <- ans
+colnames(ans2) <- c("V2")
+ans2 <- anti_join(ans2, in1[2], by = "V2")
+write.csv(x = ans2, row.names = TRUE, 
+          file = "fab_all left can use mask (by R).csv")
 ############################################################
