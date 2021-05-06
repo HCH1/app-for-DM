@@ -1012,4 +1012,29 @@ for (i in 1:len1) {
   col1 <- ans
 }
 ############################################################
+#May-6
+#Fab7 left mask# DB
+in1 = read.csv("fab7 mini db.csv", header=TRUE, stringsAsFactors=FALSE)
+colnames(in1) <- c("V1","V2")
+abcd <- LETTERS[1:26] %>% as.data.frame
+colnames(abcd) <- c("V1")
+#grep dataframe contain keywords
+abcd1 <- abcd[grep("[I]|[O]|[X]", abcd$V1, invert = TRUE),] %>% as.data.frame
+colnames(abcd1) <- c("V1")
+num1 <- matrix(0:9, nrow=10, ncol=1) %>% as.data.frame
+col2 <- rbind(num1, abcd1)
 
+col0 <- matrix(NA, nrow=1, ncol=1) #create dummy 1*1
+for (i in 1:dim(abcd)[1]) {
+  ans <- cbind(abcd[i,], col2)
+  ans_1col <- paste(ans[,1], ans[,2], sep="") %>% as.data.frame
+  colnames(ans_1col) <- c("V1")
+  ans_1colv1 <- rbind(col0, ans_1col)
+  col0 <- ans_1colv1
+}
+ans <- col0 %>% drop_na()
+
+ans1 <- anti_join(ans, in1[1], by = "V1")
+write.csv(x = ans1, row.names = TRUE, 
+          file = "fab7 left can use mask (by R).csv")
+############################################################
