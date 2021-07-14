@@ -1045,7 +1045,7 @@ write.csv(x = ans2, row.names = TRUE,
           file = "fab_all left can use mask (by R).csv")
 ############################################################
 #Jul-13 waiver list and common layers
-in1 <- "450ROM v4"
+in1 <- "2000HV v4"
 in2 <- "common layer 2019Dec"
 in130 = read.csv(file = paste(in1, ".csv", sep = ""), 
                  header=TRUE, stringsAsFactors=FALSE)
@@ -1065,6 +1065,13 @@ vs1 <- full_join(iny, inx, by = "gds2")
 vs1[ is.na( vs1 ) ] <- ""
 vs1 <- vs1[ order(vs1$gds2, decreasing = FALSE), ]
 
+vs1$naming.vs <- ifelse(vs1$Data.Layer.Name.x != "" &
+                          vs1$Data.Layer.Name.y != "" &
+                          vs1$Data.Layer.Name.x != vs1$Data.Layer.Name.y
+                     ,"naming diff","safe")
+
+vs2 <- vs1[ which( vs1$naming.vs=="naming diff" ), ]
+
 test1 <- table(vs1[5]) %>% as.data.frame
 test1 <- test1[ order(test1$Freq, decreasing = TRUE), ]
 #freq > 1
@@ -1073,7 +1080,7 @@ test2 <- test1[ which( test1[2]>1), ]
 colnames(test2)[1] <- "gds2"
 vs1b <- inner_join(vs1, test2, by = "gds2")
 
-#generate waiver list 4 col for Krishna
+#from freq >1 to generate waiver list 4 col for Krishna
 m0 <- t( as.data.frame(c(0,0,0,0)) )
 for (i in 1:dim(test2)[1]) {
   #i=2
@@ -1092,6 +1099,28 @@ for (i in 1:dim(test2)[1]) {
   m0 <- m1
 }
 m2 <- m0[-1,] 
+
+#from vs1$naming.vs=="naming diff", to generate waiver list 4 col for Krishna
+m0 <- t( as.data.frame(c(0,0,0,0)) )
+for (i in 1:dim(vs2)[1]) {
+  #i=2
+  a0 <- vs2[i,5] %>% as.character
+  vs1b1 <- vs2[ which( vs2[5]==a0 ), ] #only chr can do which == filter
+  col1 <- cbind(vs1b1[1],vs1b1[7])
+  col1a <- unique(unlist(col1)) #split cells into chr
+  col1b <- paste(col1a, collapse = ";") #merge chr become 1 term
+  col1b <- gsub('[;]$', '', col1b) #clean end is ;
+  
+  col2 <- cbind(vs1b1[3],vs1b1[4]) %>% unique
+  
+  ans <- cbind(in1,col1b,col2) # make 4 col: tech name gds
+  colnames(ans) <- c("V1","V2","V3","V4")
+  m1 <- rbind(m0,ans)
+  m0 <- m1
+}
+m3 <- m0[-1,] 
+
+m2 <- rbind(m2,m3)
 
 write.csv(x = m2, row.names = TRUE, 
           file = paste(in1, " waivers (by R) v1.csv", sep = "") )
