@@ -1045,7 +1045,7 @@ write.csv(x = ans2, row.names = TRUE,
           file = "fab_all left can use mask (by R).csv")
 ############################################################
 #Jul-13 waiver list and common layers
-in1 <- "2000HV v4"
+in1 <- "600HV v4"
 in2 <- "common layer 2019Dec"
 in130 = read.csv(file = paste(in1, ".csv", sep = ""), 
                  header=TRUE, stringsAsFactors=FALSE)
@@ -1120,7 +1120,7 @@ for (i in 1:dim(vs2)[1]) {
 }
 m3 <- m0[-1,] 
 
-m2 <- rbind(m2,m3)
+m2 <- rbind(m2,m3) %>% unique
 
 write.csv(x = m2, row.names = TRUE, 
           file = paste(in1, " waivers (by R) v1.csv", sep = "") )
