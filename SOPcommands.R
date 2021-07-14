@@ -1044,3 +1044,63 @@ ans2 <- anti_join(ans2, in1[2], by = "V2")
 write.csv(x = ans2, row.names = TRUE, 
           file = "fab_all left can use mask (by R).csv")
 ############################################################
+#Jul-13 waiver list and common layers
+in1 <- "450ROM v4"
+in2 <- "common layer 2019Dec"
+in130 = read.csv(file = paste(in1, ".csv", sep = ""), 
+                 header=TRUE, stringsAsFactors=FALSE)
+in130b = read.csv(file = paste(in2, ".csv", sep = ""), 
+                  header=TRUE, stringsAsFactors=FALSE)
+inx <- in130
+iny <- in130b
+colnames(iny)[1] <- "Data.Layer.Name"
+
+inx$gds2 <- paste( inx$GDS.Number, inx$GDS.Datatype,
+                   sep = ";", collapse = NULL )
+iny$gds2 <- paste( iny$GDS.Number, iny$GDS.Datatype,
+                   sep = ";", collapse = NULL )
+iny <- iny[ order(iny$gds2, decreasing = FALSE), ]
+
+vs1 <- full_join(iny, inx, by = "gds2")
+vs1[ is.na( vs1 ) ] <- ""
+vs1 <- vs1[ order(vs1$gds2, decreasing = FALSE), ]
+
+test1 <- table(vs1[5]) %>% as.data.frame
+test1 <- test1[ order(test1$Freq, decreasing = TRUE), ]
+#freq > 1
+test2 <- test1[ which( test1[2]>1), ]
+#do OR_filter; use inner_join will keep only correct rows
+colnames(test2)[1] <- "gds2"
+vs1b <- inner_join(vs1, test2, by = "gds2")
+
+#generate waiver list 4 col for Krishna
+m0 <- t( as.data.frame(c(0,0,0,0)) )
+for (i in 1:dim(test2)[1]) {
+  #i=2
+  a0 <- test2[i,1] %>% as.character
+  vs1b1 <- vs1b[ which( vs1b[5]==a0 ), ] #only chr can do which == filter
+  col1 <- cbind(vs1b1[1],vs1b1[7])
+  col1a <- unique(unlist(col1)) #split cells into chr
+  col1b <- paste(col1a, collapse = ";") #merge chr become 1 term
+  col1b <- gsub('[;]$', '', col1b) #clean end is ;
+  
+  col2 <- cbind(vs1b1[3],vs1b1[4]) %>% unique
+  
+  ans <- cbind(in1,col1b,col2) # make 4 col: tech name gds
+  colnames(ans) <- c("V1","V2","V3","V4")
+  m1 <- rbind(m0,ans)
+  m0 <- m1
+}
+m2 <- m0[-1,] 
+
+write.csv(x = m2, row.names = TRUE, 
+          file = paste(in1, " waivers (by R) v1.csv", sep = "") )
+write.csv(x = test1, row.names = TRUE, 
+          file = paste(in1, " GDS freq (by R) v1.csv", sep = "") )
+write.csv(x = vs1b, row.names = TRUE, 
+          file = paste(in1, " freq bigger 1 (by R) v1.csv", sep = "") )
+write.csv(x = vs1, row.names = TRUE, 
+          file = paste(in1, " vs ", in2, " (by R) v1.csv", sep = "") )
+############################################################
+
+############################################################
