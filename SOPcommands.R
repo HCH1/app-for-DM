@@ -221,6 +221,19 @@ lpo = readLines("LPO-000202.csv", warn = FALSE)
 lpo1 <- lpo
 #save without col_id by date
 write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo1_dm1.csv", sep = "") )
+##TOTO 4D
+x <- 1:49
+#http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx
+#
+r1 <- c(4,10,21,33,42,44,19,
+1,21,26,38,44,45,17
+        )
+#r1
+r1 <- sort( unique(r1) )
+#r1
+table(sample(x[-r1], 6, replace=F))
+table(sample(x[-r1], 6, replace=F))
+table(sample(x[-r1], 6, replace=F))
 ###make a sub-ALL
 TV_uwant <- "DM-000450"
 ly_st <- "Active"
