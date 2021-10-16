@@ -223,11 +223,23 @@ lpo1 <- lpo
 write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo1_dm1.csv", sep = "") )
 ##TOTO 4D
 x <- 1:49
-#http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx
+#https://www.singaporepools.com.sg/en/product/pages/toto_results.aspx
 #
-r1 <- c(4,10,21,33,42,44,19,
-1,21,26,38,44,45,17
-        )
+r0 <- "
+10	15	16	24	45	47
+Additional Number
+19
+10	26	27	36	37	43
+Additional Number
+42
+"
+#mulit-search then replace
+r0a <- gsub("[a-zA-Z]", '', r0)
+r0a <- gsub('\\n\\s\\n', ',', r0a)
+r0a <- gsub('\\n|\\t',',', r0a)
+r0a <- gsub('^.|.$', '', r0a)
+r1 <- strsplit(r0a,',') %>% unlist
+r1 <- as.numeric(r1)
 #r1
 r1 <- sort( unique(r1) )
 #r1
