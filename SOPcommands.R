@@ -1156,5 +1156,6 @@ write.csv(x = vs1b, row.names = TRUE,
 write.csv(x = vs1, row.names = TRUE, 
           file = paste(in1, " vs ", in2, " (by R) v1.csv", sep = "") )
 ############################################################
-
+#https://stackoverflow.com/questions/27197617/filter-data-frame-by-character-column-name-in-dplyr
+bf_melt1b <- bf_melt1a %>% filter_(paste(as.character( (ans[1,1]) ), "!=", 0)) #colname=EFUSE, v!=0
 ############################################################
