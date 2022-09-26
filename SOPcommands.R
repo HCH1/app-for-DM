@@ -210,6 +210,10 @@ rsconnect::setAccountInfo(name="<ACCOUNT>", token="<TOKEN>", secret="<SECRET>")
 shiny::runApp()
 library(rsconnect)
 deployApp()
+#check.names=FALSE
+#https://stackoverflow.com/questions/27197617/filter-data-frame-by-character-column-name-in-dplyr
+in4 = read.csv(file = paste(in1a, ".csv", sep = ""), 
+               header=TRUE, stringsAsFactors=FALSE, check.names=FALSE)
 #read
 #stringsAsFactors=FALSE can let is.na easy to do
 lpo = read.csv("LPO-000172.csv", header = TRUE, stringsAsFactors=FALSE)
