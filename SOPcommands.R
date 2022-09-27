@@ -1161,5 +1161,7 @@ write.csv(x = vs1, row.names = TRUE,
           file = paste(in1, " vs ", in2, " (by R) v1.csv", sep = "") )
 ############################################################
 #https://stackoverflow.com/questions/27197617/filter-data-frame-by-character-column-name-in-dplyr
-bf_melt1b <- bf_melt1a %>% filter_(paste(as.character( (ans[1,1]) ), "!=", 0)) #colname=EFUSE, v!=0
+bf_melt1aa <- bf_melt1a %>% filter_at(vars( as.character( (tt1freq[i,1]) ) ), any_vars(. != 0)) #better for sub-TT colname=EFUSE v!=0
+#bf_melt1b <- bf_melt1a %>% filter_(paste(as.character( (ans[1,1]) ), "!=", 0)) #colname=EFUSE, v!=0
+
 ############################################################
