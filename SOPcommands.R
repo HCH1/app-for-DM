@@ -204,6 +204,11 @@ length()
 head()
 as.data.frame()
 as.character()
+
+library(tidyr)
+library(dplyr)
+library(readr)
+
 #Deploying applications
 #http://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications
 rsconnect::setAccountInfo(name="<ACCOUNT>", token="<TOKEN>", secret="<SECRET>")
@@ -225,31 +230,39 @@ lpo = readLines("LPO-000202.csv", warn = FALSE)
 lpo1 <- lpo
 #save without col_id by date
 write.csv(x = lpo1_dm1, row.names = FALSE, file = paste(format(Sys.time(), "%Y%m%d_%H"), "_lpo1_dm1.csv", sep = "") )
+
 ##TOTO 4D
 x <- 1:49
 #https://www.singaporepools.com.sg/en/product/pages/toto_results.aspx
 #
 r0 <- "
-10	15	16	24	45	47
+Winning Numbers
+3	12	20	39	40	47
 Additional Number
-19
-10	26	27	36	37	43
+18
+Winning Numbers
+5	6	7	25	28	35
 Additional Number
-42
+8
+4  9  19 30 42 49
 "
-#mulit-search then replace
+#multi-search then replace
 r0a <- gsub("[a-zA-Z]", '', r0)
 r0a <- gsub('\\n\\s\\n', ',', r0a)
 r0a <- gsub('\\n|\\t',',', r0a)
 r0a <- gsub('^.|.$', '', r0a)
 r1 <- strsplit(r0a,',') %>% unlist
-r1 <- as.numeric(r1)
-#r1
-r1 <- sort( unique(r1) )
-#r1
-table(sample(x[-r1], 6, replace=F))
-table(sample(x[-r1], 6, replace=F))
-table(sample(x[-r1], 6, replace=F))
+r1 <- as.numeric(r1) %>% unique %>% sort
+#r1 <- sort( unique(r1) )
+#r2 <- sample(x[-r1])
+#remove used, gen new 
+t1 <- table(sample(x[-r1], 6, replace=F)) %>% data.frame
+t2 <- table(sample(x[-r1], 6, replace=F)) %>% data.frame
+t3 <- table(sample(x[-r1], 6, replace=F)) %>% data.frame
+t4 <- table(sample(x[-r1], 6, replace=F)) %>% data.frame
+t5 <- table(sample(x[-r1], 6, replace=F)) %>% data.frame
+cbind(t1[1],t2[1],t3[1],t4[1],t5[1]) %>% t
+
 ###make a sub-ALL
 TV_uwant <- "DM-000450"
 ly_st <- "Active"
@@ -266,6 +279,7 @@ ans[ is.na( ans ) ] <- ""
 write.csv(x = ans, row.names = TRUE, 
           file = paste(format(Sys.time(), "%Y%m%d_%H"), 
                        "_8SWAPACPRE01 DM000432.csv", sep = "") )
+
 ###re-order
 in1 <- in1[ order(in1[1], 
 decreasing = TRUE), ]
